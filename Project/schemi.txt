@@ -1,0 +1,52 @@
+-dividere il campo in 12 settori:
+
+
+  +---+---+---+---+ 
+  | 1 | 2 | 3 | 4 | 
+  |   |   |   |   | 
+  +---+---+---+---+ 
+po| 5 | 6 | 7 | 8 |po 
+rt|   |   |   |   |rt 
+  +---+---+---+---+ 
+  | 9 | 10| 11| 12| 
+  |   |   |   |   | 
+  +---+---+---+---+ 
+
+
+-per ogni settore definire due posizioni, per ognuno dei giocatori, una per le azioni di attacco (con possesso palla), una per le azioni difensive.
+Ad esempio, per il settore 1, in azione difensiva: 
+
+
+  +---+---+---+---+ 
+  |*2*|   |   |   |    *        = posizioni possibili palla 
+  |**3|7  |   |   |    <numerp> = posizione del giocatore 
+  +---+---+---+---+ 
+po|1 4|8  |11 |   |po 
+rt| 5 | 10|   |   |rt 
+  +---+---+---+---+ 
+  |  6|9  |   |   | 
+  |   |   |   |   | 
+  +---+---+---+---+ 
+
+le posizioni andranno decise per ognuno degli schemi implementati.
+
+
+-definire inoltre le posizioni dei giocatori per ogni evento speciale, come: 
+
+  -calcio di rinvio 
+  -calcio d'angolo 
+  -palla al centro
+  -calcio di rigore
+  -calcio di punizione (relativo alla posizione della palla)
+  -rimessa laterale (relativo alla posizione della palla)
+
+
+-in questo modo si potranno ottenere anche una cinquantina di posizioni per giocatore, dipendenti della posizione della palla. Quando la palla entra in un nuovo settore, tutti i giocatori si riposizioneranno di conseguenza, come nel caso degli eventi speciali sopra descritti.
+
+-il tutto va combinato con un algoritmo di selezione del giocatore attivo, che correrà verso la palla, se la stessa non sarà arrivata direttamente a quest'ultimo. Va considerato anche il lavoro di un giocatore difensivo più vicino alla palla il quale, mentre questa gli si avvicinerà, correrà verso la posizione della palla stessa.
+
+-i parametri fondamentali che regolano lo spostamento dei giocatori sono:
+
+  -resistenza (regola la velocità del giocatore)
+  -destrezza (regola la precisione del tiro/passaggio)
+  -aggressività (soglia per affrontare un giocatore opposto. Questo significa che un giocatore con questo valore più elevato correrà incontro alla palla in possesso dell'avversario, anche se questa dovesse avere una distanza maggiore di quella che generalmente attiverebbe l'intervento)
