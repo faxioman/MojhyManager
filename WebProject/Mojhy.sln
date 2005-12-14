@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "C:\WebSites\Mojhy\", "..\..\..\..\..\..\WebSites\Mojhy\", "{148F3ACD-A860-4F84-8E21-A334F982630B}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = ".\Mojhy\", "{148F3ACD-A860-4F84-8E21-A334F982630B}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.VirtualPath = "/Mojhy"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\WebSites\Mojhy\"
+		Debug.AspNetCompiler.PhysicalPath = ".\Mojhy\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Mojhy\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/Mojhy"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\WebSites\Mojhy\"
+		Release.AspNetCompiler.PhysicalPath = ".\Mojhy\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Mojhy\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
