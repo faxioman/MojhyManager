@@ -1,0 +1,31 @@
+I ::= \ interventi del sindaco \leonardi
+;
+
+
+S ::= Domanda "\n" Risposta
+
+;
+
+
+
+Domanda ::= _  "Domanda:" "'"^("Sig. Sindaco" | "Sindaco Leonardi" | \"ehi tu, elegantone" | "Oh, invornito")
+^"," Problema ^"'"
+
+;
+
+
+Problema ::= (
+
+"le fogne nel centro storico sono rifatte con i piedi" |
+"il comune paga 1000 euro di affitto al mese per l'ufficio dei vigili" |
+"si tagliano i fondi alla cultura e i giovani si disinteressano alla politica" |
+"il comune si disinteressa del volontariato" |
+"far venire una troupe televisiva a Mercato il 4 di gennaio e' una stronzata" |
+"l'altro giorno c'era poca acqua nel fiume"
+) ^["!" | "!!" | "!!!"]
+;
+
+
+Risposta ::= "Sindaco Leonardi: " "'"^ \(ma scherzerai | ci penso io | non c'e' problema) ^","
+faccio due telefonate(^"..." | e risolvo tutto) ^"'"
+;
