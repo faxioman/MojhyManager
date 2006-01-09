@@ -39,6 +39,7 @@
     <Compile Include="Engine\Field\Field.cs" />
     <Compile Include="Engine\Field\PlayArea.cs" />
     <Compile Include="Engine\Field\PlayAreas.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SoccerGraphics.cs" />
     <Compile Include="SoccerTest.cs">
       <SubType>Form</SubType>

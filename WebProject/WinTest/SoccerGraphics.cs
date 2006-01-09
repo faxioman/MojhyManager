@@ -71,6 +71,12 @@ namespace WinTest
             g.FillEllipse(Brushes.White, ptMetaCampo.X - objField.PointsThickness / 2, ptMetaCampo.Y - objField.PointsThickness / 2, objField.PointsThickness, objField.PointsThickness);
             //disegno il cerchio di metà campo
             g.DrawEllipse(penLinee, ptMetaCampo.X - objField.CirclesRadius - objField.LinesThickness / 2, ptMetaCampo.Y - objField.CirclesRadius, objField.CirclesRadius * 2, objField.CirclesRadius * 2);
+            //disegno le aree di gioco
+            Pen penAreeGioco = new Pen(Color.YellowGreen);
+            for (int i = 0; i < objField.Areas.AreasList.Length; i++)
+            {
+                g.DrawRectangle(penAreeGioco, objField.Areas.AreasList[i].AreaRect);
+            }
         }
     }
 }
