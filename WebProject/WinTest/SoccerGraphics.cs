@@ -12,70 +12,89 @@ namespace WinTest
     {
 
         //unità di misura in millimetri e scala di disegno
-        private const GraphicsUnit enUnit = GraphicsUnit.Millimeter;
-        private const float Scale = (float)0.002;
+        private const GraphicsUnit UNIT = GraphicsUnit.Millimeter;
+        private const float SCALE = (float)0.002;
+        //oggetto Pen per il disegno delle linee del campo
+        Pen l_penLinee;
+        //oggetto campo interno
+        Mojhy.Engine.Field l_objField;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:SoccerGraphics"/> class.
+        /// </summary>
+        public SoccerGraphics(Mojhy.Engine.Field objField){
+            l_objField = objField;
+            l_penLinee = new Pen(Color.White, l_objField.LinesThickness);
+        }
+        /// <summary>
+        /// Releases unmanaged resources and performs other cleanup operations before the
+        /// <see cref="T:WinTest.SoccerGraphics"/> is reclaimed by garbage collection.
+        /// </summary>
+        ~SoccerGraphics()
+        {
+            l_penLinee.Dispose();
+        }
+        /// <summary>
+        /// Sets the graphics properties of the Graphics object used by SoccerGraphics.
+        /// </summary>
+        /// <param name="g">The Graphics object.</param>
+        private void setGraphicsProperties(Graphics g){
+            //attivo l'antialias
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //imposto l'unità di misura
+            g.PageUnit = UNIT;
+            //imposto la scala, visto che considero il campo con le sue misure reali
+            g.PageScale = SCALE;
+        }
         /// <summary>
         /// Render the base soccer field.
         /// </summary>
         /// <param name="g">The graphics object where the soccer field must be rendered</param>
-		public void RenderField(Graphics g)
+		public void RenderField(Graphics g, Boolean blShowAreas)
         {
-            Mojhy.Engine.Field objField = new Mojhy.Engine.Field();
-            g.PageUnit = enUnit;
-            //imposto la scala, visto che considero il campo con le sue misure reali
-            g.PageScale = Scale;
+            setGraphicsProperties(g);
             //disegno il fondo
-            g.FillRectangle(Brushes.Green, 0, 0, objField.Width, objField.Height);
-            //creo il Pen per il disegno delle linee
-            Pen penLinee = new Pen(Color.White, objField.LinesThickness);
-            //disegno le porte
-            PointF ptPorta1A = new PointF(0, (objField.Height - objField.GoalWidth) / 2);
-            PointF ptPorta1B = new PointF(0, (objField.Height - objField.GoalWidth) / 2 + objField.GoalWidth);
-            g.DrawLine(penLinee, ptPorta1A, ptPorta1B);
-            PointF ptPorta2A = new PointF(objField.Width, (objField.Height - objField.GoalWidth) / 2);
-            PointF ptPorta2B = new PointF(objField.Width, (objField.Height - objField.GoalWidth) / 2 + objField.GoalWidth);
-            g.DrawLine(penLinee, ptPorta2A.X - objField.LinesThickness / 2, ptPorta2A.Y, ptPorta2B.X - objField.LinesThickness / 2, ptPorta2B.Y);
+            g.FillRectangle(Brushes.Green, 0, 0, l_objField.Width, l_objField.Height);
+            g.DrawRectangle(l_penLinee, 0, 0, l_objField.Width, l_objField.Height);
             //disegno le aree di rigore
             ////prima
-            g.DrawLine(penLinee, new PointF(0, ptPorta1A.Y - objField.PenaltyAreaSize), new PointF(objField.PenaltyAreaSize, ptPorta1A.Y - objField.PenaltyAreaSize));
-            g.DrawLine(penLinee, new PointF(0, ptPorta1B.Y + objField.PenaltyAreaSize), new PointF(objField.PenaltyAreaSize, ptPorta1B.Y + objField.PenaltyAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.PenaltyAreaSize, ptPorta1A.Y - objField.PenaltyAreaSize), new PointF(objField.PenaltyAreaSize, ptPorta1B.Y + objField.PenaltyAreaSize));
+            g.DrawRectangle(l_penLinee, l_objField.PenaltyAreaLeft);
             ////seconda
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.LinesThickness / 2, ptPorta2A.Y - objField.PenaltyAreaSize), new PointF(objField.Width - objField.PenaltyAreaSize - objField.LinesThickness / 2, ptPorta2A.Y - objField.PenaltyAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.LinesThickness / 2, ptPorta2B.Y + objField.PenaltyAreaSize), new PointF(objField.Width - objField.PenaltyAreaSize - objField.LinesThickness / 2, ptPorta2B.Y + objField.PenaltyAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.PenaltyAreaSize - objField.LinesThickness / 2, ptPorta2A.Y - objField.PenaltyAreaSize), new PointF(objField.Width - objField.PenaltyAreaSize - objField.LinesThickness / 2, ptPorta2B.Y + objField.PenaltyAreaSize));
+            g.DrawRectangle(l_penLinee, l_objField.PenaltyAreaRight);            
             //disegno l'area piccola
             ////prima
-            g.DrawLine(penLinee, new PointF(0, ptPorta1A.Y - objField.GoalAreaSize), new PointF(objField.GoalAreaSize, ptPorta1A.Y - objField.GoalAreaSize));
-            g.DrawLine(penLinee, new PointF(0, ptPorta1B.Y + objField.GoalAreaSize), new PointF(objField.GoalAreaSize, ptPorta1B.Y + objField.GoalAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.GoalAreaSize, ptPorta1A.Y - objField.GoalAreaSize), new PointF(objField.GoalAreaSize, ptPorta1B.Y + objField.GoalAreaSize));
+            g.DrawRectangle(l_penLinee, l_objField.GoalAreaLeft);
             ////seconda
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.LinesThickness/2, ptPorta2A.Y - objField.GoalAreaSize), new PointF(objField.Width - objField.GoalAreaSize - objField.LinesThickness/2, ptPorta2A.Y - objField.GoalAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.LinesThickness/2, ptPorta2B.Y + objField.GoalAreaSize), new PointF(objField.Width - objField.GoalAreaSize - objField.LinesThickness/2, ptPorta2B.Y + objField.GoalAreaSize));
-            g.DrawLine(penLinee, new PointF(objField.Width - objField.GoalAreaSize - objField.LinesThickness/2, ptPorta2A.Y - objField.GoalAreaSize), new PointF(objField.Width - objField.GoalAreaSize - objField.LinesThickness/2, ptPorta2B.Y + objField.GoalAreaSize));
+            g.DrawRectangle(l_penLinee, l_objField.GoalAreaRight);
+            //disegno le porte
+            l_penLinee.Color = Color.Red;
+            l_penLinee.Width = l_objField.LinesThickness * 4;
+            g.DrawLine(l_penLinee, l_objField.GoalLeftRect.Left, l_objField.GoalLeftRect.Top, l_objField.GoalLeftRect.Right, l_objField.GoalLeftRect.Bottom);
+            g.DrawLine(l_penLinee, l_objField.GoalRightRect.Left, l_objField.GoalRightRect.Top, l_objField.GoalRightRect.Right, l_objField.GoalRightRect.Bottom);
+            l_penLinee.Color = Color.White;
+            l_penLinee.Width = l_objField.LinesThickness;
             //disegno i dischetti di rigore
-            PointF dischettoRigore1 = new PointF(objField.PenaltySpotDistance, objField.Height / 2);
-            PointF dischettoRigore2 = new PointF(objField.Width - objField.PenaltySpotDistance, objField.Height / 2);
-            g.FillEllipse(Brushes.White, dischettoRigore1.X - objField.PointsThickness / 2, dischettoRigore1.Y - objField.PointsThickness / 2, objField.PointsThickness, objField.PointsThickness);
-            g.FillEllipse(Brushes.White, dischettoRigore2.X - objField.PointsThickness / 2 - objField.LinesThickness / 2, dischettoRigore2.Y - objField.PointsThickness / 2, objField.PointsThickness, objField.PointsThickness);
+            g.FillEllipse(Brushes.White, l_objField.PenaltySpotLeft.X - l_objField.PointsThickness / 2, l_objField.PenaltySpotLeft.Y - l_objField.PointsThickness / 2, l_objField.PointsThickness, l_objField.PointsThickness);
+            g.FillEllipse(Brushes.White, l_objField.PenaltySpotRight.X - l_objField.PointsThickness / 2, l_objField.PenaltySpotRight.Y - l_objField.PointsThickness / 2, l_objField.PointsThickness, l_objField.PointsThickness);
+            //disegno la riga di metà campo.
+            g.DrawLine(l_penLinee, l_objField.CentreSpot.X, 0, l_objField.CentreSpot.X, l_objField.Height);
+            //disegno il punto di metà campo
+            g.FillEllipse(Brushes.White, l_objField.CentreSpot.X - l_objField.PointsThickness / 2, l_objField.CentreSpot.Y - l_objField.PointsThickness / 2, l_objField.PointsThickness, l_objField.PointsThickness);
+            //disegno il cerchio di metà campo
+            g.DrawEllipse(l_penLinee, l_objField.CentreSpot.X - l_objField.CirclesRadius, l_objField.CentreSpot.Y - l_objField.CirclesRadius, l_objField.CirclesRadius * 2, l_objField.CirclesRadius * 2);
             //disegno le lunette dell'area.
             //troppo a digiuno in geometria per calcolare l'intersezione del cerchio con l'area di rigore.
             //ho fissato l'angolo di partenza a -53° (e il suo complemento a 180°) e l'ampiezza dell'angolo a 106° :-(
-            g.DrawArc(penLinee, dischettoRigore1.X - objField.CirclesRadius, dischettoRigore1.Y - objField.CirclesRadius, objField.CirclesRadius * 2, objField.CirclesRadius * 2, -53, 106);
-            g.DrawArc(penLinee, dischettoRigore2.X - objField.CirclesRadius, dischettoRigore2.Y - objField.CirclesRadius, objField.CirclesRadius * 2, objField.CirclesRadius * 2, 127, 106);
-            //calcolo la metà del campo
-            PointF ptMetaCampo = new PointF(objField.Width / 2, objField.Height / 2);
-            //disegno la riga di metà campo.
-            g.DrawLine(penLinee, ptMetaCampo.X - objField.LinesThickness / 2, 0, ptMetaCampo.X - objField.LinesThickness / 2, objField.Height);
-            //disegno il punto di metà campo
-            g.FillEllipse(Brushes.White, ptMetaCampo.X - objField.PointsThickness / 2, ptMetaCampo.Y - objField.PointsThickness / 2, objField.PointsThickness, objField.PointsThickness);
-            //disegno il cerchio di metà campo
-            g.DrawEllipse(penLinee, ptMetaCampo.X - objField.CirclesRadius - objField.LinesThickness / 2, ptMetaCampo.Y - objField.CirclesRadius, objField.CirclesRadius * 2, objField.CirclesRadius * 2);
-            //disegno le aree di gioco
-            Pen penAreeGioco = new Pen(Color.YellowGreen);
-            for (int i = 0; i < objField.Areas.AreasList.Length; i++)
+            g.DrawArc(l_penLinee, l_objField.PenaltySpotLeft.X - l_objField.CirclesRadius, l_objField.PenaltySpotLeft.Y - l_objField.CirclesRadius, l_objField.CirclesRadius * 2, l_objField.CirclesRadius * 2, -53, 106);
+            g.DrawArc(l_penLinee, l_objField.PenaltySpotRight.X - l_objField.CirclesRadius, l_objField.PenaltySpotRight.Y - l_objField.CirclesRadius, l_objField.CirclesRadius * 2, l_objField.CirclesRadius * 2, 127, 106);
+            //se richiesto, disegno le aree di gioco
+            if (blShowAreas)
             {
-                g.DrawRectangle(penAreeGioco, objField.Areas.AreasList[i].AreaRect);
+                Pen penAreeGioco = new Pen(Color.YellowGreen);
+                for (int i = 0; i < l_objField.Areas.AreasList.Length; i++)
+                {
+                    g.DrawRectangle(penAreeGioco, l_objField.Areas.AreasList[i].AreaRect);
+                }
+                penAreeGioco.Dispose();
             }
         }
     }

@@ -17,6 +17,6 @@ namespace Mojhy.Engine
         /// <summary>
         /// Defines the rect of the area
         /// </summary>
-        public Rectangle AreaRect = new Rectangle();
+        public Rectangle AreaRect;
     }
 }

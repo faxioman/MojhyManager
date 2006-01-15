@@ -10,19 +10,40 @@ namespace WinTest
 {
     public partial class SoccerTest : Form
     {
+        private Mojhy.Engine.Field l_objField;
+        private SoccerGraphics l_objSoccerGraph;
+        //indica se disegnare o meno le aree sensibili
+        private bool blShowAreas = false;
+        //stato dell'applicazione
+        private FormStatus l_enState = FormStatus.SettingPlayerDefensePosition;
+        //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
+        public enum FormStatus
+        {
+            SettingPlayerAttackPosition,
+            SettingPlayerDefensePosition,
+            MoveBallAndEnjoy,
+            PlayingMatch
+        }
         public SoccerTest()
         {
             InitializeComponent();
-            this.Paint += SoccerTest_Paint;
+            //creo l'oggetto campo
+            l_objField = new Mojhy.Engine.Field();
+            //inizializzo l'oggetto SoccerGraphics per la gestione
+            //degli elementi relativi al campo di calcio
+            l_objSoccerGraph = new SoccerGraphics(l_objField);
+        }
+        protected override void OnPaint(PaintEventArgs pe)
+        {
+            base.OnPaint(pe);
+            //disegno il campo
+            l_objSoccerGraph.RenderField(pe.Graphics, blShowAreas);
         }
 
-        private void SoccerTest_Paint(object sender, System.Windows.Forms.PaintEventArgs pe)
+        private void btShowAreas_Click(object sender, EventArgs e)
         {
-            //attivo l'antialias
-            pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //disegno il campo
-            SoccerGraphics objSoccerGraph = new SoccerGraphics();
-            objSoccerGraph.RenderField(pe.Graphics);
+            blShowAreas = !(blShowAreas);
+            this.Refresh();
         }
     }
 }

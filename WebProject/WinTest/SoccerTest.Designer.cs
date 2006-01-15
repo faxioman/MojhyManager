@@ -28,14 +28,26 @@ namespace WinTest
         /// </summary>
         private void InitializeComponent()
         {
+            this.btShowAreas = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // btShowAreas
+            // 
+            this.btShowAreas.Location = new System.Drawing.Point(12, 538);
+            this.btShowAreas.Name = "btShowAreas";
+            this.btShowAreas.Size = new System.Drawing.Size(118, 23);
+            this.btShowAreas.TabIndex = 0;
+            this.btShowAreas.Text = "Show/Hide Areas";
+            this.btShowAreas.UseVisualStyleBackColor = true;
+            this.btShowAreas.Click += new System.EventHandler(this.btShowAreas_Click);
             // 
             // SoccerTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(795, 531);
+            this.ClientSize = new System.Drawing.Size(795, 570);
+            this.Controls.Add(this.btShowAreas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "SoccerTest";
@@ -46,6 +58,8 @@ namespace WinTest
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btShowAreas;
     }
 }
 
