@@ -18,12 +18,16 @@ namespace WinTest
         Pen l_penLinee;
         //oggetto campo interno
         Mojhy.Engine.Field l_objField;
+        //bitmap del palloncino
+        private Image l_imgPalloncino;
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SoccerGraphics"/> class.
         /// </summary>
         public SoccerGraphics(Mojhy.Engine.Field objField){
             l_objField = objField;
             l_penLinee = new Pen(Color.White, l_objField.LinesThickness);
+            //carico la bitmap del palloncino
+            l_imgPalloncino = Bitmap.FromFile("./Images/Palloncino.png", true);
         }
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
@@ -31,7 +35,10 @@ namespace WinTest
         /// </summary>
         ~SoccerGraphics()
         {
+            //distruggo la penna per disegnare le linee del campo
             l_penLinee.Dispose();
+            //distruggo l'immagine del palloncino
+            l_imgPalloncino.Dispose();
         }
         /// <summary>
         /// Sets the graphics properties of the Graphics object used by SoccerGraphics.
