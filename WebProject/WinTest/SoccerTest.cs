@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace WinTest
 {
@@ -18,6 +19,10 @@ namespace WinTest
         private FormStatus l_enState = FormStatus.SettingPlayerDefensePosition;
         //posizione corrente del mouse
         private Point l_ptMouseLoc;
+        //posizione corrente del pallone
+        private Point l_ptBall;
+        //se un area è selezionata -> l_blAreaSelected = true
+        private bool l_blAreaSelected = false;
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
         {
@@ -48,17 +53,25 @@ namespace WinTest
         {
             l_ptMouseLoc.X = e.X;
             l_ptMouseLoc.Y = e.Y;
-            Invalidate();
+            Invalidate(new Rectangle(0,0,200,20));
         }
         //click sul campo
         void SoccerTest_Click(object sender, EventArgs e)
         {
+            //calcolo il punto del campo dove sta puntando il mouse
             switch (l_enState)
             {
                 case FormStatus.SettingPlayerAttackPosition:
-                    
+                    //imposto la posizione del pallone (dove ho cliccato il mouse)
+                    l_ptBall = l_ptMouseLoc;
+                    l_blAreaSelected = true;
+                    Invalidate();
                     break;
                 case FormStatus.SettingPlayerDefensePosition:
+                    //imposto la posizione del pallone (dove ho cliccato il mouse)
+                    l_ptBall = l_ptMouseLoc;
+                    l_blAreaSelected = true;
+                    Invalidate();
                     break;
                 case FormStatus.MoveBallAndEnjoy:
                     break;
@@ -72,8 +85,12 @@ namespace WinTest
             base.OnPaint(pe);
             //disegno il campo
             l_objSoccerGraph.RenderField(pe.Graphics, blShowAreas);
+            //calcolo il punto del mouse in mm
+            Point ptMouseLocMM = l_objSoccerGraph.PixelToMM(pe.Graphics, l_ptMouseLoc);
+            //attivo l'area cliccata
+            if (l_blAreaSelected) l_objSoccerGraph.DrawSelectedArea(pe.Graphics, l_ptBall);
             //scrivo la posizione del mouse
-            pe.Graphics.DrawString("Mouse x: " + l_ptMouseLoc.X.ToString() + "  Mouse y: " + l_ptMouseLoc.Y.ToString(), new Font("Arial",12), Brushes.White,new PointF(100,100));
+            pe.Graphics.DrawString("X: " + ptMouseLocMM.X.ToString() + "mm  Y: " + ptMouseLocMM.Y.ToString() + "mm", new Font("Arial", 12), Brushes.White, new PointF(100, 100));
         }
         //click per visualizzare o nascondere le aree del campo
         private void btShowAreas_Click(object sender, EventArgs e)

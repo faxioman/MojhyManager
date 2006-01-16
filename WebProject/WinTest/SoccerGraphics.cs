@@ -14,6 +14,10 @@ namespace WinTest
         //unità di misura in millimetri e scala di disegno
         private const GraphicsUnit UNIT = GraphicsUnit.Millimeter;
         private const float SCALE = (float)0.002;
+        //questo è il numero 'magico' (un giorno capirò come calcolarlo) da
+        //usare per calcolare il moltiplicatore utilizzato nella conversione
+        //da pixel a millimetri del campo
+        private const float MAGICNUMBERCONVERSION = (float)0.07;
         //oggetto Pen per il disegno delle linee del campo
         Pen l_penLinee;
         //oggetto campo interno
@@ -51,6 +55,37 @@ namespace WinTest
             g.PageUnit = UNIT;
             //imposto la scala, visto che considero il campo con le sue misure reali
             g.PageScale = SCALE;
+        }
+        /// <summary>
+        /// Converts a point pixel location to the point as millimeter.
+        /// </summary>
+        /// <param name="g">The base Graphics object</param>
+        /// <param name="PixelLoc">The point defined as pixel X and pixel Y</param>
+        /// <returns></returns>
+        public Point PixelToMM(Graphics g, Point PixelLoc)
+        {
+            Point ptLocMM = new Point();
+            setGraphicsProperties(g);
+            //25.4 sono i millimetri per pollice
+            ptLocMM.X = (int)(g.DpiX / (float)25.4 * PixelLoc.X * (MAGICNUMBERCONVERSION / SCALE));
+            ptLocMM.Y = (int)(g.DpiY / (float)25.4 * PixelLoc.Y * (MAGICNUMBERCONVERSION / SCALE));
+            return ptLocMM;
+        }
+        public void DrawSelectedArea(Graphics g, Point BallLoc)
+        {
+            BallLoc = this.PixelToMM(g,BallLoc);
+            //cerco in quale area mi trovo
+            Mojhy.Engine.PlayArea objPlayArea = l_objField.Areas.GetAreaFromLoc(BallLoc);
+            if (objPlayArea != null)
+            {
+                //disegno l'area selezionata
+                SolidBrush colorBrush = new SolidBrush(Color.FromArgb(50, 12, 12,12));
+                g.FillRectangle(colorBrush, objPlayArea.AreaRect);
+                colorBrush.Dispose();
+                //calcolo il centro del rettangolo
+                Point ptAreaCentre = new Point(objPlayArea.AreaRect.Right - (objPlayArea.AreaRect.Width / 2), objPlayArea.AreaRect.Bottom - (objPlayArea.AreaRect.Height / 2));
+                g.DrawImage(l_imgPalloncino, ptAreaCentre);
+            }
         }
         /// <summary>
         /// Render the base soccer field.

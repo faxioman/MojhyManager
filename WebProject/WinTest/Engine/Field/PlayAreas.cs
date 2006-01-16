@@ -113,5 +113,22 @@ namespace Mojhy.Engine
                 }
             }
         }
+        /// <summary>
+        /// Gets the Area identified by the point location.
+        /// </summary>
+        /// <param name="Loc">The Point of the requested location.</param>
+        /// <returns></returns>
+        public PlayArea GetAreaFromLoc(Point Loc)
+        {
+            foreach (PlayArea objPlayAreaAux in this.AreasList)
+            {
+                if (objPlayAreaAux.AreaRect.Contains(Loc))
+                {
+                    return objPlayAreaAux;
+                }
+            }
+            //non ho trovato nessuna area
+            return null;
+        }
     }
 }

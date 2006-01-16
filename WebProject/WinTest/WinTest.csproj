@@ -40,10 +40,6 @@
     <Compile Include="Engine\Field\Field.cs" />
     <Compile Include="Engine\Field\PlayArea.cs" />
     <Compile Include="Engine\Field\PlayAreas.cs" />
-    <Compile Include="Provaccia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProvacciaPrimitive.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SoccerGraphics.cs" />
     <Compile Include="SoccerTest.cs">
