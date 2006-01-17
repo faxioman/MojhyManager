@@ -24,6 +24,10 @@ namespace WinTest
         Mojhy.Engine.Field l_objField;
         //bitmap del palloncino
         private Image l_imgPalloncino;
+        //bitmap base delleposizioni di attacco
+        private Image l_imgAttacco;
+        //bitmap base delleposizioni di difesa
+        private Image l_imgDifesa;
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SoccerGraphics"/> class.
         /// </summary>
@@ -32,6 +36,10 @@ namespace WinTest
             l_penLinee = new Pen(Color.White, l_objField.LinesThickness);
             //carico la bitmap del palloncino
             l_imgPalloncino = Bitmap.FromFile("./Images/Palloncino.png", true);
+            //carico la bitmap dell'attacco
+            l_imgAttacco = Bitmap.FromFile("./Images/Attacco.png", true);
+            //carico la bitmap della difesa
+            l_imgDifesa = Bitmap.FromFile("./Images/Difesa.png", true);
         }
         /// <summary>
         /// Releases unmanaged resources and performs other cleanup operations before the
@@ -43,6 +51,10 @@ namespace WinTest
             l_penLinee.Dispose();
             //distruggo l'immagine del palloncino
             l_imgPalloncino.Dispose();
+            //distruggo l'immagine attacco
+            l_imgAttacco.Dispose();
+            //distruggo l'immagine difesa
+            l_imgDifesa.Dispose();
         }
         /// <summary>
         /// Sets the graphics properties of the Graphics object used by SoccerGraphics.

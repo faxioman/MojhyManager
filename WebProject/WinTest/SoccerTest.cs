@@ -16,7 +16,7 @@ namespace WinTest
         //indica se disegnare o meno le aree sensibili
         private bool blShowAreas = false;
         //stato dell'applicazione
-        private FormStatus l_enState = FormStatus.SettingPlayerDefensePosition;
+        private FormStatus l_enState = FormStatus.SettingPlayerPosition;
         //posizione corrente del mouse
         private Point l_ptMouseLoc;
         //posizione corrente del pallone
@@ -26,8 +26,7 @@ namespace WinTest
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
         {
-            SettingPlayerAttackPosition,
-            SettingPlayerDefensePosition,
+            SettingPlayerPosition,
             MoveBallAndEnjoy,
             PlayingMatch
         }
@@ -61,13 +60,7 @@ namespace WinTest
             //calcolo il punto del campo dove sta puntando il mouse
             switch (l_enState)
             {
-                case FormStatus.SettingPlayerAttackPosition:
-                    //imposto la posizione del pallone (dove ho cliccato il mouse)
-                    l_ptBall = l_ptMouseLoc;
-                    l_blAreaSelected = true;
-                    Invalidate();
-                    break;
-                case FormStatus.SettingPlayerDefensePosition:
+                case FormStatus.SettingPlayerPosition:
                     //imposto la posizione del pallone (dove ho cliccato il mouse)
                     l_ptBall = l_ptMouseLoc;
                     l_blAreaSelected = true;
@@ -102,6 +95,16 @@ namespace WinTest
         {
             blShowAreas = !(blShowAreas);
             Invalidate();
+        }
+        //click per visualizzare o nascondere le posizioni in difesa
+        private void btShowDefense_Click(object sender, EventArgs e)
+        {
+
+        }
+        //click per visualizzare o nascondere le posizioni in attacco
+        private void btShowAttack_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

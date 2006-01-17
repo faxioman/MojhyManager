@@ -29,6 +29,8 @@ namespace WinTest
         private void InitializeComponent()
         {
             this.btShowAreas = new System.Windows.Forms.Button();
+            this.btShowDefense = new System.Windows.Forms.Button();
+            this.btShowAttack = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btShowAreas
@@ -41,12 +43,34 @@ namespace WinTest
             this.btShowAreas.UseVisualStyleBackColor = true;
             this.btShowAreas.Click += new System.EventHandler(this.btShowAreas_Click);
             // 
+            // btShowDefense
+            // 
+            this.btShowDefense.Location = new System.Drawing.Point(136, 538);
+            this.btShowDefense.Name = "btShowDefense";
+            this.btShowDefense.Size = new System.Drawing.Size(118, 23);
+            this.btShowDefense.TabIndex = 1;
+            this.btShowDefense.Text = "Show/Hide Defense";
+            this.btShowDefense.UseVisualStyleBackColor = true;
+            this.btShowDefense.Click += new System.EventHandler(this.btShowDefense_Click);
+            // 
+            // btShowAttack
+            // 
+            this.btShowAttack.Location = new System.Drawing.Point(260, 538);
+            this.btShowAttack.Name = "btShowAttack";
+            this.btShowAttack.Size = new System.Drawing.Size(118, 23);
+            this.btShowAttack.TabIndex = 2;
+            this.btShowAttack.Text = "Show/Hide Attack";
+            this.btShowAttack.UseVisualStyleBackColor = true;
+            this.btShowAttack.Click += new System.EventHandler(this.btShowAttack_Click);
+            // 
             // SoccerTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(795, 570);
+            this.Controls.Add(this.btShowAttack);
+            this.Controls.Add(this.btShowDefense);
             this.Controls.Add(this.btShowAreas);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -60,6 +84,8 @@ namespace WinTest
         #endregion
 
         private System.Windows.Forms.Button btShowAreas;
+        private System.Windows.Forms.Button btShowDefense;
+        private System.Windows.Forms.Button btShowAttack;
     }
 }
 
