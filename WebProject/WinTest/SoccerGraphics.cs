@@ -14,6 +14,8 @@ namespace WinTest
         //unità di misura in millimetri e scala di disegno
         private const GraphicsUnit UNIT = GraphicsUnit.Millimeter;
         private const float SCALE = (float)0.002;
+        //millimetri per pollice
+        private const float MM_PER_INCH = (float)25.4;
         //questo è il numero 'magico' (un giorno capirò come calcolarlo) da
         //usare per calcolare il moltiplicatore utilizzato nella conversione
         //da pixel a millimetri del campo
@@ -79,8 +81,8 @@ namespace WinTest
             Point ptLocMM = new Point();
             setGraphicsProperties(g);
             //25.4 sono i millimetri per pollice
-            ptLocMM.X = (int)(g.DpiX / (float)25.4 * PixelLoc.X * (MAGICNUMBERCONVERSION / SCALE));
-            ptLocMM.Y = (int)(g.DpiY / (float)25.4 * PixelLoc.Y * (MAGICNUMBERCONVERSION / SCALE));
+            ptLocMM.X = (int)(g.DpiX / MM_PER_INCH * PixelLoc.X * (MAGICNUMBERCONVERSION / SCALE));
+            ptLocMM.Y = (int)(g.DpiY / MM_PER_INCH * PixelLoc.Y * (MAGICNUMBERCONVERSION / SCALE));
             return ptLocMM;
         }
         public void DrawSelectedArea(Graphics g, Point BallLoc)

@@ -23,6 +23,10 @@ namespace WinTest
         private Point l_ptBall;
         //se un area è selezionata -> l_blAreaSelected = true
         private bool l_blAreaSelected = false;
+        //le variabili definiscono se, in fase di selezione dei giocatori,
+        //devo visualizzare le posizioni in attacco o in difesa o entrambe
+        private bool l_blShowAttack = true;
+        private bool l_blShowDefense = true;
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
         {
@@ -64,6 +68,8 @@ namespace WinTest
                     //imposto la posizione del pallone (dove ho cliccato il mouse)
                     l_ptBall = l_ptMouseLoc;
                     l_blAreaSelected = true;
+                    l_blShowAttack = true;
+                    l_blShowDefense = true;
                     Invalidate();
                     break;
                 case FormStatus.MoveBallAndEnjoy:
