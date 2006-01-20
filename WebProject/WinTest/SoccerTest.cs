@@ -13,6 +13,9 @@ namespace WinTest
     {
         private Mojhy.Engine.Field l_objField;
         private SoccerGraphics l_objSoccerGraph;
+        //squadre
+        Mojhy.Engine.Team l_objTeamA;
+        Mojhy.Engine.Team l_objTeamB;
         //indica se disegnare o meno le aree sensibili
         private bool blShowAreas = false;
         //stato dell'applicazione
@@ -27,6 +30,8 @@ namespace WinTest
         //devo visualizzare le posizioni in attacco o in difesa o entrambe
         private bool l_blShowAttack = true;
         private bool l_blShowDefense = true;
+        //definisco se sono in fase di drag
+        private bool l_blDragging = false;
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
         {
@@ -50,6 +55,29 @@ namespace WinTest
             this.Click += new EventHandler(SoccerTest_Click);
             //collego l'evento di spostamento del mouse
             this.MouseMove += new MouseEventHandler(SoccerTest_MouseMove);
+            //collego l'evento di mouse down
+            this.MouseDown += new MouseEventHandler(SoccerTest_MouseDown);
+            //collego l'evento di mouse up
+            this.MouseUp += new MouseEventHandler(SoccerTest_MouseUp);
+            //inizializzo la prima squadra (presente in ogni situazione)
+            l_objTeamA = new Mojhy.Engine.Team();
+            //inizializzo la posizione dei giocatori (posizione iniziale, tutti a meta campo)
+            l_objTeamA.PutOnField(l_objField);
+            foreach (Mojhy.Engine.PlayingPlayer objPlayingPlayer in l_objTeamA.PlayingPlayers)
+            {
+                objPlayingPlayer.PositionOnField.X = l_objField.Width / 2;
+                objPlayingPlayer.PositionOnField.Y = l_objField.Height / 2;
+            }
+        }
+
+        void SoccerTest_MouseUp(object sender, MouseEventArgs e)
+        {
+            l_blDragging = false;
+        }
+
+        void SoccerTest_MouseDown(object sender, MouseEventArgs e)
+        {
+            l_blDragging = true;
         }
         //mantiene aggiornata la posizione del mouse
         void SoccerTest_MouseMove(object sender, MouseEventArgs e)
@@ -93,6 +121,7 @@ namespace WinTest
             }
             //attivo l'area cliccata
             if (l_blAreaSelected) l_objSoccerGraph.DrawSelectedArea(pe.Graphics, l_ptBall);
+            //controllo se devo visualizzare i giocatori in posizione attacco, difesa, entrambi o nascosti
             //scrivo la posizione del mouse
             pe.Graphics.DrawString("X: " + ptMouseLocMM.X.ToString() + "mm  Y: " + ptMouseLocMM.Y.ToString() + "mm", new Font("Tahoma", 7), Brushes.White, new PointF(100, 100));
         }
