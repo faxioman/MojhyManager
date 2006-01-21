@@ -44,6 +44,12 @@ namespace Mojhy.Engine
         {
             //inizializzo l'array dei giocatori che scendono in campo
             l_objPlayingPlayers = new PlayingPlayer[11];
+            //creo i giocatori sul campo
+            for (int i = 0; i < l_objPlayingPlayers.Length; i++)
+            {
+                l_objPlayingPlayers[i] = new PlayingPlayer(objField);
+                l_objPlayingPlayers[i].Index = i;
+            }
             //imposto il riferimento all'oggetto campo  
             l_objField = objField;
         }

@@ -19,6 +19,15 @@ namespace Mojhy.Engine
         private Point l_ptPosition;
         //oggetto field ove i giocatori sono posizionati
         private Field l_objField;
+        //indice del giocatore
+        private int l_intIndex;
+        /// <summary>
+        /// It's the player position type (attack or defense)
+        /// </summary>
+        public enum PlayerPositionType
+        {
+            Attack, Defense
+        }
         /// <summary>
         /// Gets or sets the player position on field.
         /// </summary>
@@ -28,6 +37,20 @@ namespace Mojhy.Engine
             get { return l_ptPosition; }
             set { l_ptPosition = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the player's index.
+        /// </summary>
+        /// <value>The player's index.</value>
+        public int Index
+        {
+            get { return l_intIndex; }
+            set { l_intIndex = value; }
+        }
+        /// <summary>
+        /// Gets the current play area for the player.
+        /// </summary>
+        /// <value>The current play area.</value>
         public PlayArea CurrentPlayArea
         {
             get { return l_objField.Areas.GetAreaFromLoc(l_ptPosition); }
