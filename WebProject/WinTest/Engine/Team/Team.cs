@@ -19,6 +19,8 @@ namespace Mojhy.Engine
         private PlayingPlayer[] l_objPlayingPlayers;
         //oggetto campo ove sono collocati i giocatori
         private Field l_objField;
+        //schema corrente (4-4-2, 4-3-3, 5-4-1, ecc...)
+        private string l_strCurrentFormation = "4-4-2";
         /// <summary>
         /// Gets or sets the team's name.
         /// </summary>

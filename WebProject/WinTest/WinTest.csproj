@@ -40,7 +40,6 @@
     <Compile Include="Engine\Field\Field.cs" />
     <Compile Include="Engine\Field\PlayArea.cs" />
     <Compile Include="Engine\Field\PlayAreas.cs" />
-    <Compile Include="Engine\Team\Formation.cs" />
     <Compile Include="Engine\Team\PlayingPlayer.cs" />
     <Compile Include="Engine\Team\Team.cs" />
     <Compile Include="Settings.cs" />

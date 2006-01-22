@@ -32,6 +32,10 @@ namespace WinTest
         private Image l_imgAttacco;
         //bitmap base delleposizioni di difesa
         private Image l_imgDifesa;
+        public enum PlayerPositionType
+        {
+            Attack, Defense
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:SoccerGraphics"/> class.
         /// </summary>
@@ -64,6 +68,10 @@ namespace WinTest
             //distruggo l'immagine difesa
             l_imgDifesa.Dispose();
         }
+        /// <summary>
+        /// Sets the graphics object parameters.
+        /// </summary>
+        /// <param name="g">The referenced Graphics object.</param>
         public void SetGraphicsObject(Graphics g)
         {
             l_objGraphics = g;
@@ -78,7 +86,7 @@ namespace WinTest
         /// <summary>
         /// Converts a point pixel location to the point as millimeter.
         /// </summary>
-        /// <param name="PixelLoc">The point defined as pixel X and pixel Y</param>
+        /// <param name="PixelLoc">The point defined as pixel X and pixel Y.</param>
         /// <returns></returns>
         public Point PixelToMM(Point PixelLoc)
         {
@@ -87,6 +95,11 @@ namespace WinTest
             ptLocMM.Y = (int)(l_fltDpiY / MM_PER_INCH * PixelLoc.Y * (MAGICNUMBERCONVERSION / SCALE));
             return ptLocMM;
         }
+        /// <summary>
+        /// Converts a millimeter point location to the point as pixel.
+        /// </summary>
+        /// <param name="PixelLoc">The point defined as mm X and mm Y.</param>
+        /// <returns></returns>
         public Point MMToPixel(Point PixelLoc)
         {
             Point ptLocPixel = new Point();
@@ -97,12 +110,12 @@ namespace WinTest
         /// <summary>
         /// Draws the selected play area.
         /// </summary>
-        /// <param name="BallLoc">The selecte point inside the field</param>
-        public void DrawSelectedArea(Point BallLoc, Mojhy.Engine.Field objField)
+        /// <param name="intSelectedAreaIndex">Index of the selected area.</param>
+        /// <param name="objField">The referenced field object.</param>
+        public void DrawSelectedArea(int intSelectedAreaIndex, Mojhy.Engine.Field objField)
         {
-            BallLoc = this.PixelToMM(BallLoc);
             //cerco in quale area mi trovo
-            Mojhy.Engine.PlayArea objPlayArea = objField.Areas.GetAreaFromLoc(BallLoc);
+            Mojhy.Engine.PlayArea objPlayArea = objField.Areas.AreasList[intSelectedAreaIndex];
             if (objPlayArea != null)
             {
                 //disegno l'area selezionata
@@ -118,17 +131,41 @@ namespace WinTest
         /// Draws the player.
         /// </summary>
         /// <param name="objPlayingPlayer">The PlayingPlayer object.</param>
-        /// <param name="enPositionType">Type of player position.</param>
-        public void DrawPlayer(Mojhy.Engine.PlayingPlayer objPlayingPlayer, Mojhy.Engine.PlayingPlayer.PlayerPositionType enPositionType)
+        /// <param name="intAreaIndex">Index of the selected area.</param>
+        /// <param name="enPositionType">Type of the player position (Attack, Defense, ...).</param>
+        public void DrawPlayer(Mojhy.Engine.PlayingPlayer objPlayingPlayer, int intAreaIndex, PlayerPositionType enPositionType)
         {
+            int intNumPlayer = objPlayingPlayer.Index + 1;
+            Point ptCenteredPosition;
+            //disegno inattacco
             //calcolo la posizione per centrare l'immagine
-            Point ptCenteredPosition = new Point(objPlayingPlayer.PositionOnField.X - 1800, objPlayingPlayer.PositionOnField.Y - 1500);
-            l_objGraphics.DrawImage(l_imgDifesa, ptCenteredPosition);
-            int intNumPlayer = objPlayingPlayer.Index+1;
-            if (intNumPlayer > 9) {
-                l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionOnField.X -450, objPlayingPlayer.PositionOnField.Y -600));
-            }else{
-                l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionOnField.X - 100, objPlayingPlayer.PositionOnField.Y - 600));
+            if (enPositionType == PlayerPositionType.Attack)
+            {
+                ptCenteredPosition = new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 1200, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 1500);
+                l_objGraphics.DrawImage(l_imgAttacco, ptCenteredPosition);
+                if (intNumPlayer > 9)
+                {
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 600));
+                }
+                else
+                {
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 500, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 600));
+                }
+            }
+            else
+            {
+                //disegno in difesa
+                //calcolo la posizione per centrare l'immagine
+                ptCenteredPosition = new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 1800, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 1500);
+                l_objGraphics.DrawImage(l_imgDifesa, ptCenteredPosition);
+                if (intNumPlayer > 9)
+                {
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 450, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 600));
+                }
+                else
+                {
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 100, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 600));
+                }
             }
         }
         /// <summary>

@@ -21,13 +21,9 @@ namespace Mojhy.Engine
         private Field l_objField;
         //indice del giocatore
         private int l_intIndex;
-        /// <summary>
-        /// It's the player position type (attack or defense)
-        /// </summary>
-        public enum PlayerPositionType
-        {
-            Attack, Defense
-        }
+        //posizioni di attacco e di difesa che i giocatori devono assumere
+        private Point[] l_arrAttackPositions;
+        private Point[] l_arrDefensePositions;
         /// <summary>
         /// Gets or sets the player position on field.
         /// </summary>
@@ -37,7 +33,6 @@ namespace Mojhy.Engine
             get { return l_ptPosition; }
             set { l_ptPosition = value; }
         }
-
         /// <summary>
         /// Gets or sets the player's index.
         /// </summary>
@@ -55,7 +50,24 @@ namespace Mojhy.Engine
         {
             get { return l_objField.Areas.GetAreaFromLoc(l_ptPosition); }
         }
-	
+        /// <summary>
+        /// Gets or sets the list of attack positions.
+        /// </summary>
+        /// <value>The attack positions array.</value>
+        public Point[] AttackPositions
+        {
+            get { return l_arrAttackPositions; }
+            set { l_arrAttackPositions = value; }
+        }
+        /// <summary>
+        /// Gets or sets the list of  defense positions.
+        /// </summary>
+        /// <value>The defense positions array.</value>
+        public Point[] DefensePositions
+        {
+            get { return l_arrDefensePositions; }
+            set { l_arrDefensePositions = value; }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:PlayingPlayer"/> class.
         /// </summary>
@@ -63,6 +75,8 @@ namespace Mojhy.Engine
         public PlayingPlayer(Field objField)
         {
             l_objField = objField;
+            l_arrAttackPositions = new Point[20];
+            l_arrDefensePositions = new Point[20];
         }
     }
 }
