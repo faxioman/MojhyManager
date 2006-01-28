@@ -132,19 +132,22 @@ namespace WinTest
                     //calcolo il rettangolo che definisce il range di selezione del giocatore
                     Point ptMousePositionInField = l_objSoccerGraph.PixelToMM(l_ptMouseLoc);
                     Rectangle rctSelectionArea = new Rectangle(ptMousePositionInField.X - 1500, ptMousePositionInField.Y - 1500, 3000, 3000);
-                    for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
+                    //controllo se i difensori sono visibili
+                    if (l_blShowDefense)
                     {
-                        if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]))
+                        for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
                         {
-                            l_intSelectedDefensePlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
-                            Cursor.Hide();
-                            break;
+                            if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]))
+                            {
+                                l_intSelectedDefensePlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
+                                Cursor.Hide();
+                                break;
+                            }
                         }
                     }
-                    //verifico se sono sopra un giocatore (in difesa) e se quindi lo devo
+                    //verifico se sono sopra un giocatore (in attacco) e se quindi lo devo
                     //selezionare per lo spostamento
-                    //calcolo il rettangolo che definisce il range di selezione del giocatore
-                    if (l_intSelectedDefensePlayerIndex == -1)
+                    if ((l_intSelectedDefensePlayerIndex == -1) && (l_blShowAttack))
                     {
                         for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
                         {
