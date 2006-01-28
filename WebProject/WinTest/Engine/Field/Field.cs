@@ -13,7 +13,7 @@ namespace Mojhy.Engine
     /// <summary>
     /// Defines the soccer field class used by 'play algorithm'.
     /// </summary>
-    class Field
+    public class Field
     {
         #region Private variables
         //aree sensibili del campo

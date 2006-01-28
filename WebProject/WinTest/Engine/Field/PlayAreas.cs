@@ -14,7 +14,7 @@ namespace Mojhy.Engine
     /// <summary>
     /// Defines all the twenty areas of the field
     /// </summary>
-    class PlayAreas
+    public class PlayAreas
     {
         private PlayArea[] l_arrAreas;
         private Field l_objField;

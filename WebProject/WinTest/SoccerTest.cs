@@ -69,13 +69,13 @@ namespace WinTest
             l_objTeamA.PutOnField(l_objField);
             foreach (Mojhy.Engine.PlayingPlayer objPlayingPlayer in l_objTeamA.PlayingPlayers)
             {
-                for (int i = 0; i < objPlayingPlayer.DefensePositions.Length; i++)
+                for (int i = 0; i < objPlayingPlayer.PositionsOnField.DefensePositions.Length; i++)
                 {
-                    objPlayingPlayer.DefensePositions[i] = new Point((l_objField.Width / 2)-10000, l_objField.Height / 2);
+                    objPlayingPlayer.PositionsOnField.DefensePositions[i] = new Point((l_objField.Width / 2)-10000, l_objField.Height / 2);
                 }
-                for (int i = 0; i < objPlayingPlayer.AttackPositions.Length; i++)
+                for (int i = 0; i < objPlayingPlayer.PositionsOnField.AttackPositions.Length; i++)
                 {
-                    objPlayingPlayer.AttackPositions[i] = new Point((l_objField.Width / 2)+10000, l_objField.Height / 2);
+                    objPlayingPlayer.PositionsOnField.AttackPositions[i] = new Point((l_objField.Width / 2)+10000, l_objField.Height / 2);
                 }
 
             }
@@ -134,7 +134,7 @@ namespace WinTest
                     Rectangle rctSelectionArea = new Rectangle(ptMousePositionInField.X - 1500, ptMousePositionInField.Y - 1500, 3000, 3000);
                     for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
                     {
-                        if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].DefensePositions[l_intSelectedAreaIndex]))
+                        if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]))
                         {
                             l_intSelectedDefensePlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
                             Cursor.Hide();
@@ -148,7 +148,7 @@ namespace WinTest
                     {
                         for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
                         {
-                            if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].AttackPositions[l_intSelectedAreaIndex]))
+                            if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]))
                             {
                                 l_intSelectedAttackPlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
                                 Cursor.Hide();
@@ -170,24 +170,24 @@ namespace WinTest
                 if ((l_blDragging) && ((l_intSelectedDefensePlayerIndex != -1)||(l_intSelectedAttackPlayerIndex != -1)))
                 {
                     if (l_intSelectedDefensePlayerIndex != -1){
-                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].DefensePositions[l_intSelectedAreaIndex]);
+                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]);
                         Point ptNewPosition = l_ptMouseLoc;
                         ptNewPosition = GetValidFieldPosition(ptNewPosition);
-                        l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].DefensePositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
+                        l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
                         Invalidate(new Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
                         Invalidate(new Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
                     }else{
-                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].AttackPositions[l_intSelectedAreaIndex]);
+                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]);
                         Point ptNewPosition = l_ptMouseLoc;
                         ptNewPosition = GetValidFieldPosition(ptNewPosition);
-                        l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].AttackPositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
+                        l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
                         Invalidate(new Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
                         Invalidate(new Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
                     }
                 }
             }
             //invalido l'area dove scrivere la posizione del mouse
-            Invalidate(new Rectangle(0,0,120,25));
+            //Invalidate(new Rectangle(0,0,120,25));
 
         }
         //evento di ridisegno della form
@@ -218,7 +218,7 @@ namespace WinTest
                 ptMouseLocTmp.Y = 0;
             }
             //attivo l'area cliccata
-            if (l_blAreaSelected) l_objSoccerGraph.DrawSelectedArea(l_intSelectedAreaIndex, l_objField);
+            if ((l_blAreaSelected)&&(l_intSelectedAreaIndex!=-1)) l_objSoccerGraph.DrawSelectedArea(l_intSelectedAreaIndex, l_objField);
             //controllo se devo visualizzare i giocatori in posizione attacco, difesa, entrambi o nascosti
             if ((l_intSelectedAreaIndex != -1) && (l_blShowDefense || l_blShowAttack))
             {
@@ -250,5 +250,23 @@ namespace WinTest
             l_blShowAttack = !l_blShowAttack;
             Invalidate();
         }
+        //clickper il salvataggio delle posizioni correnti
+        private void btSavePositions_Click(object sender, EventArgs e)
+        {
+            string prova = SerializeObject(l_objTeamA.PlayingPlayers);
+        }
+
+        private string SerializeObject(object objDeserialized){
+            System.Xml.Serialization.XmlSerializer objXmlSerializer;
+            System.IO.StringWriter objStringWriter = new System.IO.StringWriter();
+            string strSerializedObject;  
+            objXmlSerializer = new System.Xml.Serialization.XmlSerializer(objDeserialized.GetType()) ;
+            objXmlSerializer.Serialize(objStringWriter, objDeserialized);
+            strSerializedObject = objStringWriter.ToString();
+            objXmlSerializer = null;
+            objStringWriter.Close(); 
+            objStringWriter = null;
+            return strSerializedObject;
+        } 
     }
 }

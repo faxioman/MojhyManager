@@ -12,7 +12,7 @@ namespace Mojhy.Engine
     /// <summary>
     /// Defines a single play area of the fields
     /// </summary>
-    class PlayArea
+    public class PlayArea
     {
         /// <summary>
         /// Defines the rect of the area

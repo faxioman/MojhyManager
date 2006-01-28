@@ -141,30 +141,30 @@ namespace WinTest
             //calcolo la posizione per centrare l'immagine
             if (enPositionType == PlayerPositionType.Attack)
             {
-                ptCenteredPosition = new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 1200, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 1500);
+                ptCenteredPosition = new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 1200, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 1500);
                 l_objGraphics.DrawImage(l_imgAttacco, ptCenteredPosition);
                 if (intNumPlayer > 9)
                 {
-                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 600));
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
                 }
                 else
                 {
-                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.AttackPositions[intAreaIndex].X - 500, objPlayingPlayer.AttackPositions[intAreaIndex].Y - 600));
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 500, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
                 }
             }
             else
             {
                 //disegno in difesa
                 //calcolo la posizione per centrare l'immagine
-                ptCenteredPosition = new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 1800, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 1500);
+                ptCenteredPosition = new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 1800, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 1500);
                 l_objGraphics.DrawImage(l_imgDifesa, ptCenteredPosition);
                 if (intNumPlayer > 9)
                 {
-                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 450, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 600));
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 450, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
                 }
                 else
                 {
-                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.DefensePositions[intAreaIndex].X - 100, objPlayingPlayer.DefensePositions[intAreaIndex].Y - 600));
+                    l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 100, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
                 }
             }
         }

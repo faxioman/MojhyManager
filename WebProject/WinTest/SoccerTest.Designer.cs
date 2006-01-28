@@ -31,37 +31,52 @@ namespace WinTest
             this.btShowAreas = new System.Windows.Forms.Button();
             this.btShowDefense = new System.Windows.Forms.Button();
             this.btShowAttack = new System.Windows.Forms.Button();
+            this.btSavePositions = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btShowAreas
             // 
+            this.btShowAreas.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btShowAreas.Location = new System.Drawing.Point(12, 538);
             this.btShowAreas.Name = "btShowAreas";
-            this.btShowAreas.Size = new System.Drawing.Size(118, 23);
+            this.btShowAreas.Size = new System.Drawing.Size(104, 23);
             this.btShowAreas.TabIndex = 0;
-            this.btShowAreas.Text = "Show/Hide Areas";
+            this.btShowAreas.Text = "SHOW/HIDE AREAS";
             this.btShowAreas.UseVisualStyleBackColor = true;
             this.btShowAreas.Click += new System.EventHandler(this.btShowAreas_Click);
             // 
             // btShowDefense
             // 
-            this.btShowDefense.Location = new System.Drawing.Point(136, 538);
+            this.btShowDefense.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowDefense.Location = new System.Drawing.Point(119, 538);
             this.btShowDefense.Name = "btShowDefense";
             this.btShowDefense.Size = new System.Drawing.Size(118, 23);
             this.btShowDefense.TabIndex = 1;
-            this.btShowDefense.Text = "Show/Hide Defense";
+            this.btShowDefense.Text = "SHOW/HIDE DEFENSE";
             this.btShowDefense.UseVisualStyleBackColor = true;
             this.btShowDefense.Click += new System.EventHandler(this.btShowDefense_Click);
             // 
             // btShowAttack
             // 
-            this.btShowAttack.Location = new System.Drawing.Point(260, 538);
+            this.btShowAttack.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btShowAttack.Location = new System.Drawing.Point(240, 538);
             this.btShowAttack.Name = "btShowAttack";
-            this.btShowAttack.Size = new System.Drawing.Size(118, 23);
+            this.btShowAttack.Size = new System.Drawing.Size(111, 23);
             this.btShowAttack.TabIndex = 2;
-            this.btShowAttack.Text = "Show/Hide Attack";
+            this.btShowAttack.Text = "SHOW/HIDE ATTACK";
             this.btShowAttack.UseVisualStyleBackColor = true;
             this.btShowAttack.Click += new System.EventHandler(this.btShowAttack_Click);
+            // 
+            // btSavePositions
+            // 
+            this.btSavePositions.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btSavePositions.Location = new System.Drawing.Point(354, 538);
+            this.btSavePositions.Name = "btSavePositions";
+            this.btSavePositions.Size = new System.Drawing.Size(97, 23);
+            this.btSavePositions.TabIndex = 3;
+            this.btSavePositions.Text = "SAVE POSITIONS";
+            this.btSavePositions.UseVisualStyleBackColor = true;
+            this.btSavePositions.Click += new System.EventHandler(this.btSavePositions_Click);
             // 
             // SoccerTest
             // 
@@ -69,6 +84,7 @@ namespace WinTest
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(795, 570);
+            this.Controls.Add(this.btSavePositions);
             this.Controls.Add(this.btShowAttack);
             this.Controls.Add(this.btShowDefense);
             this.Controls.Add(this.btShowAreas);
@@ -86,6 +102,7 @@ namespace WinTest
         private System.Windows.Forms.Button btShowAreas;
         private System.Windows.Forms.Button btShowDefense;
         private System.Windows.Forms.Button btShowAttack;
+        private System.Windows.Forms.Button btSavePositions;
     }
 }
 

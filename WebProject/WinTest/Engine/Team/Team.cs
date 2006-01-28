@@ -11,7 +11,7 @@ namespace Mojhy.Engine
     /// <summary>
     /// Defines the team.
     /// </summary>
-    class Team
+    public class Team
     {
         //il nome della squadra
         private string l_strTeamName;
