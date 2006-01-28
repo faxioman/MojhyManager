@@ -308,7 +308,7 @@ namespace WinTest
                 }
                 finally
                 {
-                    objFileDialog.Dispose();
+                    objTextFile.Dispose();
                 }
                 Invalidate();
             }
