@@ -250,23 +250,37 @@ namespace WinTest
             l_blShowAttack = !l_blShowAttack;
             Invalidate();
         }
-        //clickper il salvataggio delle posizioni correnti
+        //click per il salvataggio delle posizioni correnti
         private void btSavePositions_Click(object sender, EventArgs e)
         {
-            string prova = SerializeObject(l_objTeamA.PlayingPlayers);
+            SaveFileDialog objSaveDialog = new SaveFileDialog();
+            objSaveDialog.Filter = "Mojhy formation file (*.mft)|";
+            DialogResult objDialogRes = objSaveDialog.ShowDialog();
+            if (objDialogRes == DialogResult.OK)
+            {
+                String strFilename = objSaveDialog.FileName;
+                if (strFilename.IndexOf(".") == -1) strFilename = String.Concat(strFilename, ".mft");
+                System.IO.StreamWriter objTextFile = new System.IO.StreamWriter(strFilename, false);
+                try
+                {
+                    //oggetto temporaneo per il salvataggio delle posizioni per oguno degli 11 giocatori in campo
+                    Mojhy.Engine.PlayingPositions[] objPlayingPositionsAux = new Mojhy.Engine.PlayingPositions[l_objTeamA.PlayingPlayers.Length];
+                    for (int i = 0; i < l_objTeamA.PlayingPlayers.Length; i++)
+                    {
+                        objPlayingPositionsAux[i] = l_objTeamA.PlayingPlayers[i].PositionsOnField;
+                    }
+                    objTextFile.Write(Mojhy.Utils.FrameworkUtils.SerializeObject(objPlayingPositionsAux));                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error saving formation: " + ex.Message);
+                }
+                finally
+                {
+                    objTextFile.Dispose();
+                }
+                //objSaveDialog.FileName
+            }
+            objSaveDialog.Dispose();
         }
-
-        private string SerializeObject(object objDeserialized){
-            System.Xml.Serialization.XmlSerializer objXmlSerializer;
-            System.IO.StringWriter objStringWriter = new System.IO.StringWriter();
-            string strSerializedObject;  
-            objXmlSerializer = new System.Xml.Serialization.XmlSerializer(objDeserialized.GetType()) ;
-            objXmlSerializer.Serialize(objStringWriter, objDeserialized);
-            strSerializedObject = objStringWriter.ToString();
-            objXmlSerializer = null;
-            objStringWriter.Close(); 
-            objStringWriter = null;
-            return strSerializedObject;
-        } 
     }
 }
