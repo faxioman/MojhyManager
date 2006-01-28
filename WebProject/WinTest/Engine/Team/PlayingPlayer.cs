@@ -49,9 +49,14 @@ namespace Mojhy.Engine
         {
             get { return l_objField.Areas.GetAreaFromLoc(l_ptPosition); }
         }
+        /// <summary>
+        /// Gets or sets the positions on field for the current playing player.
+        /// </summary>
+        /// <value>The positions on field.</value>
         public PlayingPositions PositionsOnField
         {
             get { return l_objPlayingPositions; }
+            set { l_objPlayingPositions = value; }
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:PlayingPlayer"/> class.

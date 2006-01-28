@@ -278,9 +278,41 @@ namespace WinTest
                 {
                     objTextFile.Dispose();
                 }
-                //objSaveDialog.FileName
             }
             objSaveDialog.Dispose();
+        }
+        //click per il caricamento delle posizioni correnti
+        private void btLoadPositions_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog objFileDialog = new OpenFileDialog();
+            objFileDialog.Filter = "Mojhy formation file (*.mft)|";
+            objFileDialog.Multiselect = false;
+            DialogResult objDialogRes = objFileDialog.ShowDialog();
+            if (objDialogRes == DialogResult.OK)
+            {
+                System.IO.StreamReader objTextFile = new System.IO.StreamReader(objFileDialog.FileName);
+                try
+                {
+                    //oggetto temporaneo per il salvataggio delle posizioni per oguno degli 11 giocatori in campo
+                    Mojhy.Engine.PlayingPositions[] objPlayingPositionsAux;
+                    objPlayingPositionsAux = (Mojhy.Engine.PlayingPositions[])Mojhy.Utils.FrameworkUtils.DeserializeObject(objTextFile.ReadToEnd(), System.Type.GetType("Mojhy.Engine.PlayingPositions[]"));
+                    //assegno alla squadra A le posizioni lette
+                    for (int i = 0; i < objPlayingPositionsAux.Length; i++)
+                    {
+                        l_objTeamA.PlayingPlayers[i].PositionsOnField = objPlayingPositionsAux[i];
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading formation: " + ex.Message);
+                }
+                finally
+                {
+                    objFileDialog.Dispose();
+                }
+                Invalidate();
+            }
+            objFileDialog.Dispose();
         }
     }
 }
