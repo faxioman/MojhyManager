@@ -1,11 +1,12 @@
 // Classe contenente le funzioni generiche per l'accesso al DB
 
+using System.Data.OleDb;
+using System.Data;
+using System;
+using Npgsql;
+
 namespace Mojhy.DataAccess
 {
-
-    using System.Data.OleDb;
-    using System.Data;
-    using Npgsql;
 
     /// <summary>
     /// Summary description for CommonDB
@@ -13,31 +14,31 @@ namespace Mojhy.DataAccess
     public class CommonDB
     {
 
-        private NpgsqlConnection m_objConnection = new NpgsqlConnection();
+        private NpgsqlConnection l_objConnection = new NpgsqlConnection();
         
         public void DBConnect()
         {
             string strConnectionString;
-            strConnectionString = System.Configuration.ConfigurationSettings.AppSettings["myConnection"];
-            m_objConnection.ConnectionString = strConnectionString;            
-            m_objConnection.Open();
+            strConnectionString = System.Configuration.ConfigurationManager.AppSettings["myConnection"];
+            l_objConnection.ConnectionString = strConnectionString;
+            l_objConnection.Open();
         }
 
         public void DBClose()
         {
-            m_objConnection.Close();
+            l_objConnection.Close();
         }
 
         public NpgsqlDataReader GetDataReader(string strSQL)
         {
             try
             {
-                if ((m_objConnection.State != ConnectionState.Open))
+                if ((l_objConnection.State != ConnectionState.Open))
                 {
                     DBConnect();
                 }
 
-                NpgsqlCommand cmd = new NpgsqlCommand(strSQL, m_objConnection);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSQL, l_objConnection);
                 NpgsqlDataReader dr = cmd.ExecuteReader();
                 return dr;
             }
@@ -52,7 +53,7 @@ namespace Mojhy.DataAccess
             try
             {
                 DataSet ds = new DataSet();
-                NpgsqlDataAdapter da = new NpgsqlDataAdapter(strSQL, m_objConnection);
+                NpgsqlDataAdapter da = new NpgsqlDataAdapter(strSQL, l_objConnection);
                 da.Fill(ds, strName);
                 return ds;
             }
@@ -64,7 +65,7 @@ namespace Mojhy.DataAccess
 
         public void RunCommand(string strSQL, bool IgnoreError)
         {
-            NpgsqlCommand Cmd = new NpgsqlCommand(strSQL, DBConnect.cn);
+            NpgsqlCommand Cmd = new NpgsqlCommand(strSQL, l_objConnection);
             try
             {
                 Cmd.ExecuteNonQuery();
@@ -80,7 +81,12 @@ namespace Mojhy.DataAccess
 
         public void RunCommand(string strSQL)
         {
-            return RunCommand(strSQL, true);
+            RunCommand(strSQL, true);
+        }
+
+        public void Close()
+        {
+            
         }
 
         public string FormatField(object varIn, bool IsString, bool UseComma)
@@ -103,17 +109,14 @@ namespace Mojhy.DataAccess
             return strOut;
         }
 
-        public int GetID(string Table, string IDField)
+        public int GetField(string SQL, string FieldName)
         {
-            int Out;
-            string SQL = ("SELECT TOP 1 "
-                        + (IDField + (" FROM "
-                        + (Table + (" ORDER BY "
-                        + (IDField + " DESC "))))));
-            NpgsqlDataAdapter DR = GetDataReader(SQL);
-            while (DR.Read)
+            int Out = -1;
+            NpgsqlDataReader DR = GetDataReader(SQL);
+                        
+            while (DR.Read())
             {
-                Out = DR.Item[IDField];
+                Out = (int)DR[FieldName];
             }
             DR.Close();
             return Out;

@@ -11,8 +11,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using Mojhy.League;
-
+using Mojhy.Leagues;
+using Mojhy.Schedules;
+using Npgsql;
 
 namespace Mojhy.DataAccess
 {
@@ -22,8 +23,8 @@ namespace Mojhy.DataAccess
 
     public class LeaguesDB : CommonDB
     {
-                
-        int InsertLeague(League objLeague)
+
+        public int InsertLeague(League objLeague)
         {
             string SQL;
             // With...
@@ -31,71 +32,81 @@ namespace Mojhy.DataAccess
               + (FormatField(objLeague.Name, true, true));
             RunCommand(SQL);
 
+            //Ritorna l'ultimo id impostato
+            //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
+            objLeague.LeagueID = (int)GetField(SQL, "ID");
+
             return objLeague.LeagueID;
 
         }
 
-        int InsertDivision(Division objDiv)
+        public int InsertDivision(Division objDiv)
         {
             string SQL;
             // With...
-            SQL = ("INSERT INTO Campionati " + ("([Name], [NazioneID])" + ("VALUES ("
-                        + (FormatField(objDiv.Name, true, true)
-                        + (FormatField(objDiv.LeagueID, false, false) + ")")))));
+            SQL = ("INSERT INTO Campionati ([Name], [NazioneID]) VALUES ("
+                        + (FormatField(objDiv.Name, true, true))
+                        + (FormatField(objDiv.LeagueID, false, false)) + ")");
             RunCommand(SQL);
+
+            //Ritorna l'ultimo id impostato
+            //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
+            objDiv.DivisionID = (int)GetField(SQL, "ID");
+            
             return objDiv.DivisionID;
+
         }
 
-        void UpdateDivision(Division objDivision)
+        public void UpdateDivision(Division objDivision)
         {
             string SQL;
             // With...
-            SQL = ("UPDATE Campionati SET " + ("Name = "
-                        + (FormatField(objDivision.Name, true, true) + ("NazioneID = "
-                        + (FormatField(objDivision.ConferenceID, false, false) + (" WHERE CampionatoID = " + objDivision.ID))))));
+            SQL = ("UPDATE Campionati SET Name = " + (FormatField(objDivision.Name, true, true)) + 
+                " NazioneID = " + (FormatField(objDivision.LeagueID, false, false)) + 
+                " WHERE CampionatoID = " + objDivision.DivisionID);
             RunCommand(SQL);
         }
-
-
-
-        void UpdateGame(Game objGame)
+        
+        public void UpdateGame(Game objGame)
         {
             string SQL;
             // With...
-            SQL = ("UPDATE Schedule SET " + (" HomeScore = "
-                        + (FormatField(objGame.HomeScore, false, true) + (" AwayScore = "
-                        + (FormatField(objGame.AwayScore, false, true) + (" Status = "
-                        + (FormatField(objGame.Status, false, true) + (" Overtime = "
-                        + (FormatField(objGame.Overtime, false, true) + (" Attendance = "
-                        + (FormatField(objGame.Attendance, false, true) + (" SeriesID = "
-                        + (FormatField(objGame.SeriesID, false, true) + (" Season = "
-                        + (FormatField(objGame.Season, false, false) + (" WHERE ScheduleID = " + objGame.GameID))))))))))))))));
+            SQL = ("UPDATE Partita SET " 
+                + " SquadraCasaID = " + (FormatField(objGame.HomeTeamID, false, true))
+                + " SquadraFuoriID = " + (FormatField(objGame.AwayTeamID, false, true))
+                + " ScoreSquadraCasa = " + (FormatField(objGame.HomeScore, false, true))
+                + " ScoreSquadraFuori = " + (FormatField(objGame.AwayScore, false, true))
+                + " DataPartita = " + (FormatField(objGame.GameDate, false, true))
+                + " StadioID = " + (FormatField(objGame.StadiumID, false, true)) 
+                + " CampionatoID = " + (FormatField(objGame.DivisionID, false, true))
+                + " StagioneID = " + (FormatField(objGame.SeasonID, false, false)) 
+                + " WHERE PartitaID = " + objGame.GameID);
             RunCommand(SQL);
         }
 
-        int InsertGame(Game objGame)
+        public int InsertGame(Game objGame)
         {
             string SQL;
             // With...
-            SQL = ("INSERT INTO Schedule " + ("(ScheduleID, GameDate, AwayTeamID, HomeTeamID, AwayScore, HomeScore, " + (" Phase, Overtime, Attendance, Status, SeriesID, Season)" + ("VALUES ("
-                        + (FormatField(objGame.GameID, false, true)
-                        + (FormatField(objGame.GameDate, true, true)
-                        + (FormatField(objGame.AwayTeamID, false, true)
-                        + (FormatField(objGame.HomeTeamID, false, true)
-                        + (FormatField(objGame.AwayScore, false, true)
-                        + (FormatField(objGame.HomeScore, false, true)
-                        + (FormatField(objGame.Phase, false, true)
-                        + (FormatField(objGame.Overtime, false, true)
-                        + (FormatField(objGame.Attendance, false, true)
-                        + (FormatField(objGame.Status, false, true)
-                        + (FormatField(objGame.SeriesID, false, true)
-                        + (FormatField(objGame.Season, false, false) + ")"))))))))))))))));
+            SQL = ("INSERT INTO Partita ( SquadraCasaID, SquadraFuoriID, ScoreSquadraCasa, ScoreSquadraFuori, DataPartita, StadioID, CampionatoID, StagioneID ) VALUES ("
+                        + (FormatField(objGame.HomeTeamID, true, true))
+                        + (FormatField(objGame.AwayTeamID, true, true))
+                        + (FormatField(objGame.HomeScore, false, true))
+                        + (FormatField(objGame.AwayScore, false, true))
+                        + (FormatField(objGame.GameDate, false, true))
+                        + (FormatField(objGame.StadiumID, false, true))
+                        + (FormatField(objGame.DivisionID, false, true))
+                        + (FormatField(objGame.SeasonID, false, true)) + ")");
             RunCommand(SQL);
+                       
+            //Ritorna l'ultimo id impostato
+            //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
+
+            objGame.GameID = (int)GetField(SQL,"ID");
+            
             return objGame.GameID;
         }
-
-
-
+        
         void UpdateDefaultTeamID(int DefaultTeamID)
         {
             string SQL;
@@ -109,8 +120,6 @@ namespace Mojhy.DataAccess
             SQL = ("UPDATE Leagues SET PlayoffRound = " + Round);
             RunCommand(SQL);
         }
-
-
 
         void InsertSeries(int SeriesID, int Season, int TopSeedID, int BottomSeedID, int Level, int TopSeed, int BottomSeed)
         {
@@ -131,8 +140,8 @@ namespace Mojhy.DataAccess
         {
             string SQL = ("SELECT ps2.*, ps.SeriesID " + ("FROM PlayoffSeries AS ps INNER JOIN PlayoffSeries AS ps2 ON ps.[Level] = ps2.[Level] " + ("WHERE (((ps2.WinnerID)=0) AND ((ps.SeriesID)="
                         + (SeriesID + "));"))));
-            bool Result;
-            OleDbDataReader dr = GetDataReader(SQL);
+            
+            NpgsqlDataReader dr = GetDataReader(SQL);
             if (dr.HasRows)
             {
                 dr.Close();
@@ -149,17 +158,17 @@ namespace Mojhy.DataAccess
         {
             string SQL = ("SELECT Top 1 ps.[Level]  " + ("FROM PlayoffSeries ps  " + ("WHERE ps.WinnerID > 0 " + "ORDER BY SeriesID DESC;")));
             int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                Result = dr.Item["Level"];
+                Result = (int)dr["Level"];
                 dr.Close();
                 return Result;
             }
             return 0;
         }
 
-        OleDbDataReader GetTeamsRemainingInPlayoffs()
+        NpgsqlDataReader GetTeamsRemainingInPlayoffs()
         {
             int Level;
             Level = this.GetLastPlayoffLevel();
@@ -174,12 +183,12 @@ namespace Mojhy.DataAccess
             SQL = ("SELECT TOP 1 Schedule.SeriesID, Schedule.Status, Schedule.GameDate, Schedule.ScheduleID " + ("FROM Schedule " + ("WHERE (((Schedule.SeriesID) = "
                         + (SeriesID + (")) AND Schedule.Status = 2  " + "ORDER BY Schedule.GameDate ASC; ")))));
             int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                if ((dr.Item["Status"] == 2))
+                if (((int)dr["Status"] == 2))
                 {
-                    Result = dr.Item["ScheduleID"];
+                    Result = (int)dr["ScheduleID"];
                 }
                 else
                 {
@@ -197,10 +206,10 @@ namespace Mojhy.DataAccess
             SQL = ("SELECT TOP 1 ps.WinnerID, t.PlayoffSeed " + ("FROM PlayoffSeries AS ps LEFT JOIN Teams AS t ON ps.WinnerID = t.TeamID " + ("WHERE(((ps.Level) = "
                         + (Round + (")) " + "ORDER BY t.PlayoffSeed DESC; ")))));
             int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                Result = dr.Item["WinnerID"];
+                Result = (int)dr["WinnerID"];
                 dr.Close();
                 return Result;
             }
@@ -213,10 +222,10 @@ namespace Mojhy.DataAccess
             SQL = ("SELECT TOP 1 ps.WinnerID, t.PlayoffSeed " + ("FROM PlayoffSeries AS ps LEFT JOIN Teams AS t ON ps.WinnerID = t.TeamID " + ("WHERE(((ps.Level) = "
                         + (Round + (")) " + "ORDER BY t.PlayoffSeed ASC; ")))));
             int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                Result = dr.Item["WinnerID"];
+                Result = (int)dr["WinnerID"];
                 dr.Close();
                 return Result;
             }
@@ -228,10 +237,10 @@ namespace Mojhy.DataAccess
             string SQL;
             SQL = "SELECT TOP 1 ps.Level FROM PlayoffSeries AS ps ORDER BY ps.Level DESC;";
             int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                Result = dr.Item["Level"];
+                Result = (int)dr["Level"];
                 dr.Close();
                 return Result;
             }
@@ -241,11 +250,11 @@ namespace Mojhy.DataAccess
         bool GetPlayoffsComplete()
         {
             string SQL = ("SELECT Count(ps.PlayoffSeriesID) AS Winners, ps.Level " + ("FROM PlayoffSeries AS ps " + ("WHERE(((ps.WinnerID) > 0) And ((ps.LoserID) > 0)) " + ("GROUP BY ps.Level " + ("HAVING(((Count(ps.PlayoffSeriesID)) = 1)) " + "ORDER BY ps.Level DESC;")))));
-            bool Result;
-            OleDbDataReader dr = GetDataReader(SQL);
-            while (dr.Read)
+            
+            NpgsqlDataReader dr = GetDataReader(SQL);
+            while (dr.Read())
             {
-                if ((dr.Item["Winners"] == 1))
+                if (((int)dr["Winners"] == 1))
                 {
                     dr.Close();
                     return true;
@@ -270,7 +279,7 @@ namespace Mojhy.DataAccess
             RunCommand(SQL);
         }
 
-        OleDbDataReader GetSeries(int SeriesID)
+        NpgsqlDataReader GetSeries(int SeriesID)
         {
             string SQL;
             SQL = ("SELECT * FROM PlayoffSeries WHERE SeriesID = " + SeriesID);
@@ -285,31 +294,31 @@ namespace Mojhy.DataAccess
             RunCommand(SQL);
         }
 
-        OleDbDataReader GetLeague()
+        NpgsqlDataReader GetLeague()
         {
             string SQL = "SELECT * FROM Leagues Where LeagueID = 1";
             return GetDataReader(SQL);
         }
 
-        OleDbDataReader GetConference(int ConferenceID)
+        NpgsqlDataReader GetConference(int ConferenceID)
         {
             string SQL = ("SELECT * FROM Conferences WHERE ConferenceID = " + ConferenceID);
             return GetDataReader(SQL);
         }
 
-        OleDbDataReader GetConferences()
+        NpgsqlDataReader GetConferences()
         {
             string SQL = "SELECT * FROM Conferences ORDER BY ConferenceID";
             return GetDataReader(SQL);
         }
 
-        OleDbDataReader GetDivisions()
+        NpgsqlDataReader GetDivisions()
         {
             string SQL = "SELECT * FROM Divisions ORDER BY DivisionID";
             return GetDataReader(SQL);
         }
 
-        void GetSchedule()
+        NpgsqlDataReader GetSchedule()
         {
             string SQL = "SELECT * FROM Schedule ORDER BY GameDate, ScheduleID";
             return GetDataReader(SQL);
@@ -318,18 +327,18 @@ namespace Mojhy.DataAccess
         int GetLastSeriesID()
         {
             string SQL = "SELECT TOP 1 SeriesID FROM Schedule ORDER BY SeriesID DESC";
-            int Result;
-            OleDbDataReader dr = GetDataReader(SQL);
+            int Result=-1;
+            NpgsqlDataReader dr = GetDataReader(SQL);
             while (dr.Read())
             {
-                Result = dr.Item["SeriesID"];
+                Result = (int)dr["SeriesID"];
                 break; //Warning!!! Review that break works as 'Exit Do' as it could be in a nested instruction like switch
             }
             dr.Close();
             return Result;
         }
 
-        void GetConferenceDivisionNames()
+        NpgsqlDataReader GetConferenceDivisionNames()
         {
             string SQL = ("SELECT c.Name AS ConferenceName, d.Name as DivisionName, d.DivisionID " + (" FROM Conferences c INNER JOIN Divisions d ON c.ConferenceID = d.ConferenceID " + " ORDER BY d.ConferenceID, d.DivisionID"));
             return GetDataReader(SQL);
