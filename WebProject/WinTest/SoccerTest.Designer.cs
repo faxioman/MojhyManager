@@ -33,6 +33,7 @@ namespace WinTest
             this.btShowAttack = new System.Windows.Forms.Button();
             this.btSavePositions = new System.Windows.Forms.Button();
             this.btLoadPositions = new System.Windows.Forms.Button();
+            this.cbStatus = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btShowAreas
@@ -90,12 +91,27 @@ namespace WinTest
             this.btLoadPositions.UseVisualStyleBackColor = true;
             this.btLoadPositions.Click += new System.EventHandler(this.btLoadPositions_Click);
             // 
+            // cbStatus
+            // 
+            this.cbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStatus.FormattingEnabled = true;
+            this.cbStatus.Items.AddRange(new object[] {
+            "Players positions",
+            "Move ball",
+            "Play match"});
+            this.cbStatus.Location = new System.Drawing.Point(662, 539);
+            this.cbStatus.Name = "cbStatus";
+            this.cbStatus.Size = new System.Drawing.Size(121, 21);
+            this.cbStatus.TabIndex = 5;
+            this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
+            // 
             // SoccerTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(795, 570);
+            this.Controls.Add(this.cbStatus);
             this.Controls.Add(this.btLoadPositions);
             this.Controls.Add(this.btSavePositions);
             this.Controls.Add(this.btShowAttack);
@@ -117,6 +133,7 @@ namespace WinTest
         private System.Windows.Forms.Button btShowAttack;
         private System.Windows.Forms.Button btSavePositions;
         private System.Windows.Forms.Button btLoadPositions;
+        private System.Windows.Forms.ComboBox cbStatus;
     }
 }
 

@@ -11,6 +11,7 @@ namespace WinTest
 {
     public partial class SoccerTest : Form
     {
+        #region Variabili Locali
         private const int MINX = 8;
         private const int MAXX = 786;
         private const int MINY = 8;
@@ -41,6 +42,7 @@ namespace WinTest
         private bool l_blShowDefense = true;
         //definisco se sono in fase di drag
         private bool l_blDragging = false;
+        #endregion
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
         {
@@ -79,6 +81,8 @@ namespace WinTest
                 }
 
             }
+            //inizializzo la combo dello stato allo stato attuale
+            cbStatus.SelectedIndex = (int)this.l_enState;
         }
         //restituisce un punto valido del campo in pixel
         private Point GetValidFieldPosition(Point ptRawPoint)
@@ -316,6 +320,31 @@ namespace WinTest
                 Invalidate();
             }
             objFileDialog.Dispose();
+        }
+        //evento di modifica della compbo dello stato
+        private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cbStatusAux = (ComboBox)sender;
+            l_enState = (FormStatus)cbStatusAux.SelectedIndex;
+            l_blAreaSelected = false;
+            l_intSelectedAreaIndex = -1;
+            //se lo stato non è di modifica dei giocatori allora nascondo
+            //i button inutili
+            if (l_enState != FormStatus.SettingPlayerPosition)
+            {
+                btLoadPositions.Hide();
+                btSavePositions.Hide();
+                btShowAttack.Hide();
+                btShowDefense.Hide();
+            }
+            else
+            {
+                btLoadPositions.Show();
+                btSavePositions.Show();
+                btShowAttack.Show();
+                btShowDefense.Show();
+            }
+            Invalidate();
         }
     }
 }

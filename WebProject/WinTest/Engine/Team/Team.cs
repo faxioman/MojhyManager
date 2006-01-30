@@ -21,6 +21,14 @@ namespace Mojhy.Engine
         private Field l_objField;
         //schema corrente (4-4-2, 4-3-3, 5-4-1, ecc...)
         private string l_strCurrentFormation = "4-4-2";
+        //stato di gioco (attacco, difesa, angolo...)
+        private PlayingStatus l_enPlayingStatus;
+        //enumeratore che definisce gli stati possibili della squadra
+        public enum PlayingStatus
+        {
+            attack,
+            defense
+        }
         /// <summary>
         /// Gets or sets the team's name.
         /// </summary>
@@ -37,6 +45,15 @@ namespace Mojhy.Engine
         public PlayingPlayer[] PlayingPlayers
         {
             get { return l_objPlayingPlayers; }
+        }
+        /// <summary>
+        /// Gets or sets the current playing status (attack, defense, kick-off, ecc...).
+        /// </summary>
+        /// <value>The current playing status.</value>
+        public PlayingStatus CurrentPlayingStatus
+        {
+            get { return l_enPlayingStatus; }
+            set { l_enPlayingStatus = value; }
         }
         /// <summary>
         /// Puts eleven empty players on field.
