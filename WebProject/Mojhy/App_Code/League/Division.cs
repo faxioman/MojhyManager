@@ -1,12 +1,15 @@
 /* Division.cs, MARCO CECCARELLI
  * La classe definisce le divisioni (le serie) presenti all'interno di ogni lega */
 
-namespace Mojhy.League
+using System;
+using Mojhy.DataAccess;
+
+namespace Mojhy.Leagues
 {
     /// <summary>
     /// Definisce le divisioni
     /// </summary>
-    class Division
+    public class Division
     {
         private string l_strName;
         private int l_intLeagueID;
@@ -41,6 +44,19 @@ namespace Mojhy.League
             set { l_intDivisionID = value; }
         }
 
+        void Save()
+        {
+            LeaguesDB Data = new LeaguesDB();
+            Data.InsertDivision(this);
+            Data.Close();
+        }
+
+        void Update()
+        {
+            LeaguesDB Data = new LeaguesDB();
+            Data.UpdateDivision(this);
+            Data.Close();
+        }
 
         /// <summary>
         /// Gets the teams.
