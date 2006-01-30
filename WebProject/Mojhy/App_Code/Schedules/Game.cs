@@ -1,4 +1,4 @@
-using Mojhy.DataAccess
+using Mojhy.DataAccess;
 
 namespace Schedules
 {
