@@ -23,6 +23,8 @@ namespace Mojhy.Engine
         private string l_strCurrentFormation = "4-4-2";
         //stato di gioco (attacco, difesa, angolo...)
         private PlayingStatus l_enPlayingStatus;
+        //flag che definisce se l'Intelligienza Artificiale è abilitata (okkio! Che non vogliano diventare giocatori veri...)
+        private Boolean l_blAIenabled = false;
         //enumeratore che definisce gli stati possibili della squadra
         public enum PlayingStatus
         {
@@ -54,6 +56,35 @@ namespace Mojhy.Engine
         {
             get { return l_enPlayingStatus; }
             set { l_enPlayingStatus = value; }
+        }
+        /// <summary>
+        /// Enable or disable AI.
+        /// </summary>
+        /// <value><c>true</c> if AI enabled; otherwise, <c>false</c>.</value>
+        public Boolean EnableAI
+        {
+            get { return l_blAIenabled; }
+            set
+            {
+                if (value == true)
+                {
+                    //devo abilitare l'intelligienza artificiale
+                    //verifico se i giocatori sono stati inseriti in campo
+                    if (l_objPlayingPlayers != null)
+                    {
+                        //attivo l'algoritmo di posizionamento per ogni giocatore
+
+                    }
+                    else
+                    {
+                        l_blAIenabled = false;
+                    }
+                }
+                else
+                {
+                    //devo disabilitare l'intelligienza artificiale
+                }
+            }
         }
         /// <summary>
         /// Puts eleven empty players on field.
