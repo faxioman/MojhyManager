@@ -66,6 +66,32 @@ namespace Mojhy.DataAccess
                 " WHERE CampionatoID = " + objDivision.DivisionID);
             RunCommand(SQL);
         }
+
+        public int InsertSeason(Season objSeason)
+        {
+            string SQL;
+            // With...
+            SQL = ("INSERT INTO Stagioni ([Name], [StagioneID]) VALUES ("
+                        + (FormatField(objSeason.Name, true, true))
+                        + (FormatField(objSeason.SeasonID, false, false)) + ")");
+            RunCommand(SQL);
+
+            //Ritorna l'ultimo id impostato
+            //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
+            objSeason.SeasonID = (int)GetField(SQL, "ID");
+
+            return objSeason.SeasonID;
+
+        }
+
+        public void UpdateSeason(Season objSeason)
+        {
+            string SQL;
+            // With...
+            SQL = ("UPDATE Stagioni SET Name = " + (FormatField(objSeason.Name, true, true)) +
+                " WHERE StagioneID = " + objSeason.SeasonID);
+            RunCommand(SQL);
+        }
         
         public void UpdateGame(Game objGame)
         {
