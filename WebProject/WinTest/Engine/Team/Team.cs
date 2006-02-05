@@ -58,33 +58,12 @@ namespace Mojhy.Engine
             set { l_enPlayingStatus = value; }
         }
         /// <summary>
-        /// Enable or disable AI.
+        /// Gets a value indicating whether AI is enabled.
         /// </summary>
-        /// <value><c>true</c> if AI enabled; otherwise, <c>false</c>.</value>
-        public Boolean EnableAI
+        /// <value><c>true</c> if AI is enabled; otherwise, <c>false</c>.</value>
+        public Boolean AIEnabled
         {
             get { return l_blAIenabled; }
-            set
-            {
-                if (value == true)
-                {
-                    //devo abilitare l'intelligienza artificiale
-                    //verifico se i giocatori sono stati inseriti in campo
-                    if (l_objPlayingPlayers != null)
-                    {
-                        //attivo l'algoritmo di posizionamento per ogni giocatore
-
-                    }
-                    else
-                    {
-                        l_blAIenabled = false;
-                    }
-                }
-                else
-                {
-                    //devo disabilitare l'intelligienza artificiale
-                }
-            }
         }
         /// <summary>
         /// Puts eleven empty players on field.
@@ -102,6 +81,26 @@ namespace Mojhy.Engine
             }
             //imposto il riferimento all'oggetto campo  
             l_objField = objField;
+        }
+        /// <summary>
+        /// Enables the AI.
+        /// </summary>
+        public void EnableAI()
+        {
+                //verifico se i giocatori sono stati inseriti in campo
+            if (l_objPlayingPlayers != null)
+            {
+                //attivo l'algoritmo di posizionamento per ogni giocatore
+                
+            }
+            else
+            {
+                l_blAIenabled = false;
+            }
+        }
+        public void DisableAI()
+        {
+            l_blAIenabled = false;
         }
     }
 }
