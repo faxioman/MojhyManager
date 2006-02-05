@@ -39,7 +39,7 @@ namespace Mojhy.Leagues
         void Save()
         {
             LeaguesDB Data = new LeaguesDB();
-            Data.Insert(this);
+            Data.InsertSeason(this);
             Data.Close();
         }
 
@@ -47,17 +47,9 @@ namespace Mojhy.Leagues
         {
             
             LeaguesDB Data = new LeaguesDB();
-            Data.UpdateDivision(this);
+            Data.UpdateSeason(this);
             Data.Close();
         }
 
-        /// <summary>
-        /// Gets the teams.
-        /// </summary>
-        public void GetTeams()
-        {
-
-            
-        }
     }
 }
