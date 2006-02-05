@@ -15,7 +15,7 @@ namespace Mojhy.DataAccess
     {
 
         private NpgsqlConnection l_objConnection = new NpgsqlConnection();
-        
+
         public void DBConnect()
         {
             string strConnectionString;
@@ -86,7 +86,7 @@ namespace Mojhy.DataAccess
 
         public void Close()
         {
-            
+
         }
 
         public string FormatField(object varIn, bool IsString, bool UseComma)
@@ -113,7 +113,7 @@ namespace Mojhy.DataAccess
         {
             int Out = -1;
             NpgsqlDataReader DR = GetDataReader(SQL);
-                        
+
             while (DR.Read())
             {
                 Out = (int)DR[FieldName];

@@ -15,10 +15,9 @@ using Mojhy.Leagues;
 using Mojhy.Schedules;
 using Npgsql;
 
+
 namespace Mojhy.DataAccess
 {
-
-    //using System.Data.OleDb;
 
 
     public class LeaguesDB : CommonDB
@@ -52,7 +51,7 @@ namespace Mojhy.DataAccess
             //Ritorna l'ultimo id impostato
             //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
             objDiv.DivisionID = (int)GetField(SQL, "ID");
-            
+
             return objDiv.DivisionID;
 
         }
@@ -61,25 +60,25 @@ namespace Mojhy.DataAccess
         {
             string SQL;
             // With...
-            SQL = ("UPDATE Campionati SET Name = " + (FormatField(objDivision.Name, true, true)) + 
-                " NazioneID = " + (FormatField(objDivision.LeagueID, false, false)) + 
+            SQL = ("UPDATE Campionati SET Name = " + (FormatField(objDivision.Name, true, true)) +
+                " NazioneID = " + (FormatField(objDivision.LeagueID, false, false)) +
                 " WHERE CampionatoID = " + objDivision.DivisionID);
             RunCommand(SQL);
         }
-        
+
         public void UpdateGame(Game objGame)
         {
             string SQL;
             // With...
-            SQL = ("UPDATE Partita SET " 
+            SQL = ("UPDATE Partita SET "
                 + " SquadraCasaID = " + (FormatField(objGame.HomeTeamID, false, true))
                 + " SquadraFuoriID = " + (FormatField(objGame.AwayTeamID, false, true))
                 + " ScoreSquadraCasa = " + (FormatField(objGame.HomeScore, false, true))
                 + " ScoreSquadraFuori = " + (FormatField(objGame.AwayScore, false, true))
                 + " DataPartita = " + (FormatField(objGame.GameDate, false, true))
-                + " StadioID = " + (FormatField(objGame.StadiumID, false, true)) 
+                + " StadioID = " + (FormatField(objGame.StadiumID, false, true))
                 + " CampionatoID = " + (FormatField(objGame.DivisionID, false, true))
-                + " StagioneID = " + (FormatField(objGame.SeasonID, false, false)) 
+                + " StagioneID = " + (FormatField(objGame.SeasonID, false, false))
                 + " WHERE PartitaID = " + objGame.GameID);
             RunCommand(SQL);
         }
@@ -98,15 +97,15 @@ namespace Mojhy.DataAccess
                         + (FormatField(objGame.DivisionID, false, true))
                         + (FormatField(objGame.SeasonID, false, true)) + ")");
             RunCommand(SQL);
-                       
+
             //Ritorna l'ultimo id impostato
             //SQL = "select currval('"Calendario"."campionati_campionatoid_seq"') as ID;";
 
-            objGame.GameID = (int)GetField(SQL,"ID");
-            
+            objGame.GameID = (int)GetField(SQL, "ID");
+
             return objGame.GameID;
         }
-        
+
         void UpdateDefaultTeamID(int DefaultTeamID)
         {
             string SQL;
@@ -140,7 +139,7 @@ namespace Mojhy.DataAccess
         {
             string SQL = ("SELECT ps2.*, ps.SeriesID " + ("FROM PlayoffSeries AS ps INNER JOIN PlayoffSeries AS ps2 ON ps.[Level] = ps2.[Level] " + ("WHERE (((ps2.WinnerID)=0) AND ((ps.SeriesID)="
                         + (SeriesID + "));"))));
-            
+
             NpgsqlDataReader dr = GetDataReader(SQL);
             if (dr.HasRows)
             {
@@ -250,7 +249,7 @@ namespace Mojhy.DataAccess
         bool GetPlayoffsComplete()
         {
             string SQL = ("SELECT Count(ps.PlayoffSeriesID) AS Winners, ps.Level " + ("FROM PlayoffSeries AS ps " + ("WHERE(((ps.WinnerID) > 0) And ((ps.LoserID) > 0)) " + ("GROUP BY ps.Level " + ("HAVING(((Count(ps.PlayoffSeriesID)) = 1)) " + "ORDER BY ps.Level DESC;")))));
-            
+
             NpgsqlDataReader dr = GetDataReader(SQL);
             while (dr.Read())
             {
@@ -327,7 +326,7 @@ namespace Mojhy.DataAccess
         int GetLastSeriesID()
         {
             string SQL = "SELECT TOP 1 SeriesID FROM Schedule ORDER BY SeriesID DESC";
-            int Result=-1;
+            int Result = -1;
             NpgsqlDataReader dr = GetDataReader(SQL);
             while (dr.Read())
             {
@@ -344,5 +343,5 @@ namespace Mojhy.DataAccess
             return GetDataReader(SQL);
         }
     }
-}
 
+}
