@@ -1,22 +1,59 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+/* Division.cs, MARCO CECCARELLI
+ * La classe definisce le stagioni dei vari campionati */
 
-/// <summary>
-/// Summary description for Season
-/// </summary>
-public class Season
+using System;
+
+namespace Mojhy.Leagues
 {
-    public Season()
+        
+    /// <summary>
+    /// Definisce le divisioni
+    /// </summary>
+    public class Season
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        private string l_strName;
+        private int l_intSeasonID;
+
+        /// <summary>
+        /// Gets / Sets the Name of the Season.
+        /// </summary>        
+        public string Name
+        {
+            get { return l_strName; }
+            set { l_strName = value; }
+        }
+
+
+        /// <summary>
+        /// Gets / Sets the SeasonID.
+        /// </summary>
+        /// <value>The Season ID.</value>
+        public int SeasonID
+        {
+            get { return l_intSeasonID; }
+            set { l_intSeasonID = value; }
+        }
+
+        void Save()
+        {
+            LeaguesDB Data = new LeaguesDB();
+            Data.Insert(this);
+            Data.Close();
+        }
+
+        void Update()
+        {
+            LeaguesDB Data = new LeaguesDB();
+            Data.UpdateDivision(this);
+            Data.Close();
+        }
+
+        /// <summary>
+        /// Gets the teams.
+        /// </summary>
+        public void GetTeams()
+        {
+
+        }
     }
 }
