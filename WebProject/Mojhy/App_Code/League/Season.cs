@@ -3,6 +3,8 @@
 
 using System;
 
+using Mojhy.DataAccess;
+
 namespace Mojhy.Leagues
 {
         
@@ -43,6 +45,7 @@ namespace Mojhy.Leagues
 
         void Update()
         {
+            
             LeaguesDB Data = new LeaguesDB();
             Data.UpdateDivision(this);
             Data.Close();
