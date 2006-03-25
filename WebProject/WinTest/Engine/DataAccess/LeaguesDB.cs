@@ -1,16 +1,13 @@
-/* Team.cs, FABIO MASINI
- * La classe definisce l'oggetto 'squadra'.
- * Incapsula anche i giocatori della squadra */
+/* LeagueDB.cs, Ceccarelli Marco
+ 
+ * La classe gestisci l'accesso ai dati per l'oggetto League
+ 
+ */
+ 
 
 using System;
 using System.Data;
 using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using Mojhy.Leagues;
 using Mojhy.Schedules;
 using Npgsql;

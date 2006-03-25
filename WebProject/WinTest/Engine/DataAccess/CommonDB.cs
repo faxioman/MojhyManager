@@ -1,3 +1,4 @@
+// CommonDB.cs, Ceccarelli Marco
 // Classe contenente le funzioni generiche per l'accesso al DB
 
 using System.Data.OleDb;
@@ -19,7 +20,7 @@ namespace Mojhy.DataAccess
         public void DBConnect()
         {
             string strConnectionString;
-            strConnectionString = System.Configuration.ConfigurationManager.AppSettings["myConnection"];
+            strConnectionString = System.Configuration.ConfigurationSettings.AppSettings["myConnection"];
             l_objConnection.ConnectionString = strConnectionString;
             l_objConnection.Open();
         }
