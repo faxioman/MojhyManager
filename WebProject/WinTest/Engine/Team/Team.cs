@@ -23,7 +23,7 @@ namespace Mojhy.Engine
         private string l_strCurrentFormation = "4-4-2";
         //stato di gioco (attacco, difesa, angolo...)
         private PlayingStatus l_enPlayingStatus;
-        //flag che definisce se l'Intelligienza Artificiale è abilitata (okkio! Che non vogliano diventare giocatori veri...)
+        //flag che definisce se l'Intelligienza Artificiale è abilitata (okkio! Che non vogliano diventare giocatori veri...Spielberg insegna!)
         private Boolean l_blAIenabled = false;
         //enumeratore che definisce gli stati possibili della squadra
         public enum PlayingStatus

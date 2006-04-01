@@ -22,5 +22,23 @@ namespace Mojhy.Engine
         /// Get the area index
         /// </summary>
         public int Index;
+        //il parent di PlayArea è l'oggetto PlayAreas
+        private PlayAreas l_objPlayAreas;
+        /// <summary>
+        /// Gets the PlayAreas.
+        /// </summary>
+        /// <value>The parent.</value>
+        public PlayAreas parent
+        {
+            get { return l_objPlayAreas; }
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:PlayArea"/> class.
+        /// </summary>
+        /// <param name="objPlayAreas">The PlayAreas object.</param>
+        public PlayArea(PlayAreas objPlayAreas)
+        {
+            l_objPlayAreas = objPlayAreas;
+        }
     }
 }
