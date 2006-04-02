@@ -79,16 +79,23 @@ namespace Mojhy.Engine
         /// <param name="objField">The referenced field object.</param>
         public void PutOnField(Field objField)
         {
-            //inizializzo l'array dei giocatori che scendono in campo
-            l_objPlayingPlayers = new PlayingPlayer[11];
-            //creo i giocatori sul campo
-            for (int i = 0; i < l_objPlayingPlayers.Length; i++)
+            if (objField != null)
             {
-                l_objPlayingPlayers[i] = new PlayingPlayer(objField);
-                l_objPlayingPlayers[i].Index = i;
+                //inizializzo l'array dei giocatori che scendono in campo
+                l_objPlayingPlayers = new PlayingPlayer[11];
+                //creo i giocatori sul campo
+                for (int i = 0; i < l_objPlayingPlayers.Length; i++)
+                {
+                    l_objPlayingPlayers[i] = new PlayingPlayer(this, objField);
+                    l_objPlayingPlayers[i].Index = i;
+                }
+                //imposto il riferimento all'oggetto campo  
+                l_objField = objField;
             }
-            //imposto il riferimento all'oggetto campo  
-            l_objField = objField;
+            else
+            {
+                throw new Exception("The Field Object cannot be null");
+            }
         }
         /// <summary>
         /// Enables the AI.

@@ -36,6 +36,9 @@ namespace Mojhy.Engine
         private Point l_ptDischettoRigoreRight;
         //posizione del dischetto di metà campo
         private Point l_ptDischettoMetaCampo;
+        //squadre in campo (a e b)
+        private Team l_objTeamA;
+        private Team l_objTeamB;
         #endregion
         
         #region Private Const
@@ -258,6 +261,40 @@ namespace Mojhy.Engine
             //calcolo la posizione del dischetto di metà campo
             l_ptDischettoMetaCampo.X = this.Width / 2;
             l_ptDischettoMetaCampo.Y = this.Height / 2;
+        }
+        /// <summary>
+        /// Adds the team "A" on field.
+        /// </summary>
+        /// <param name="objTeam">The Team object.</param>
+        public void AddTeamA(Team objTeam)
+        {
+            l_objTeamA = objTeam;
+            //inizializzo la squadra in campo
+            objTeam.PutOnField(this);
+        }
+        /// <summary>
+        /// Adds the team "B" on field.
+        /// </summary>
+        /// <param name="objTeam">The Team object.</param>
+        public void AddTeamB(Team objTeam)
+        {
+            l_objTeamB = objTeam;
+            //inizializzo la squadra in campo
+            objTeam.PutOnField(this);
+        }
+        /// <summary>
+        /// Gets the team "A" on field.
+        /// </summary>
+        /// <returns></returns>
+        public Team GetTeamA(){
+            return l_objTeamA;
+        }
+        /// <summary>
+        /// Gets the team "B" on field.
+        /// </summary>
+        /// <returns></returns>
+        public Team GetTeamB(){
+            return l_objTeamB;
         }
     }
 }

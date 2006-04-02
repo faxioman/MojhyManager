@@ -21,6 +21,8 @@ namespace Mojhy.Engine
         private Field l_objField;
         //indice del giocatore
         private int l_intIndex;
+        //oggetto Team padre
+        private Team l_objTeam;
         //posizioni in campo
         private PlayingPositions l_objPlayingPositions;
         /// <summary>
@@ -42,6 +44,14 @@ namespace Mojhy.Engine
             set { l_intIndex = value; }
         }
         /// <summary>
+        /// Gets the parent Team object.
+        /// </summary>
+        /// <value>The parent Team object.</value>
+        public Team parent
+        {
+            get { return l_objTeam; }
+        }
+        /// <summary>
         /// Gets the current play area for the player.
         /// </summary>
         /// <value>The current play area.</value>
@@ -61,11 +71,13 @@ namespace Mojhy.Engine
         /// <summary>
         /// Initializes a new instance of the <see cref="T:PlayingPlayer"/> class.
         /// </summary>
-        /// <param name="objField">The referenced field object.</param>
-        public PlayingPlayer(Field objField)
+        /// <param name="objTeam">The referenced Team object.</param>
+        /// <param name="objField">The referenced Field object.</param>
+        public PlayingPlayer(Team objTeam, Field objField)
         {
             l_objPlayingPositions = new PlayingPositions();
             l_objField = objField;
+            l_objTeam = objTeam;
         }
     }
 }
