@@ -66,7 +66,15 @@ namespace Mojhy.Engine
             get { return l_blAIenabled; }
         }
         /// <summary>
-        /// Puts eleven empty players on field.
+        /// Gets the parent Field Object.
+        /// </summary>
+        /// <value>The parent Field Object.</value>
+        public Field parent
+        {
+            get { return l_objField; }
+        }
+        /// <summary>
+        /// Initialize the team on fiedl.
         /// </summary>
         /// <param name="objField">The referenced field object.</param>
         public void PutOnField(Field objField)
