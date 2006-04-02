@@ -68,7 +68,7 @@ namespace WinTest
             //inizializzo la prima squadra (presente in ogni situazione)
             l_objTeamA = new Mojhy.Engine.Team();
             //inizializzo le posizione dei giocatori (posizione iniziale, tutti a meta campo)
-            l_objTeamA.PutOnField(l_objField);
+            l_objField.SetTeamA(l_objTeamA);
             foreach (Mojhy.Engine.PlayingPlayer objPlayingPlayer in l_objTeamA.PlayingPlayers)
             {
                 for (int i = 0; i < objPlayingPlayer.PositionsOnField.DefensePositions.Length; i++)

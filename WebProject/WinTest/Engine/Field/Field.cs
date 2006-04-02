@@ -266,7 +266,7 @@ namespace Mojhy.Engine
         /// Adds the team "A" on field.
         /// </summary>
         /// <param name="objTeam">The Team object.</param>
-        public void AddTeamA(Team objTeam)
+        public void SetTeamA(Team objTeam)
         {
             l_objTeamA = objTeam;
             //inizializzo la squadra in campo
@@ -276,7 +276,7 @@ namespace Mojhy.Engine
         /// Adds the team "B" on field.
         /// </summary>
         /// <param name="objTeam">The Team object.</param>
-        public void AddTeamB(Team objTeam)
+        public void SetTeamB(Team objTeam)
         {
             l_objTeamB = objTeam;
             //inizializzo la squadra in campo
