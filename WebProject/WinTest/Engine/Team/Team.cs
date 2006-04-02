@@ -74,7 +74,7 @@ namespace Mojhy.Engine
             get { return l_objField; }
         }
         /// <summary>
-        /// Initialize the team on fiedl.
+        /// Initialize the team on field.
         /// </summary>
         /// <param name="objField">The referenced field object.</param>
         public void PutOnField(Field objField)
