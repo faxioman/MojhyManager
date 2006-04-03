@@ -107,6 +107,7 @@ namespace WinTest
             ptLocPixel.Y = (int)(MM_PER_INCH / l_fltDpiY * PixelLoc.Y / (MAGICNUMBERCONVERSION / SCALE));
             return ptLocPixel;
         }
+
         /// <summary>
         /// Draws the selected play area.
         /// </summary>
@@ -127,6 +128,7 @@ namespace WinTest
                 l_objGraphics.DrawImage(l_imgPalloncino, ptAreaCentre);
             }
         }
+        
         /// <summary>
         /// Draws the player.
         /// </summary>
@@ -168,6 +170,9 @@ namespace WinTest
                 }
             }
         }
+
+     
+
         /// <summary>
         /// Render the base soccer field.
         /// </summary>
@@ -225,5 +230,63 @@ namespace WinTest
                 penAreeGioco.Dispose();
             }
         }
+
+
+
+        /// <summary>
+        /// Draws the moving player.
+        /// </summary>
+        /// <param name="objPlayingPlayer">The obj playing player.</param>
+        public void DrawMovingPlayer(Mojhy.Engine.PlayingPlayer objPlayingPlayer)
+        {
+            int intNumPlayer = objPlayingPlayer.Index + 1;
+            Point ptCenteredPosition = objPlayingPlayer.CurrentPositionOnField;
+
+            //disegno inattacco
+            //calcolo la posizione per centrare l'immagine
+            ptCenteredPosition = new Point(ptCenteredPosition.X - 1200, ptCenteredPosition.Y - 1500);
+
+            l_objGraphics.DrawImage(l_imgAttacco, ptCenteredPosition);
+            if (intNumPlayer > 9)
+            {
+                l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 900, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+            }
+            else
+            {
+                l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 500, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+            }
+
+        }
+
+        /// <summary>
+        /// Draws the ball.
+        /// </summary>
+        /// <param name="ptBall">The pt ball.</param>
+        public void DrawBall(Point ptBall)
+        {
+            if (ptBall != null)
+            {
+                l_objGraphics.DrawImage(l_imgPalloncino, ptBall);
+            }
+        }
+
+        /// <summary>
+        /// Draws the selected play area without drawing the ball in the center
+        /// </summary>
+        /// <param name="intSelectedAreaIndex">Index of the selected area.</param>
+        /// <param name="objField">The referenced field object.</param>
+        public void DrawSelectedAreaNoBall(int intSelectedAreaIndex, Mojhy.Engine.Field objField)
+        {
+            //cerco in quale area mi trovo
+            Mojhy.Engine.PlayArea objPlayArea = objField.Areas.AreasList[intSelectedAreaIndex];
+            if (objPlayArea != null)
+            {
+                //disegno l'area selezionata
+                SolidBrush colorBrush = new SolidBrush(Color.FromArgb(50, 12, 12, 12));
+                l_objGraphics.FillRectangle(colorBrush, objPlayArea.AreaRect);
+                colorBrush.Dispose();
+            }
+        }
+
     }
 }
