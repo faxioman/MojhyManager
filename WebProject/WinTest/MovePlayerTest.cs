@@ -349,7 +349,7 @@ namespace WinTest
 
                     foreach (Mojhy.Engine.PlayingPlayer objPlayer in l_objTeamA.PlayingPlayers)
                     {
-                        l_objSoccerGraph.DrawMovingPlayer(objPlayer, SoccerGraphics.PlayerPositionType.Attack);
+                        l_objSoccerGraph.DrawMovingPlayer(objPlayer);//, SoccerGraphics.PlayerPositionType.Attack);
                     }
 
                 }
