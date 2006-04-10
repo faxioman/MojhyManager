@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Training\Training.cs" />
     <Compile Include="MovePlayerTest.cs">
       <SubType>Form</SubType>
     </Compile>
