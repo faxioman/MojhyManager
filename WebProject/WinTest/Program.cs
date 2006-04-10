@@ -14,9 +14,9 @@ namespace WinTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new SoccerTest());
+            Application.Run(new SoccerTest());
 
-            Application.Run(new MovePlayerTest());
+            //Application.Run(new MovePlayerTest());
 
         }
     }
