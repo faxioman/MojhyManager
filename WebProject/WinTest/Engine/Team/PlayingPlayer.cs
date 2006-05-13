@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Threading;
 
 namespace Mojhy.Engine
 {
@@ -25,6 +26,8 @@ namespace Mojhy.Engine
         private Team l_objTeam;
         //posizioni in campo
         private PlayingPositions l_objPlayingPositions;
+        //thread AI
+        private Thread l_objAIThread;
         /// <summary>
         /// Gets or sets the player position on field.
         /// </summary>
@@ -78,6 +81,24 @@ namespace Mojhy.Engine
             l_objPlayingPositions = new PlayingPositions();
             l_objField = objField;
             l_objTeam = objTeam;
+        }
+        /// <summary>
+        /// Enables the artificial intelligence for the player.
+        /// </summary>
+        public void EnableAI(){
+            //creo il nuovo thread di posizionamento del giocatore, che segue il pallone.
+            if (l_objAIThread == null) {
+                l_objAIThread = new Thread(this.TheBrain);
+                l_objAIThread.Start();
+            }
+        }
+
+        /// <summary>
+        /// It's the player's brain.
+        /// </summary>
+        private void TheBrain(){
+            //leggo la posizione del pallone
+           //this.parent.parent.GetBall().PositionOnField
         }
     }
 }

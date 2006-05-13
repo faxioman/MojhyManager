@@ -15,6 +15,25 @@ namespace Mojhy.Engine
     /// </summary>
     public class Field
     {
+        #region Private Const
+        //spessore righe del campo
+        private const int SPESSORELINEE = 110;
+        //spessore dei punti disegnati sul campo
+        private const int SPESSOREPUNTI = 800;
+        //dimensioni del campo in mm
+        private const int CAMPOWIDTH = 105000;
+        private const int CAMPOHEIGHT = 70000;
+        private const int PORTAWIDTH = 7320;
+        //misura area di rigore
+        private const int AREARIGORE = 16500;
+        //misura area di porta
+        private const int AREAPORTA = 5500;
+        //distanza dischetto di rigore
+        private const int DISCHETTORIGORE = 11000;
+        //raggio lunette area di rigore e metà campo
+        private const int RAGGIOCIRCCAMPO = 9150;
+        #endregion
+
         #region Private variables
         //aree sensibili del campo
         private PlayAreas l_objAreas;
@@ -39,27 +58,10 @@ namespace Mojhy.Engine
         //squadre in campo (a e b)
         private Team l_objTeamA;
         private Team l_objTeamB;
+        //pallone in campo
+        private Ball l_objBall;
         #endregion
         
-        #region Private Const
-        //spessore righe del campo
-        private const int SPESSORELINEE = 110;
-        //spessore dei punti disegnati sul campo
-        private const int SPESSOREPUNTI = 800;
-        //dimensioni del campo in mm
-        private const int CAMPOWIDTH = 105000;
-        private const int CAMPOHEIGHT = 70000;
-        private const int PORTAWIDTH = 7320;
-        //misura area di rigore
-        private const int AREARIGORE = 16500;
-        //misura area di porta
-        private const int AREAPORTA = 5500;
-        //distanza dischetto di rigore
-        private const int DISCHETTORIGORE = 11000;
-        //raggio lunette area di rigore e metà campo
-        private const int RAGGIOCIRCCAMPO = 9150;
-        #endregion
-
         #region Properties
         /// <summary>
         /// Gets the field's width.
@@ -295,6 +297,23 @@ namespace Mojhy.Engine
         /// <returns></returns>
         public Team GetTeamB(){
             return l_objTeamB;
+        }
+        /// <summary>
+        /// Sets the ball on field.
+        /// </summary>
+        /// <param name="objBall">The ball object.</param>
+        public void SetBall(Ball objBall)
+        {
+            l_objBall = objBall;
+            objBall.PutOnField(this);
+        }
+        /// <summary>
+        /// Gets the ball object on field.
+        /// </summary>
+        /// <returns>The ball objects</returns>
+        public Ball GetBall()
+        {
+            return l_objBall;
         }
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Ball\Ball.cs" />
     <Compile Include="Engine\Training\Training.cs" />
     <Compile Include="MovePlayerTest.cs">
       <SubType>Form</SubType>
@@ -112,6 +113,7 @@
     <Compile Include="TrainTest.Designer.cs">
       <DependentUpon>TrainTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DrawingExt.cs" />
     <Compile Include="Utils\FrameworkUtils.cs" />
   </ItemGroup>
   <ItemGroup>

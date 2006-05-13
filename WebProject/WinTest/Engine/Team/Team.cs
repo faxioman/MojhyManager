@@ -106,15 +106,27 @@ namespace Mojhy.Engine
             if (l_objPlayingPlayers != null)
             {
                 //attivo l'algoritmo di posizionamento per ogni giocatore
-                
+                foreach (PlayingPlayer objPlayingPlayervar in l_objPlayingPlayers)
+                {
+                    objPlayingPlayervar.EnableAI();
+                }
+                l_blAIenabled = true;
             }
             else
             {
                 l_blAIenabled = false;
             }
         }
+        /// <summary>
+        /// Disables the AI.
+        /// </summary>
         public void DisableAI()
         {
+            //attivo l'algoritmo di posizionamento per ogni giocatore
+            foreach (PlayingPlayer objPlayingPlayervar in l_objPlayingPlayers)
+            {
+                //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            }
             l_blAIenabled = false;
         }
     }
