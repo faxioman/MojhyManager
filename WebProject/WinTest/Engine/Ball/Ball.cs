@@ -11,7 +11,7 @@ namespace Mojhy.Engine
     /// <summary>
     /// Defines the ball object used on field.
     /// </summary>
-    class Ball
+    public class Ball
     {
         //oggetto campo ove è collocato il pallone
         private Field l_objField;
