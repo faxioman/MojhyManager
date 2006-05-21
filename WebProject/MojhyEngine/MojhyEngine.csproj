@@ -7,7 +7,7 @@
     <ProjectGuid>{1657A77C-85C8-497A-B616-21123D544E44}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MojhyEngine</RootNamespace>
+    <RootNamespace>Mojhy.Engine</RootNamespace>
     <AssemblyName>MojhyEngine</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
