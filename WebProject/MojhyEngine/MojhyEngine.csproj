@@ -50,8 +50,16 @@
       <HintPath>..\Mojhy\Bin\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MojhyUtils\MojhyUtils.csproj">
+      <Project>{26605B21-1918-4251-B026-6074857E7FAB}</Project>
+      <Name>MojhyUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
