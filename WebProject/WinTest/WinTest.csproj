@@ -48,26 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Ball\Ball.cs" />
-    <Compile Include="Engine\Training\Training.cs" />
     <Compile Include="MovePlayerTest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MovePlayerTest.Designer.cs">
       <DependentUpon>MovePlayerTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\DataAccess\CommonDB.cs" />
-    <Compile Include="Engine\DataAccess\LeaguesDB.cs" />
-    <Compile Include="Engine\Field\Field.cs" />
-    <Compile Include="Engine\Field\PlayArea.cs" />
-    <Compile Include="Engine\Field\PlayAreas.cs" />
-    <Compile Include="Engine\League\Division.cs" />
-    <Compile Include="Engine\League\League.cs" />
-    <Compile Include="Engine\League\Season.cs" />
-    <Compile Include="Engine\Schedules\Game.cs" />
-    <Compile Include="Engine\Team\PlayingPlayer.cs" />
-    <Compile Include="Engine\Team\PlayingPositions.cs" />
-    <Compile Include="Engine\Team\Team.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SoccerGraphics.cs" />
     <Compile Include="SoccerTest.cs">
