@@ -301,8 +301,8 @@ namespace WinTest
                 try
                 {
                     //oggetto temporaneo per il salvataggio delle posizioni per oguno degli 11 giocatori in campo
-                    Mojhy.Engine.PlayingPositions[] objPlayingPositionsAux;
-                    objPlayingPositionsAux = (Mojhy.Engine.PlayingPositions[])Mojhy.Utils.FrameworkUtils.DeserializeObject(objTextFile.ReadToEnd(), System.Type.GetType("Mojhy.Engine.PlayingPositions[]"));
+                    Mojhy.Engine.PlayingPositions[] objPlayingPositionsAux = new Mojhy.Engine.PlayingPositions[0];
+                    objPlayingPositionsAux = (Mojhy.Engine.PlayingPositions[])Mojhy.Utils.FrameworkUtils.DeserializeObject(objTextFile.ReadToEnd(), objPlayingPositionsAux.GetType());
                     //assegno alla squadra A le posizioni lette
                     for (int i = 0; i < objPlayingPositionsAux.Length; i++)
                     {
