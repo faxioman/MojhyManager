@@ -7,7 +7,7 @@
     <ProjectGuid>{26605B21-1918-4251-B026-6074857E7FAB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MojhyUtils</RootNamespace>
+    <RootNamespace>Mojhy.Utils</RootNamespace>
     <AssemblyName>MojhyUtils</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,6 +31,9 @@
     <Compile Include="DrawingExt.cs" />
     <Compile Include="FrameworkUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
