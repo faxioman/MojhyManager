@@ -102,8 +102,6 @@
     <Compile Include="TrainTest.Designer.cs">
       <DependentUpon>TrainTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\DrawingExt.cs" />
-    <Compile Include="Utils\FrameworkUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Attacco.png">
@@ -115,6 +113,9 @@
     <Content Include="Images\Palloncino.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
