@@ -7,10 +7,10 @@ namespace Mojhy.Utils.DrawingExt
     /// <summary>
     /// 3D PointF class
     /// </summary>
-    public struct Point3DF
+    public struct Point3D
     {
         Matrix  matrix;
-        public Point3DF(System.Single X, System.Single Y, System.Single Z)
+        public Point3D(System.Int32 X, System.Int32 Y, System.Int32 Z)
         {
             matrix = new Matrix(1, 4);
             matrix[0, 0] = X;
@@ -18,39 +18,39 @@ namespace Mojhy.Utils.DrawingExt
             matrix[0, 2] = Z;
             matrix[0, 3] = 1;
         }
-        public Point3DF(Matrix Matrix)
+        public Point3D(Matrix Matrix)
         {
             if (Matrix.Rows != 1 || Matrix.Columns != 4)
                 throw new System.Exception("Matrix must be a 1 by 4 matrix.");
             matrix = Matrix;
         }
-        public System.Single X
+        public System.Int32 X
         {
             get
             {
-                return (System.Single)matrix[0, 0];
+                return (System.Int32)matrix[0, 0];
             }
             set
             {
                 matrix[0, 0] = value;
             }
         }
-        public System.Single Y
+        public System.Int32 Y
         {
             get
             {
-                return (System.Single)matrix[0, 1];
+                return (System.Int32)matrix[0, 1];
             }
             set
             {
                 matrix[0, 1] = value;
             }
         }
-        public System.Single Z
+        public System.Int32 Z
         {
             get
             {
-                return (System.Single)matrix[0, 2];
+                return (System.Int32)matrix[0, 2];
             }
             set
             {

@@ -20,7 +20,7 @@ namespace Mojhy.DataAccess
         public void DBConnect()
         {
             string strConnectionString;
-            strConnectionString = System.Configuration.ConfigurationSettings.AppSettings["myConnection"];
+            strConnectionString = System.Configuration.ConfigurationManager.AppSettings["myConnection"];
             l_objConnection.ConnectionString = strConnectionString;
             l_objConnection.Open();
         }

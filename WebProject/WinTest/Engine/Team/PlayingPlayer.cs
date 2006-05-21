@@ -92,13 +92,76 @@ namespace Mojhy.Engine
                 l_objAIThread.Start();
             }
         }
-
         /// <summary>
         /// It's the player's brain.
         /// </summary>
         private void TheBrain(){
-            //leggo la posizione del pallone
-           //this.parent.parent.GetBall().PositionOnField
+            while (System.Threading.Thread.CurrentThread.ThreadState == ThreadState.Running)
+            {
+                Point ptGoodPosition;
+                //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
+                switch (this.parent.CurrentPlayingStatus)
+                {
+                    case Team.PlayingStatus.attack:
+                        ptGoodPosition = this.PositionsOnField.AttackPositions[this.parent.parent.GetCurrentArea().Index];
+                        break;
+                    case Team.PlayingStatus.defense:
+                        ptGoodPosition = this.PositionsOnField.DefensePositions[this.parent.parent.GetCurrentArea().Index];
+                        break;
+                    default:
+                        //se non dovesse avere alcuno stato (e non dovrebbe succedere) considero la posizione attuale del giocatore
+                        //come valida
+                        ptGoodPosition = this.CurrentPositionOnField;
+                        break;
+                }
+               
+            }
+        }
+        /// <summary>
+        /// Calculate the direction angle of the player towards the ball (in RAD).
+        /// </summary>
+        /// <param name="px1">The PX1.</param>
+        /// <param name="py1">The py1.</param>
+        /// <param name="px2">The PX2.</param>
+        /// <param name="py2">The py2.</param>
+        /// <returns></returns>
+        private double Angle(double px1, double py1, double px2, double py2)
+        {
+            // Negate X and Y value
+            double pxRes = px2 - px1;
+            double pyRes = py2 - py1;
+            double angle = 0.0;
+            // Calculate the angle
+            if (pxRes == 0.0)
+            {
+                if (pxRes == 0.0)
+                    angle = 0.0;
+                else if (pyRes > 0.0)
+                    angle = System.Math.PI / 2.0;
+                else
+                    angle = System.Math.PI * 3.0 / 2.0;
+            }
+            else if (pyRes == 0.0)
+            {
+                if (pxRes > 0.0)
+                    angle = 0.0;
+                else
+                    angle = System.Math.PI;
+            }
+            else
+            {
+                if (pxRes < 0.0)
+                    angle = System.Math.Atan(pyRes / pxRes) + System.Math.PI;
+                else if (pyRes < 0.0)
+                    angle = System.Math.Atan(pyRes / pxRes) + (2 * System.Math.PI);
+                else
+                    angle = System.Math.Atan(pyRes / pxRes);
+            }
+            // Convert to degrees
+            angle = angle * 180 / System.Math.PI;
+            //Return to RADIANT ;-) non chiedetemi il perchè 
+            angle = (((double)(360 - angle)) / 180) * Math.PI;
+            return angle;
         }
     }
 }

@@ -315,5 +315,13 @@ namespace Mojhy.Engine
         {
             return l_objBall;
         }
+        /// <summary>
+        /// Gets the current area (where the ball is in).
+        /// </summary>
+        /// <returns>The current PlayArea</returns>
+        public PlayArea GetCurrentArea()
+        {
+            return this.Areas.GetAreaFromLoc(new Point(this.GetBall().PositionOnField.X, this.GetBall().PositionOnField.Y));
+        }
     }
 }

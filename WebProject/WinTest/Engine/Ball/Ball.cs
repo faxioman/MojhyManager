@@ -16,7 +16,7 @@ namespace Mojhy.Engine
         //oggetto campo ove è collocato il pallone
         private Field l_objField;
         //posizione del pallone in campo
-        private Point3DF l_ptzBallPosition = new Point3DF();
+        private Point3D l_ptzBallPosition = new Point3D();
         /// <summary>
         /// Gets the parent Field Object.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Mojhy.Engine
         /// Gets the ball position on field.
         /// </summary>
         /// <value>The ball position on field as a 3-dimensional point.</value>
-        public Point3DF PositionOnField
+        public Point3D PositionOnField
         {
             get { return l_ptzBallPosition; }
         }
