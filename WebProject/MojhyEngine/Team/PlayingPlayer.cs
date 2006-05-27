@@ -112,8 +112,6 @@ namespace Mojhy.Engine
         {
             double dblCos = 0;
             double dblSin = 0;
-            //punto di posizione attuale del giocatore
-            Point ptCurrentPositionAux;
             //punto di arrivo del giocatore
             Point ptGoodPosition;
             //angolo di spostmento del giocatore
@@ -153,9 +151,7 @@ namespace Mojhy.Engine
                     objStatusPrevious = this.parent.CurrentPlayingStatus;
                 }
                 //muovo il giocatore nella sua posizione
-                ptCurrentPositionAux = this.CurrentPositionOnField;
-                ptCurrentPositionAux.X += (int)Math.Round(l_sglVelocity * dblCos);
-                ptCurrentPositionAux.Y -= (int)Math.Round(l_sglVelocity * dblSin);
+                this.CurrentPositionOnField = new Point(this.CurrentPositionOnField.X + (int)Math.Round(l_sglVelocity * dblCos), this.CurrentPositionOnField.Y - (int)Math.Round(l_sglVelocity * dblSin));
             }
         }
         /// <summary>

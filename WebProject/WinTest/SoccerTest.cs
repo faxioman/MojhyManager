@@ -336,6 +336,12 @@ namespace WinTest
                 btSavePositions.Hide();
                 btShowAttack.Hide();
                 btShowDefense.Hide();
+                if (l_enState == FormStatus.MoveBallAndEnjoy)
+                {
+                    l_objField.SetBall(new Mojhy.Engine.Ball());
+                    l_objField.GetBall().PositionOnField = new Mojhy.Utils.DrawingExt.Point3D(1000,1000,0);
+                    l_objTeamA.EnableAI();
+                }
             }
             else
             {
