@@ -110,6 +110,10 @@ namespace Mojhy.Engine
         /// </summary>
         private void TheBrain()
         {
+            double dblCos = 0;
+            double dblSin = 0;
+            //punto di posizione attuale del giocatore
+            Point ptCurrentPositionAux;
             //punto di arrivo del giocatore
             Point ptGoodPosition;
             //angolo di spostmento del giocatore
@@ -143,14 +147,15 @@ namespace Mojhy.Engine
                     }
                     //calcolo l'angolo di spostamento del giocatore
                     dblMoveAngle = Angle(this.CurrentPositionOnField.X, this.CurrentPositionOnField.Y, ptGoodPosition.X, ptGoodPosition.Y);
+                    dblCos = Math.Cos(dblMoveAngle);
+                    dblSin = Math.Sin(dblMoveAngle);
                     intAreaIndexPrevious = intAreaIndexTmp;
                     objStatusPrevious = this.parent.CurrentPlayingStatus;
                 }
                 //muovo il giocatore nella sua posizione
-                double dblCos = Math.Cos(dblMoveAngle);
-                double dblSin = Math.Sin(dblMoveAngle);
-                this.CurrentPositionOnField.X += (int)Math.Round(l_sglVelocity * dblCos);
-                this.CurrentPositionOnField.Y -= (int)Math.Round(l_sglVelocity * dblSin);
+                ptCurrentPositionAux = this.CurrentPositionOnField;
+                ptCurrentPositionAux.X += (int)Math.Round(l_sglVelocity * dblCos);
+                ptCurrentPositionAux.Y -= (int)Math.Round(l_sglVelocity * dblSin);
             }
         }
         /// <summary>
