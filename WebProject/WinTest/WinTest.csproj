@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="MovePlayerTest.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="MovePlayerTest.Designer.cs">
+      <DependentUpon>MovePlayerTest.cs</DependentUpon>
+    </None>
     <Compile Include="Settings.cs" />
     <Compile Include="SoccerGraphics.cs" />
     <Compile Include="SoccerTest.cs">
@@ -41,6 +47,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MovePlayerTest.resx">
+      <DependentUpon>MovePlayerTest.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="SoccerTest.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SoccerTest.cs</DependentUpon>
@@ -78,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Attacco.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Current.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Difesa.png">

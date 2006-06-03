@@ -29,8 +29,6 @@ namespace WinTest
         private FormStatus l_enState = FormStatus.SettingPlayerPosition;
         //posizione corrente del mouse
         private PointObject l_ptMouseLoc = new PointObject();
-        //posizione corrente del pallone
-        private PointObject l_ptBall = new PointObject();
         //area corrente selezionata
         private int l_intSelectedAreaIndex = -1;
         //se un area è selezionata -> l_blAreaSelected = true
@@ -82,6 +80,8 @@ namespace WinTest
                 }
 
             }
+            //inserisco il pallone nel campo
+            l_objField.SetBall(new Mojhy.Engine.Ball());
             //inizializzo la combo dello stato allo stato attuale
             cbStatus.SelectedIndex = (int)this.l_enState;
         }
@@ -98,6 +98,7 @@ namespace WinTest
         //eventu sul rilascio del mouse
         void SoccerTest_MouseUp(object sender, MouseEventArgs e)
         {
+            PointObject ptLocBallMM;
             switch (l_enState)
             {
                 case FormStatus.SettingPlayerPosition:
@@ -106,10 +107,11 @@ namespace WinTest
                     //e calcolo la relativa area
                     if ((l_intSelectedDefensePlayerIndex == -1) && (l_intSelectedAttackPlayerIndex == -1))
                     {
-                        l_ptBall = l_ptMouseLoc;
                         l_blAreaSelected = true;
-                        PointObject ptLocBallMM = l_objSoccerGraph.PixelToMM(l_ptBall);
-                        Mojhy.Engine.PlayArea objPlayAreaAux = l_objField.Areas.GetAreaFromLoc(ptLocBallMM);
+                        ptLocBallMM = l_objSoccerGraph.PixelToMM(new PointObject(l_ptMouseLoc.X, l_ptMouseLoc.Y));
+                        l_objField.GetBall().PositionOnField.X = ptLocBallMM.X;
+                        l_objField.GetBall().PositionOnField.Y = ptLocBallMM.Y;
+                        Mojhy.Engine.PlayArea objPlayAreaAux = l_objField.Areas.GetAreaFromLoc(l_objField.GetBall().PositionOnField);
                         if (objPlayAreaAux != null)
                         {
                             l_intSelectedAreaIndex = objPlayAreaAux.Index;
@@ -125,6 +127,9 @@ namespace WinTest
                     l_intSelectedAttackPlayerIndex = -1;
                     break;
                 case FormStatus.MoveBallAndEnjoy:
+                    ptLocBallMM = l_objSoccerGraph.PixelToMM(new PointObject(l_ptMouseLoc.X, l_ptMouseLoc.Y));
+                    l_objField.GetBall().PositionOnField.X = ptLocBallMM.X;
+                    l_objField.GetBall().PositionOnField.Y = ptLocBallMM.Y;
                     break;
                 case FormStatus.PlayingMatch:
                     break;
@@ -174,6 +179,7 @@ namespace WinTest
                     }
                     break;
                 case FormStatus.MoveBallAndEnjoy:
+                    
                     break;
                 case FormStatus.PlayingMatch:
                     break;
@@ -257,6 +263,14 @@ namespace WinTest
                     if (l_blShowAttack) l_objSoccerGraph.DrawPlayer(objPlayingPlayer, l_intSelectedAreaIndex, SoccerGraphics.PlayerPositionType.Attack);
                 }
             }
+            if (l_enState == FormStatus.MoveBallAndEnjoy)
+            {
+                foreach (Mojhy.Engine.PlayingPlayer objPlayingPlayer in l_objTeamA.PlayingPlayers)
+                {
+                    l_objSoccerGraph.DrawPlayer(objPlayingPlayer, -1, SoccerGraphics.PlayerPositionType.Current);
+                }
+            }
+            if (l_enState != FormStatus.SettingPlayerPosition) l_objSoccerGraph.DrawBall(l_objField.GetBall());
             //scrivo la posizione del mouse (in MM e in Pixel)
             // pe.Graphics.DrawString("X: " + ptMouseLocMM.X.ToString() + "mm  Y: " + ptMouseLocMM.Y.ToString() + "mm", new Font("Tahoma", 7), Brushes.White, new PointF(100, 100));
             // pe.Graphics.DrawString("X: " + ptMouseLocTmp.X.ToString() + "px  Y: " + ptMouseLocTmp.Y.ToString() + "px", new Font("Tahoma", 7), Brushes.White, new PointF(100, 1600));
@@ -361,13 +375,6 @@ namespace WinTest
                 btShowDefense.Hide();
                 if (l_enState == FormStatus.MoveBallAndEnjoy)
                 {
-                    //se non era ancora stato fatto, inserisco la palla nel campo
-                    if (l_objField.GetBall() == null)
-                    {
-                        l_objField.SetBall(new Mojhy.Engine.Ball());
-                        l_objField.GetBall().PositionOnField.X = 1000;
-                        l_objField.GetBall().PositionOnField.Y = 1000;
-                    }
                     l_objTeamA.EnableAI();
                 }
             }

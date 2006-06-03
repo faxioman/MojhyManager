@@ -48,7 +48,7 @@ namespace Mojhy.Engine
             get { return l_ptPosition; }
         }
         /// <summary>
-        /// Gets or sets the player's index.
+        /// Gets the player's index.
         /// </summary>
         /// <value>The player's index.</value>
         public int Index
@@ -104,6 +104,7 @@ namespace Mojhy.Engine
             if (l_objAIThread == null)
             {
                 l_objAIThread = new Thread(this.TheBrain);
+                l_objAIThread.Priority = ThreadPriority.Lowest;
                 l_objAIThread.Start();
             }
         }
