@@ -160,7 +160,7 @@ namespace WinTest
             Point ptCenteredPosition;
             //disegno inattacco
             //calcolo la posizione per centrare l'immagine
-            Font fntNumber = new Font("Tahoma", 7, FontStyle.Bold);
+            Font fntNumber = new Font("Tahoma", 6, FontStyle.Bold);
             switch (enPositionType)
             {
                 case PlayerPositionType.Attack:
@@ -168,7 +168,7 @@ namespace WinTest
                     l_objGraphics.DrawImage(l_imgAttacco, ptCenteredPosition);
                     if (intNumPlayer > 9)
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 1000, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
                     }
                     else
                     {
@@ -196,11 +196,11 @@ namespace WinTest
                     l_objGraphics.DrawImage(l_imgCurrent, ptCenteredPosition);
                     if (intNumPlayer > 9)
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 1000, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 1000, objPlayingPlayer.CurrentPositionOnField.Y - 450));
                     }
                     else
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 600, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 600, objPlayingPlayer.CurrentPositionOnField.Y - 450));
                     }
                     break;
             }

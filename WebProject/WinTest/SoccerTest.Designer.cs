@@ -34,6 +34,7 @@ namespace WinTest
             this.btSavePositions = new System.Windows.Forms.Button();
             this.btLoadPositions = new System.Windows.Forms.Button();
             this.cbStatus = new System.Windows.Forms.ComboBox();
+            this.cbTeamStatus = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btShowAreas
@@ -105,12 +106,26 @@ namespace WinTest
             this.cbStatus.TabIndex = 5;
             this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
             // 
+            // cbTeamStatus
+            // 
+            this.cbTeamStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTeamStatus.FormattingEnabled = true;
+            this.cbTeamStatus.Items.AddRange(new object[] {
+            "Attack",
+            "Defense"});
+            this.cbTeamStatus.Location = new System.Drawing.Point(535, 539);
+            this.cbTeamStatus.Name = "cbTeamStatus";
+            this.cbTeamStatus.Size = new System.Drawing.Size(121, 21);
+            this.cbTeamStatus.TabIndex = 6;
+            this.cbTeamStatus.SelectedIndexChanged += new System.EventHandler(this.cbTeamStatus_SelectedIndexChanged);
+            // 
             // SoccerTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(795, 570);
+            this.Controls.Add(this.cbTeamStatus);
             this.Controls.Add(this.cbStatus);
             this.Controls.Add(this.btLoadPositions);
             this.Controls.Add(this.btSavePositions);
@@ -134,6 +149,7 @@ namespace WinTest
         private System.Windows.Forms.Button btSavePositions;
         private System.Windows.Forms.Button btLoadPositions;
         private System.Windows.Forms.ComboBox cbStatus;
+        private System.Windows.Forms.ComboBox cbTeamStatus;
     }
 }
 

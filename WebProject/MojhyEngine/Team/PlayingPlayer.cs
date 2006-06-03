@@ -169,7 +169,7 @@ namespace Mojhy.Engine
                 }
                 System.Threading.Thread.Sleep(4); //TODO. SOLO PER TESTING...POI NON SARà IL CASO DI RALLENTARE NULLA!!!!
                 //muovo il giocatore nella sua posizione (verifico che non sia già arrivato 'nei pressi')
-                if ((Math.Abs(this.CurrentPositionOnField.X - ptGoodPosition.X) > 100) && (Math.Abs(this.CurrentPositionOnField.Y - ptGoodPosition.Y) > 100))
+                if ((Math.Abs(this.CurrentPositionOnField.X - ptGoodPosition.X) > 500) || (Math.Abs(this.CurrentPositionOnField.Y - ptGoodPosition.Y) > 500))
                 {
                     this.CurrentPositionOnField.X += intMoveX;
                     this.CurrentPositionOnField.Y -= intMoveY;

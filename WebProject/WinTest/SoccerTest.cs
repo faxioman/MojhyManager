@@ -91,6 +91,8 @@ namespace WinTest
             l_objField.SetBall(new Mojhy.Engine.Ball());
             //inizializzo la combo dello stato allo stato attuale
             cbStatus.SelectedIndex = (int)this.l_enState;
+            //inizializzo la combo dello stato della squadra ad 'attacco'
+            cbTeamStatus.SelectedIndex = 0;
             //inizializzo il timer per il ridisegno
             l_objTimer.Interval = 40;
             l_objTimer.Tick += new System.EventHandler(this.RedrawTimer);
@@ -401,6 +403,7 @@ namespace WinTest
                 btSavePositions.Hide();
                 btShowAttack.Hide();
                 btShowDefense.Hide();
+                cbTeamStatus.Show();
                 l_objTimer.Start();
                 if (l_enState == FormStatus.MoveBallAndEnjoy)
                 {
@@ -411,6 +414,7 @@ namespace WinTest
             else
             {
                 l_objTimer.Stop();
+                cbTeamStatus.Hide();
                 btLoadPositions.Show();
                 btSavePositions.Show();
                 btShowAttack.Show();
@@ -439,6 +443,19 @@ namespace WinTest
             Invalidate(new System.Drawing.Rectangle(objCurrentBallPosAux.X - 20, objCurrentBallPosAux.Y - 20, 40, 40));
             l_ptBallPos.X = objCurrentBallPosAux.X;
             l_ptBallPos.Y = objCurrentBallPosAux.Y;
+        }
+        //combo dello stato attuale della squadra
+        private void cbTeamStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (((ComboBox)sender).SelectedItem.ToString())
+            {
+                case "Attack":
+                    l_objTeamA.CurrentPlayingStatus = Mojhy.Engine.Team.PlayingStatus.attack;
+                    break;
+                case "Defense":
+                    l_objTeamA.CurrentPlayingStatus = Mojhy.Engine.Team.PlayingStatus.defense;
+                break;
+            }
         }
     }
 }
