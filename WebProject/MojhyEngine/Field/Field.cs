@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Mojhy.Engine;
-using System.Drawing;
 using Mojhy.Utils.DrawingExt;
 
 namespace Mojhy.Engine
@@ -39,23 +38,23 @@ namespace Mojhy.Engine
         //aree sensibili del campo
         private PlayAreas l_objAreas;
         //misure porta 1
-        private Rectangle l_rctPortaLeft;
+        private RectangleObject l_rctPortaLeft = new RectangleObject();
         //misure porta 2
-        private Rectangle l_rctPortaRight;
+        private RectangleObject l_rctPortaRight = new RectangleObject();
         //misure area di rigore 1
-        private Rectangle l_rctAreaRigoreLeft;
+        private RectangleObject l_rctAreaRigoreLeft = new RectangleObject();
         //misure area di rigore 2
-        private Rectangle l_rctAreaRigoreRight;
+        private RectangleObject l_rctAreaRigoreRight = new RectangleObject();
         //misure area piccola 1
-        private Rectangle l_rctAreaPiccolaLeft;
+        private RectangleObject l_rctAreaPiccolaLeft = new RectangleObject();
         //misure area piccola 2
-        private Rectangle l_rctAreaPiccolaRight;
+        private RectangleObject l_rctAreaPiccolaRight = new RectangleObject();
         //posizione dischetto di rigore 1
-        private Point l_ptDischettoRigoreLeft;
+        private PointObject l_ptDischettoRigoreLeft = new PointObject();
         //posizione dischetto di rigore 2
-        private Point l_ptDischettoRigoreRight;
+        private PointObject l_ptDischettoRigoreRight = new PointObject();
         //posizione del dischetto di metà campo
-        private Point l_ptDischettoMetaCampo;
+        private PointObject l_ptDischettoMetaCampo = new PointObject();
         //squadre in campo (a e b)
         private Team l_objTeamA;
         private Team l_objTeamB;
@@ -140,7 +139,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the first goal.
         /// </summary>
         /// <returns>The Rectangle of the first goal</returns>
-        public Rectangle GoalLeftRect
+        public RectangleObject GoalLeftRect
         {
             get { return l_rctPortaLeft; }
         }
@@ -148,7 +147,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the second goal.
         /// </summary>
         /// <returns>The Rectangle of the second goal</returns>
-        public Rectangle GoalRightRect
+        public RectangleObject GoalRightRect
         {
             get { return l_rctPortaRight; }
         }
@@ -156,7 +155,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the first penalty area.
         /// </summary>
         /// <returns>The Rectangle of the first penalty area</returns>
-        public Rectangle PenaltyAreaLeft
+        public RectangleObject PenaltyAreaLeft
         {
             get { return l_rctAreaRigoreLeft; }
         }
@@ -164,7 +163,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the second penalty area.
         /// </summary>
         /// <returns>The Rectangle of the second penalty area</returns>
-        public Rectangle PenaltyAreaRight
+        public RectangleObject PenaltyAreaRight
         {
             get { return l_rctAreaRigoreRight; }
         }
@@ -172,7 +171,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the first goal area.
         /// </summary>
         /// <returns>The Rectangle of the first goal area</returns>
-        public Rectangle GoalAreaLeft
+        public RectangleObject GoalAreaLeft
         {
             get { return l_rctAreaPiccolaLeft; }
         }
@@ -180,7 +179,7 @@ namespace Mojhy.Engine
         /// Gets the rect of the second goal area.
         /// </summary>
         /// <returns>The Rectangle of the second goal area</returns>
-        public Rectangle GoalAreaRight
+        public RectangleObject GoalAreaRight
         {
             get { return l_rctAreaPiccolaRight; }
         }
@@ -188,7 +187,7 @@ namespace Mojhy.Engine
         /// Gets the position of the first penalty spot.
         /// </summary>
         /// <returns>The Point of the first penalty spot</returns>
-        public Point PenaltySpotLeft
+        public PointObject PenaltySpotLeft
         {
             get { return l_ptDischettoRigoreLeft; }
         }
@@ -196,7 +195,7 @@ namespace Mojhy.Engine
         /// Gets the position of the second penalty spot.
         /// </summary>
         /// <returns>The Point of the second penalty spot</returns>
-        public Point PenaltySpotRight
+        public PointObject PenaltySpotRight
         {
             get { return l_ptDischettoRigoreRight; }
         }
@@ -204,7 +203,7 @@ namespace Mojhy.Engine
         /// Gets the position of the centre spot.
         /// </summary>
         /// <returns>The Point of the centre spot</returns>
-        public Point CentreSpot
+        public PointObject CentreSpot
         {
             get { return l_ptDischettoMetaCampo; }
         }

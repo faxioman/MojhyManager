@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
 using Mojhy.Engine;
 using Mojhy.Utils.DrawingExt;
 
