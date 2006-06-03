@@ -127,6 +127,13 @@ namespace Mojhy.Utils.DrawingExt
         {
             l_ptInternalPoint = new Point(X, Y);
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:PointObject"/> class.
+        /// </summary>
+        public PointObject()
+        {
+            l_ptInternalPoint = new Point(0, 0);
+        }
     }
     /// <summary>
     /// 3D PointF class
