@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
+using Mojhy.Utils.DrawingExt;
 
 namespace WinTest
 {
@@ -29,9 +28,9 @@ namespace WinTest
         //stato dell'applicazione
         private FormStatus l_enState = FormStatus.SettingPlayerPosition;
         //posizione corrente del mouse
-        private Point l_ptMouseLoc;
+        private PointObject l_ptMouseLoc = new PointObject();
         //posizione corrente del pallone
-        private Point l_ptBall;
+        private PointObject l_ptBall = new PointObject();
         //area corrente selezionata
         private int l_intSelectedAreaIndex = -1;
         //se un area è selezionata -> l_blAreaSelected = true
@@ -73,11 +72,13 @@ namespace WinTest
             {
                 for (int i = 0; i < objPlayingPlayer.PositionsOnField.DefensePositions.Length; i++)
                 {
-                    objPlayingPlayer.PositionsOnField.DefensePositions[i] = new Point((l_objField.Width / 2)-10000, l_objField.Height / 2);
+                    objPlayingPlayer.PositionsOnField.DefensePositions[i].X = (l_objField.Width / 2) - 10000;
+                    objPlayingPlayer.PositionsOnField.DefensePositions[i].Y = l_objField.Height / 2;
                 }
                 for (int i = 0; i < objPlayingPlayer.PositionsOnField.AttackPositions.Length; i++)
                 {
-                    objPlayingPlayer.PositionsOnField.AttackPositions[i] = new Point((l_objField.Width / 2)+10000, l_objField.Height / 2);
+                    objPlayingPlayer.PositionsOnField.AttackPositions[i].X = (l_objField.Width / 2) + 10000;
+                    objPlayingPlayer.PositionsOnField.AttackPositions[i].Y = l_objField.Height / 2;
                 }
 
             }
@@ -85,9 +86,9 @@ namespace WinTest
             cbStatus.SelectedIndex = (int)this.l_enState;
         }
         //restituisce un punto valido del campo in pixel
-        private Point GetValidFieldPosition(Point ptRawPoint)
+        private PointObject GetValidFieldPosition(PointObject ptRawPoint)
         {
-            Point ptValidPosition = new Point(ptRawPoint.X,ptRawPoint.Y);
+            PointObject ptValidPosition = new PointObject(ptRawPoint.X, ptRawPoint.Y);
             if (ptValidPosition.X < MINX) ptValidPosition.X = MINX;
             if (ptValidPosition.X > MAXX) ptValidPosition.X = MAXX;
             if (ptValidPosition.Y < MINY) ptValidPosition.Y = MINY;
@@ -97,73 +98,85 @@ namespace WinTest
         //eventu sul rilascio del mouse
         void SoccerTest_MouseUp(object sender, MouseEventArgs e)
         {
-            l_blDragging = false;
-            if (l_enState == FormStatus.SettingPlayerPosition)
+            switch (l_enState)
             {
-                //se non è selezionato nessun giocatore, allore sposto la posizione attuale del pallone
-                //e calcolo la relativa area
-                if ((l_intSelectedDefensePlayerIndex == -1)&&(l_intSelectedAttackPlayerIndex == -1))
-                {
-                    l_ptBall = l_ptMouseLoc;
-                    l_blAreaSelected = true;
-                    Point ptLocBallMM = l_objSoccerGraph.PixelToMM(l_ptBall);
-                    Mojhy.Engine.PlayArea objPlayAreaAux = l_objField.Areas.GetAreaFromLoc(ptLocBallMM);
-                    if (objPlayAreaAux != null)
+                case FormStatus.SettingPlayerPosition:
+                    l_blDragging = false;
+                    //se non è selezionato nessun giocatore, allore sposto la posizione attuale del pallone
+                    //e calcolo la relativa area
+                    if ((l_intSelectedDefensePlayerIndex == -1) && (l_intSelectedAttackPlayerIndex == -1))
                     {
-                        l_intSelectedAreaIndex = objPlayAreaAux.Index;
-                        Invalidate();
+                        l_ptBall = l_ptMouseLoc;
+                        l_blAreaSelected = true;
+                        PointObject ptLocBallMM = l_objSoccerGraph.PixelToMM(l_ptBall);
+                        Mojhy.Engine.PlayArea objPlayAreaAux = l_objField.Areas.GetAreaFromLoc(ptLocBallMM);
+                        if (objPlayAreaAux != null)
+                        {
+                            l_intSelectedAreaIndex = objPlayAreaAux.Index;
+                            Invalidate();
+                        }
                     }
-                }
-                else
-                {
-                    Cursor.Show();
-                }
+                    else
+                    {
+                        Cursor.Show();
+                    }
+                    //deseleziono qualsiasi eventuale giocatore selezionato
+                    l_intSelectedDefensePlayerIndex = -1;
+                    l_intSelectedAttackPlayerIndex = -1;
+                    break;
+                case FormStatus.MoveBallAndEnjoy:
+                    break;
+                case FormStatus.PlayingMatch:
+                    break;
             }
-            //deseleziono qualsiasi eventuale giocatore selezionato
-            l_intSelectedDefensePlayerIndex = -1;
-            l_intSelectedAttackPlayerIndex = -1;
         }
 
         void SoccerTest_MouseDown(object sender, MouseEventArgs e)
         {
-            l_blDragging = true;
-            if (l_enState == FormStatus.SettingPlayerPosition)
+            switch (l_enState)
             {
-                if (l_intSelectedAreaIndex != -1)
-                {
-                    //verifico se sono sopra un giocatore (in difesa) e se quindi lo devo
-                    //selezionare per lo spostamento
-                    //calcolo il rettangolo che definisce il range di selezione del giocatore
-                    Point ptMousePositionInField = l_objSoccerGraph.PixelToMM(l_ptMouseLoc);
-                    Rectangle rctSelectionArea = new Rectangle(ptMousePositionInField.X - 1500, ptMousePositionInField.Y - 1500, 3000, 3000);
-                    //controllo se i difensori sono visibili
-                    if (l_blShowDefense)
+                case FormStatus.SettingPlayerPosition:
+                    l_blDragging = true;
+                    if (l_intSelectedAreaIndex != -1)
                     {
-                        for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
+                        //verifico se sono sopra un giocatore (in difesa) e se quindi lo devo
+                        //selezionare per lo spostamento
+                        //calcolo il rettangolo che definisce il range di selezione del giocatore
+                        PointObject ptMousePositionInField = l_objSoccerGraph.PixelToMM(l_ptMouseLoc);
+                        RectangleObject rctSelectionArea = new RectangleObject(ptMousePositionInField.X - 1500, ptMousePositionInField.Y - 1500, 3000, 3000);
+                        //controllo se i difensori sono visibili
+                        if (l_blShowDefense)
                         {
-                            if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]))
+                            for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
                             {
-                                l_intSelectedDefensePlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
-                                Cursor.Hide();
-                                break;
+                                if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]))
+                                {
+                                    l_intSelectedDefensePlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
+                                    Cursor.Hide();
+                                    break;
+                                }
+                            }
+                        }
+                        //verifico se sono sopra un giocatore (in attacco) e se quindi lo devo
+                        //selezionare per lo spostamento
+                        if ((l_intSelectedDefensePlayerIndex == -1) && (l_blShowAttack))
+                        {
+                            for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
+                            {
+                                if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]))
+                                {
+                                    l_intSelectedAttackPlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
+                                    Cursor.Hide();
+                                    break;
+                                }
                             }
                         }
                     }
-                    //verifico se sono sopra un giocatore (in attacco) e se quindi lo devo
-                    //selezionare per lo spostamento
-                    if ((l_intSelectedDefensePlayerIndex == -1) && (l_blShowAttack))
-                    {
-                        for (int i = l_objTeamA.PlayingPlayers.Length - 1; i >= 0; i--)
-                        {
-                            if (rctSelectionArea.Contains(l_objTeamA.PlayingPlayers[i].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]))
-                            {
-                                l_intSelectedAttackPlayerIndex = l_objTeamA.PlayingPlayers[i].Index;
-                                Cursor.Hide();
-                                break;
-                            }
-                        }
-                    }
-                }
+                    break;
+                case FormStatus.MoveBallAndEnjoy:
+                    break;
+                case FormStatus.PlayingMatch:
+                    break;
             }
         }
         //mantiene aggiornata la posizione del mouse
@@ -171,27 +184,36 @@ namespace WinTest
         {
             l_ptMouseLoc.X = e.X;
             l_ptMouseLoc.Y = e.Y;
-            if (l_enState == FormStatus.SettingPlayerPosition)
+            switch (l_enState)
             {
-                //verifico se devo spostare un giocatore
-                if ((l_blDragging) && ((l_intSelectedDefensePlayerIndex != -1)||(l_intSelectedAttackPlayerIndex != -1)))
-                {
-                    if (l_intSelectedDefensePlayerIndex != -1){
-                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]);
-                        Point ptNewPosition = l_ptMouseLoc;
-                        ptNewPosition = GetValidFieldPosition(ptNewPosition);
-                        l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
-                        Invalidate(new Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
-                        Invalidate(new Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
-                    }else{
-                        Point ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]);
-                        Point ptNewPosition = l_ptMouseLoc;
-                        ptNewPosition = GetValidFieldPosition(ptNewPosition);
-                        l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
-                        Invalidate(new Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
-                        Invalidate(new Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
+                case FormStatus.SettingPlayerPosition:
+                    //verifico se devo spostare un giocatore
+                    if ((l_blDragging) && ((l_intSelectedDefensePlayerIndex != -1) || (l_intSelectedAttackPlayerIndex != -1)))
+                    {
+                        if (l_intSelectedDefensePlayerIndex != -1)
+                        {
+                            PointObject ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex]);
+                            PointObject ptNewPosition = l_ptMouseLoc;
+                            ptNewPosition = GetValidFieldPosition(ptNewPosition);
+                            l_objTeamA.PlayingPlayers[l_intSelectedDefensePlayerIndex].PositionsOnField.DefensePositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
+                            Invalidate(new System.Drawing.Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
+                            Invalidate(new System.Drawing.Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
+                        }
+                        else
+                        {
+                            PointObject ptOldPosition = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex]);
+                            PointObject ptNewPosition = l_ptMouseLoc;
+                            ptNewPosition = GetValidFieldPosition(ptNewPosition);
+                            l_objTeamA.PlayingPlayers[l_intSelectedAttackPlayerIndex].PositionsOnField.AttackPositions[l_intSelectedAreaIndex] = l_objSoccerGraph.PixelToMM(ptNewPosition);
+                            Invalidate(new System.Drawing.Rectangle(ptOldPosition.X - 20, ptOldPosition.Y - 20, 40, 40));
+                            Invalidate(new System.Drawing.Rectangle(ptNewPosition.X - 20, ptNewPosition.Y - 20, 40, 40));
+                        }
                     }
-                }
+                    break;
+                case FormStatus.MoveBallAndEnjoy:
+                    break;
+                case FormStatus.PlayingMatch:
+                    break;
             }
             //invalido l'area dove scrivere la posizione del mouse
             //Invalidate(new Rectangle(0,0,120,25));
@@ -215,8 +237,8 @@ namespace WinTest
             //disegno il campo
             l_objSoccerGraph.RenderField(l_objField, blShowAreas);
             //calcolo il punto del mouse in mm
-            Point ptMouseLocMM = l_objSoccerGraph.PixelToMM(l_ptMouseLoc);
-            Point ptMouseLocTmp = l_ptMouseLoc;
+            PointObject ptMouseLocMM = l_objSoccerGraph.PixelToMM(l_ptMouseLoc);
+            PointObject ptMouseLocTmp = l_ptMouseLoc;
             if ((ptMouseLocMM.X > l_objField.Width) || (ptMouseLocMM.Y > l_objField.Height) || (ptMouseLocMM.X < 0) || (ptMouseLocMM.Y < 0))
             {
                 ptMouseLocMM.X = 0;
@@ -225,7 +247,7 @@ namespace WinTest
                 ptMouseLocTmp.Y = 0;
             }
             //attivo l'area cliccata
-            if ((l_blAreaSelected)&&(l_intSelectedAreaIndex!=-1)) l_objSoccerGraph.DrawSelectedArea(l_intSelectedAreaIndex, l_objField);
+            if ((l_blAreaSelected) && (l_intSelectedAreaIndex != -1)) l_objSoccerGraph.DrawSelectedArea(l_intSelectedAreaIndex, l_objField);
             //controllo se devo visualizzare i giocatori in posizione attacco, difesa, entrambi o nascosti
             if ((l_intSelectedAreaIndex != -1) && (l_blShowDefense || l_blShowAttack))
             {
@@ -236,8 +258,8 @@ namespace WinTest
                 }
             }
             //scrivo la posizione del mouse (in MM e in Pixel)
-           // pe.Graphics.DrawString("X: " + ptMouseLocMM.X.ToString() + "mm  Y: " + ptMouseLocMM.Y.ToString() + "mm", new Font("Tahoma", 7), Brushes.White, new PointF(100, 100));
-           // pe.Graphics.DrawString("X: " + ptMouseLocTmp.X.ToString() + "px  Y: " + ptMouseLocTmp.Y.ToString() + "px", new Font("Tahoma", 7), Brushes.White, new PointF(100, 1600));
+            // pe.Graphics.DrawString("X: " + ptMouseLocMM.X.ToString() + "mm  Y: " + ptMouseLocMM.Y.ToString() + "mm", new Font("Tahoma", 7), Brushes.White, new PointF(100, 100));
+            // pe.Graphics.DrawString("X: " + ptMouseLocTmp.X.ToString() + "px  Y: " + ptMouseLocTmp.Y.ToString() + "px", new Font("Tahoma", 7), Brushes.White, new PointF(100, 1600));
         }
         //click per visualizzare o nascondere le aree del campo
         private void btShowAreas_Click(object sender, EventArgs e)
@@ -276,7 +298,8 @@ namespace WinTest
                     {
                         objPlayingPositionsAux[i] = l_objTeamA.PlayingPlayers[i].PositionsOnField;
                     }
-                    objTextFile.Write(Mojhy.Utils.FrameworkUtils.SerializeObject(objPlayingPositionsAux));                }
+                    objTextFile.Write(Mojhy.Utils.FrameworkUtils.SerializeObject(objPlayingPositionsAux));
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error saving formation: " + ex.Message);
@@ -338,8 +361,13 @@ namespace WinTest
                 btShowDefense.Hide();
                 if (l_enState == FormStatus.MoveBallAndEnjoy)
                 {
-                    l_objField.SetBall(new Mojhy.Engine.Ball());
-                    l_objField.GetBall().PositionOnField = new Mojhy.Utils.DrawingExt.Point3D(1000,1000,0);
+                    //se non era ancora stato fatto, inserisco la palla nel campo
+                    if (l_objField.GetBall() == null)
+                    {
+                        l_objField.SetBall(new Mojhy.Engine.Ball());
+                        l_objField.GetBall().PositionOnField.X = 1000;
+                        l_objField.GetBall().PositionOnField.Y = 1000;
+                    }
                     l_objTeamA.EnableAI();
                 }
             }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using Mojhy.Utils.DrawingExt;
 
 namespace WinTest
 {
@@ -88,9 +89,9 @@ namespace WinTest
         /// </summary>
         /// <param name="PixelLoc">The point defined as pixel X and pixel Y.</param>
         /// <returns></returns>
-        public Point PixelToMM(Point PixelLoc)
+        public PointObject PixelToMM(PointObject PixelLoc)
         {
-            Point ptLocMM = new Point();
+            PointObject ptLocMM = new PointObject();
             ptLocMM.X = (int)(l_fltDpiX / MM_PER_INCH * PixelLoc.X * (MAGICNUMBERCONVERSION / SCALE));
             ptLocMM.Y = (int)(l_fltDpiY / MM_PER_INCH * PixelLoc.Y * (MAGICNUMBERCONVERSION / SCALE));
             return ptLocMM;
@@ -100,9 +101,9 @@ namespace WinTest
         /// </summary>
         /// <param name="PixelLoc">The point defined as mm X and mm Y.</param>
         /// <returns></returns>
-        public Point MMToPixel(Point PixelLoc)
+        public PointObject MMToPixel(PointObject PixelLoc)
         {
-            Point ptLocPixel = new Point();
+            PointObject ptLocPixel = new PointObject();
             ptLocPixel.X = (int)(MM_PER_INCH / l_fltDpiX * PixelLoc.X / (MAGICNUMBERCONVERSION / SCALE));
             ptLocPixel.Y = (int)(MM_PER_INCH / l_fltDpiY * PixelLoc.Y / (MAGICNUMBERCONVERSION / SCALE));
             return ptLocPixel;
@@ -121,7 +122,7 @@ namespace WinTest
             {
                 //disegno l'area selezionata
                 SolidBrush colorBrush = new SolidBrush(Color.FromArgb(50, 12, 12,12));
-                l_objGraphics.FillRectangle(colorBrush, objPlayArea.AreaRect);
+                l_objGraphics.FillRectangle(colorBrush, new Rectangle(objPlayArea.AreaRect.X, objPlayArea.AreaRect.Y,objPlayArea.AreaRect.Width,objPlayArea.AreaRect.Height));
                 colorBrush.Dispose();
                 //calcolo il centro del rettangolo
                 Point ptAreaCentre = new Point(objPlayArea.AreaRect.Right - (objPlayArea.AreaRect.Width / 2), objPlayArea.AreaRect.Bottom - (objPlayArea.AreaRect.Height / 2));
@@ -190,14 +191,14 @@ namespace WinTest
             l_objGraphics.DrawRectangle(l_penLinee, 0, 0, objField.Width, objField.Height);
             //disegno le aree di rigore
             ////prima
-            l_objGraphics.DrawRectangle(l_penLinee, objField.PenaltyAreaLeft);
+            l_objGraphics.DrawRectangle(l_penLinee, objField.PenaltyAreaLeft.GetDrawingRectangle());
             ////seconda
-            l_objGraphics.DrawRectangle(l_penLinee, objField.PenaltyAreaRight);            
+            l_objGraphics.DrawRectangle(l_penLinee, objField.PenaltyAreaRight.GetDrawingRectangle());            
             //disegno l'area piccola
             ////prima
-            l_objGraphics.DrawRectangle(l_penLinee, objField.GoalAreaLeft);
+            l_objGraphics.DrawRectangle(l_penLinee, objField.GoalAreaLeft.GetDrawingRectangle());
             ////seconda
-            l_objGraphics.DrawRectangle(l_penLinee, objField.GoalAreaRight);
+            l_objGraphics.DrawRectangle(l_penLinee, objField.GoalAreaRight.GetDrawingRectangle());
             //disegno le porte
             l_penLinee.Color = Color.Red;
             l_penLinee.Width = objField.LinesThickness * 4;
@@ -225,7 +226,8 @@ namespace WinTest
                 Pen penAreeGioco = new Pen(Color.YellowGreen);
                 for (int i = 0; i < objField.Areas.AreasList.Length; i++)
                 {
-                    l_objGraphics.DrawRectangle(penAreeGioco, objField.Areas.AreasList[i].AreaRect);
+                    RectangleObject objAreaRectAux = objField.Areas.AreasList[i].AreaRect;
+                    l_objGraphics.DrawRectangle(penAreeGioco, new Rectangle(objAreaRectAux.X,objAreaRectAux.Y,objAreaRectAux.Width,objAreaRectAux.Height));
                 }
                 penAreeGioco.Dispose();
             }
@@ -240,7 +242,7 @@ namespace WinTest
         public void DrawMovingPlayer(Mojhy.Engine.PlayingPlayer objPlayingPlayer)
         {
             int intNumPlayer = objPlayingPlayer.Index + 1;
-            Point ptCenteredPosition = objPlayingPlayer.CurrentPositionOnField;
+            Point ptCenteredPosition = new Point(objPlayingPlayer.CurrentPositionOnField.X, objPlayingPlayer.CurrentPositionOnField.Y);
 
             //disegno inattacco
             //calcolo la posizione per centrare l'immagine
@@ -283,7 +285,7 @@ namespace WinTest
             {
                 //disegno l'area selezionata
                 SolidBrush colorBrush = new SolidBrush(Color.FromArgb(50, 12, 12, 12));
-                l_objGraphics.FillRectangle(colorBrush, objPlayArea.AreaRect);
+                l_objGraphics.FillRectangle(colorBrush, new Rectangle(objPlayArea.AreaRect.X,objPlayArea.AreaRect.Y,objPlayArea.AreaRect.Width,objPlayArea.AreaRect.Height));
                 colorBrush.Dispose();
             }
         }
