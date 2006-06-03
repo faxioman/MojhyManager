@@ -86,6 +86,20 @@ namespace Mojhy.Utils.DrawingExt
         public RectangleObject(int x, int y, int width, int height){
             l_rctInternalRectangle = new Rectangle(x, y, width, height);
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:RectangleObject"/> class.
+        /// </summary>
+        public RectangleObject()
+        {
+            l_rctInternalRectangle = new Rectangle();
+        }
+        /// <summary>
+        /// Determines if the specified point is contained within this <see cref="T:RectangleObject"/>.
+        /// </summary>
+        /// <param name="ptObj">The PointObject to test.</param>
+        /// <returns>
+        /// 	This method returns <c>true</c> if the point represented by ptObj is contained within this <see cref="T:RectangleObject"/>; otherwise, <c>false</c>.
+        /// </returns>
         public bool Contains (PointObject ptObj)
         {
             if ((ptObj.X < this.X) || (ptObj.X > this.Right) || (ptObj.Y < this.Y) || (ptObj.Y > this.Bottom))
@@ -132,7 +146,7 @@ namespace Mojhy.Utils.DrawingExt
         /// </summary>
         public PointObject()
         {
-            l_ptInternalPoint = new Point(0, 0);
+            l_ptInternalPoint = new Point();
         }
     }
     /// <summary>
