@@ -107,6 +107,14 @@ namespace Mojhy.Utils.DrawingExt
             else
                 return true;
         }
+        /// <summary>
+        /// Gets the System.Drawing.Rectangle.
+        /// </summary>
+        /// <returns></returns>
+        public Rectangle GetDrawingRectangle()
+        {
+            return l_rctInternalRectangle;
+        }
     }
     /// <summary>
     /// PointObject class
@@ -147,6 +155,10 @@ namespace Mojhy.Utils.DrawingExt
         public PointObject()
         {
             l_ptInternalPoint = new Point();
+        }
+        public Point GetDrawingPoint()
+        {
+            return l_ptInternalPoint;
         }
     }
     /// <summary>
