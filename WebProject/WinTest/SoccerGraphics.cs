@@ -84,6 +84,7 @@ namespace WinTest
             l_objGraphics = g;
             //attivo l'antialias
             l_objGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            l_objGraphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             //imposto l'unità di misura
             l_objGraphics.PageUnit = UNIT;
             //imposto la scala, visto che considero il campo con le sue misure reali
@@ -114,7 +115,18 @@ namespace WinTest
             ptLocPixel.Y = (int)(MM_PER_INCH / l_fltDpiY * PixelLoc.Y / (MAGICNUMBERCONVERSION / SCALE));
             return ptLocPixel;
         }
-
+        /// <summary>
+        /// Converts a millimeter point (3D) location to the point as pixel.
+        /// </summary>
+        /// <param name="PixelLoc">The pixel loc.</param>
+        /// <returns></returns>
+        public PointObject MMToPixel(Point3D PixelLoc)
+        {
+            PointObject ptLocPixel = new PointObject();
+            ptLocPixel.X = (int)(MM_PER_INCH / l_fltDpiX * PixelLoc.X / (MAGICNUMBERCONVERSION / SCALE));
+            ptLocPixel.Y = (int)(MM_PER_INCH / l_fltDpiY * PixelLoc.Y / (MAGICNUMBERCONVERSION / SCALE));
+            return ptLocPixel;
+        }
         /// <summary>
         /// Draws the selected play area.
         /// </summary>
@@ -148,6 +160,7 @@ namespace WinTest
             Point ptCenteredPosition;
             //disegno inattacco
             //calcolo la posizione per centrare l'immagine
+            Font fntNumber = new Font("Tahoma", 7, FontStyle.Bold);
             switch (enPositionType)
             {
                 case PlayerPositionType.Attack:
@@ -155,11 +168,11 @@ namespace WinTest
                     l_objGraphics.DrawImage(l_imgAttacco, ptCenteredPosition);
                     if (intNumPlayer > 9)
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 900, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
                     }
                     else
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 500, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].X - 500, objPlayingPlayer.PositionsOnField.AttackPositions[intAreaIndex].Y - 600));
                     }
                     break;
                 case PlayerPositionType.Defense:
@@ -169,11 +182,11 @@ namespace WinTest
                     l_objGraphics.DrawImage(l_imgDifesa, ptCenteredPosition);
                     if (intNumPlayer > 9)
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 450, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 450, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
                     }
                     else
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 100, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].X - 100, objPlayingPlayer.PositionsOnField.DefensePositions[intAreaIndex].Y - 600));
                     }
                     break;
                 case PlayerPositionType.Current:
@@ -183,11 +196,11 @@ namespace WinTest
                     l_objGraphics.DrawImage(l_imgCurrent, ptCenteredPosition);
                     if (intNumPlayer > 9)
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 450, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 1000, objPlayingPlayer.CurrentPositionOnField.Y - 600));
                     }
                     else
                     {
-                        l_objGraphics.DrawString(intNumPlayer.ToString(), new Font("Tahoma", 7), Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 100, objPlayingPlayer.CurrentPositionOnField.Y - 600));
+                        l_objGraphics.DrawString(intNumPlayer.ToString(), fntNumber, Brushes.White, new Point(objPlayingPlayer.CurrentPositionOnField.X - 600, objPlayingPlayer.CurrentPositionOnField.Y - 600));
                     }
                     break;
             }

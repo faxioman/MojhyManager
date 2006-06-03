@@ -29,7 +29,7 @@ namespace Mojhy.Engine
         //thread AI
         private Thread l_objAIThread;
         //variabili locali indicanti le skill del giocatore
-        private Single l_sglVelocity = 100;
+        private Single l_sglVelocity = 30;
         /// <summary>
         /// Gets or sets the player skill 'velocity'.
         /// </summary>
@@ -104,8 +104,18 @@ namespace Mojhy.Engine
             if (l_objAIThread == null)
             {
                 l_objAIThread = new Thread(this.TheBrain);
-                l_objAIThread.Priority = ThreadPriority.Lowest;
                 l_objAIThread.Start();
+            }
+        }
+        /// <summary>
+        /// Disables the artificial intelligence for the player.
+        /// </summary>
+        public void DisableAI()
+        {
+            if (l_objAIThread != null)
+            {
+                l_objAIThread.Abort();
+                l_objAIThread = null;
             }
         }
         /// <summary>
@@ -115,8 +125,10 @@ namespace Mojhy.Engine
         {
             double dblCos = 0;
             double dblSin = 0;
+            int intMoveX = 0;
+            int intMoveY = 0;
             //punto di arrivo del giocatore
-            PointObject ptGoodPosition;
+            PointObject ptGoodPosition = new PointObject();
             //angolo di spostmento del giocatore
             double dblMoveAngle;
             //indice dell'area temporaneo
@@ -129,7 +141,7 @@ namespace Mojhy.Engine
             while (System.Threading.Thread.CurrentThread.ThreadState == ThreadState.Running)
             {
                 intAreaIndexTmp = this.parent.parent.GetCurrentArea().Index;
-                if ((intAreaIndexPrevious != this.parent.parent.GetCurrentArea().Index) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
+                if ((intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
                 {
                     //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
                     switch (this.parent.CurrentPlayingStatus)
@@ -152,10 +164,16 @@ namespace Mojhy.Engine
                     dblSin = Math.Sin(dblMoveAngle);
                     intAreaIndexPrevious = intAreaIndexTmp;
                     objStatusPrevious = this.parent.CurrentPlayingStatus;
+                    intMoveX = (int)Math.Round(l_sglVelocity * dblCos);
+                    intMoveY= (int)Math.Round(l_sglVelocity * dblSin);
                 }
-                //muovo il giocatore nella sua posizione
-                this.CurrentPositionOnField.X += (int)Math.Round(l_sglVelocity * dblCos);
-                this.CurrentPositionOnField.Y -= (int)Math.Round(l_sglVelocity * dblSin);
+                System.Threading.Thread.Sleep(4); //TODO. SOLO PER TESTING...POI NON SARà IL CASO DI RALLENTARE NULLA!!!!
+                //muovo il giocatore nella sua posizione (verifico che non sia già arrivato 'nei pressi')
+                if ((Math.Abs(this.CurrentPositionOnField.X - ptGoodPosition.X) > 100) && (Math.Abs(this.CurrentPositionOnField.Y - ptGoodPosition.Y) > 100))
+                {
+                    this.CurrentPositionOnField.X += intMoveX;
+                    this.CurrentPositionOnField.Y -= intMoveY;
+                }
             }
         }
         /// <summary>

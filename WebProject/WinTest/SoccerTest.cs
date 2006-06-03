@@ -39,6 +39,11 @@ namespace WinTest
         private bool l_blShowDefense = true;
         //definisco se sono in fase di drag
         private bool l_blDragging = false;
+        //timer per il ridisegno
+        private Timer l_objTimer = new System.Windows.Forms.Timer();
+        //posizioni in memoria per raffinare il ridisegno
+        private System.Drawing.Point[] l_arrPosPoints;
+        private System.Drawing.Point l_ptBallPos;
         #endregion
         //l'enumeratore FormStatus indica lo stato corrente dell'applicativo
         public enum FormStatus
@@ -62,6 +67,8 @@ namespace WinTest
             this.MouseDown += new MouseEventHandler(SoccerTest_MouseDown);
             //collego l'evento di mouse up
             this.MouseUp += new MouseEventHandler(SoccerTest_MouseUp);
+            //collego l'evento di chiusura della form
+            this.FormClosing += new FormClosingEventHandler(SoccerTest_FormClosing);
             //inizializzo la prima squadra (presente in ogni situazione)
             l_objTeamA = new Mojhy.Engine.Team();
             //inizializzo le posizione dei giocatori (posizione iniziale, tutti a meta campo)
@@ -84,6 +91,14 @@ namespace WinTest
             l_objField.SetBall(new Mojhy.Engine.Ball());
             //inizializzo la combo dello stato allo stato attuale
             cbStatus.SelectedIndex = (int)this.l_enState;
+            //inizializzo il timer per il ridisegno
+            l_objTimer.Interval = 40;
+            l_objTimer.Tick += new System.EventHandler(this.RedrawTimer);
+        }
+        //distruzione della form
+        private void SoccerTest_FormClosing(object sender,  FormClosingEventArgs e)
+        {
+            l_objTeamA.DisableAI();
         }
         //restituisce un punto valido del campo in pixel
         private PointObject GetValidFieldPosition(PointObject ptRawPoint)
@@ -127,9 +142,8 @@ namespace WinTest
                     l_intSelectedAttackPlayerIndex = -1;
                     break;
                 case FormStatus.MoveBallAndEnjoy:
-                    ptLocBallMM = l_objSoccerGraph.PixelToMM(new PointObject(l_ptMouseLoc.X, l_ptMouseLoc.Y));
-                    l_objField.GetBall().PositionOnField.X = ptLocBallMM.X;
-                    l_objField.GetBall().PositionOnField.Y = ptLocBallMM.Y;
+                    l_blDragging = false;
+                    Cursor.Show();
                     break;
                 case FormStatus.PlayingMatch:
                     break;
@@ -138,6 +152,7 @@ namespace WinTest
 
         void SoccerTest_MouseDown(object sender, MouseEventArgs e)
         {
+            PointObject ptLocBallMM;
             switch (l_enState)
             {
                 case FormStatus.SettingPlayerPosition:
@@ -179,7 +194,12 @@ namespace WinTest
                     }
                     break;
                 case FormStatus.MoveBallAndEnjoy:
-                    
+                    l_blDragging = true;
+                    Cursor.Hide();
+                    ptLocBallMM = GetValidFieldPosition(new PointObject(l_ptMouseLoc.X, l_ptMouseLoc.Y));
+                    ptLocBallMM = l_objSoccerGraph.PixelToMM(ptLocBallMM);
+                    l_objField.GetBall().PositionOnField.X = ptLocBallMM.X;
+                    l_objField.GetBall().PositionOnField.Y = ptLocBallMM.Y;
                     break;
                 case FormStatus.PlayingMatch:
                     break;
@@ -188,6 +208,7 @@ namespace WinTest
         //mantiene aggiornata la posizione del mouse
         void SoccerTest_MouseMove(object sender, MouseEventArgs e)
         {
+            PointObject ptLocBallMM;
             l_ptMouseLoc.X = e.X;
             l_ptMouseLoc.Y = e.Y;
             switch (l_enState)
@@ -217,6 +238,13 @@ namespace WinTest
                     }
                     break;
                 case FormStatus.MoveBallAndEnjoy:
+                    if (l_blDragging)
+                    {
+                        ptLocBallMM = GetValidFieldPosition(new PointObject(l_ptMouseLoc.X, l_ptMouseLoc.Y));
+                        ptLocBallMM = l_objSoccerGraph.PixelToMM(ptLocBallMM);
+                        l_objField.GetBall().PositionOnField.X = ptLocBallMM.X;
+                        l_objField.GetBall().PositionOnField.Y = ptLocBallMM.Y;
+                    }
                     break;
                 case FormStatus.PlayingMatch:
                     break;
@@ -373,19 +401,44 @@ namespace WinTest
                 btSavePositions.Hide();
                 btShowAttack.Hide();
                 btShowDefense.Hide();
+                l_objTimer.Start();
                 if (l_enState == FormStatus.MoveBallAndEnjoy)
                 {
+                    l_objTeamA.CurrentPlayingStatus = Mojhy.Engine.Team.PlayingStatus.attack;
                     l_objTeamA.EnableAI();
                 }
             }
             else
             {
+                l_objTimer.Stop();
                 btLoadPositions.Show();
                 btSavePositions.Show();
                 btShowAttack.Show();
                 btShowDefense.Show();
+                l_objTeamA.DisableAI();
             }
             Invalidate();
+        }
+        //il metodo viene chiamato dal timer che si occupa del ridisegno
+        private void RedrawTimer(object sender, EventArgs e)
+        {
+            if (l_arrPosPoints == null)
+            {
+                l_arrPosPoints = new System.Drawing.Point[11];
+            }
+            for (int i = 0; i < 11; i++)
+            {
+                PointObject objCurrentPosAux = l_objSoccerGraph.MMToPixel(l_objTeamA.PlayingPlayers[i].CurrentPositionOnField);
+                Invalidate(new System.Drawing.Rectangle(l_arrPosPoints[i].X - 20, l_arrPosPoints[i].Y - 20, 40, 40));
+                Invalidate(new System.Drawing.Rectangle(objCurrentPosAux.X - 20, objCurrentPosAux.Y - 20, 40, 40));
+                l_arrPosPoints[i].X = objCurrentPosAux.X;
+                l_arrPosPoints[i].Y = objCurrentPosAux.Y;
+            }
+            PointObject objCurrentBallPosAux = l_objSoccerGraph.MMToPixel(l_objField.GetBall().PositionOnField);
+            Invalidate(new System.Drawing.Rectangle(l_ptBallPos.X - 20, l_ptBallPos.Y - 20, 40, 40));
+            Invalidate(new System.Drawing.Rectangle(objCurrentBallPosAux.X - 20, objCurrentBallPosAux.Y - 20, 40, 40));
+            l_ptBallPos.X = objCurrentBallPosAux.X;
+            l_ptBallPos.Y = objCurrentBallPosAux.Y;
         }
     }
 }
