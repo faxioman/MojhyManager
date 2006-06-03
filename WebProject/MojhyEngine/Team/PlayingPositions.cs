@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-
+using Mojhy.Utils.DrawingExt;
 namespace Mojhy.Engine
 {
     /// <summary>
@@ -16,8 +16,8 @@ namespace Mojhy.Engine
     public class PlayingPositions
     {
         //posizioni di attacco e di difesa che il giocatore deve assumere per area
-        private Point[] l_arrAttackPositions;
-        private Point[] l_arrDefensePositions;
+        private PointObject[] l_arrAttackPositions;
+        private PointObject[] l_arrDefensePositions;
         //posizioni speciali che il giocatore dovrà assumere per evento
 
         //TODO//
@@ -26,7 +26,7 @@ namespace Mojhy.Engine
         /// Gets or sets the list of attack positions.
         /// </summary>
         /// <value>The attack positions array.</value>
-        public Point[] AttackPositions
+        public PointObject[] AttackPositions
         {
             get { return l_arrAttackPositions; }
             set { l_arrAttackPositions = value; }
@@ -35,7 +35,7 @@ namespace Mojhy.Engine
         /// Gets or sets the list of  defense positions.
         /// </summary>
         /// <value>The defense positions array.</value>
-        public Point[] DefensePositions
+        public PointObject[] DefensePositions
         {
             get { return l_arrDefensePositions; }
             set { l_arrDefensePositions = value; }
@@ -45,8 +45,8 @@ namespace Mojhy.Engine
         /// </summary>
         public PlayingPositions()
         {
-            l_arrAttackPositions = new Point[20];
-            l_arrDefensePositions = new Point[20];
+            l_arrAttackPositions = new PointObject[20];
+            l_arrDefensePositions = new PointObject[20];
         }
     }
 }

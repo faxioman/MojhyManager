@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Threading;
+using Mojhy.Utils.DrawingExt;
 
 namespace Mojhy.Engine
 {
@@ -17,7 +18,7 @@ namespace Mojhy.Engine
     public class PlayingPlayer
     {
         //posizione nel campo del giocatore
-        private Point l_ptPosition;
+        private PointObject l_ptPosition;
         //oggetto field ove i giocatori sono posizionati
         private Field l_objField;
         //indice del giocatore
@@ -43,7 +44,7 @@ namespace Mojhy.Engine
         /// Gets or sets the player position on field.
         /// </summary>
         /// <value>The player position on field as Point.</value>
-        public Point CurrentPositionOnField
+        public PointObject CurrentPositionOnField
         {
             get { return l_ptPosition; }
             set { l_ptPosition = value; }
@@ -113,7 +114,7 @@ namespace Mojhy.Engine
             double dblCos = 0;
             double dblSin = 0;
             //punto di arrivo del giocatore
-            Point ptGoodPosition;
+            PointObject ptGoodPosition;
             //angolo di spostmento del giocatore
             double dblMoveAngle;
             //indice dell'area temporaneo
@@ -151,7 +152,8 @@ namespace Mojhy.Engine
                     objStatusPrevious = this.parent.CurrentPlayingStatus;
                 }
                 //muovo il giocatore nella sua posizione
-                this.CurrentPositionOnField = new Point(this.CurrentPositionOnField.X + (int)Math.Round(l_sglVelocity * dblCos), this.CurrentPositionOnField.Y - (int)Math.Round(l_sglVelocity * dblSin));
+                this.CurrentPositionOnField.X += (int)Math.Round(l_sglVelocity * dblCos);
+                this.CurrentPositionOnField.Y -= (int)Math.Round(l_sglVelocity * dblSin);
             }
         }
         /// <summary>

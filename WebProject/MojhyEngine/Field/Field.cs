@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mojhy.Engine;
 using System.Drawing;
+using Mojhy.Utils.DrawingExt;
 
 namespace Mojhy.Engine
 {
@@ -321,7 +322,7 @@ namespace Mojhy.Engine
         /// <returns>The current PlayArea</returns>
         public PlayArea GetCurrentArea()
         {
-            return this.Areas.GetAreaFromLoc(new Point(this.GetBall().PositionOnField.X, this.GetBall().PositionOnField.Y));
+            return this.Areas.GetAreaFromLoc(this.GetBall().PositionOnField);
         }
     }
 }

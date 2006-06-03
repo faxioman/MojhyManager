@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using Mojhy.Engine;
+using Mojhy.Utils.DrawingExt;
 
 namespace Mojhy.Engine
 {
@@ -119,7 +120,7 @@ namespace Mojhy.Engine
         /// </summary>
         /// <param name="Loc">The Point of the requested location.</param>
         /// <returns></returns>
-        public PlayArea GetAreaFromLoc(Point Loc)
+        public PlayArea GetAreaFromLoc(PointObject Loc)
         {
             foreach (PlayArea objPlayAreaAux in this.AreasList)
             {
@@ -130,6 +131,17 @@ namespace Mojhy.Engine
             }
             //non ho trovato nessuna area
             return null;
+        }
+        /// <summary>
+        /// Gets the Area identified by the 3D point location.
+        /// </summary>
+        /// <param name="Loc">The 3D point of the requested location.</param>
+        /// <returns></returns>
+        public PlayArea GetAreaFromLoc(Point3D Loc)
+        {
+            //converto il punto tridimensionale in bidimensionale
+            PointObject ptLocAux = new PointObject(Loc.X, Loc.Y);
+            return this.GetAreaFromLoc(ptLocAux);
         }
     }
 }

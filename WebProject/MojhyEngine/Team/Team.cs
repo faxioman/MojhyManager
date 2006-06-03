@@ -123,7 +123,7 @@ namespace Mojhy.Engine
         /// </summary>
         public void DisableAI()
         {
-            //attivo l'algoritmo di posizionamento per ogni giocatore
+            //disattivo l'algoritmo di posizionamento per ogni giocatore
             foreach (PlayingPlayer objPlayingPlayervar in l_objPlayingPlayers)
             {
                 //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
