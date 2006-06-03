@@ -46,8 +46,7 @@ namespace Mojhy.Engine
             l_arrAreas = new PlayArea[20];
             for (int i = 0; i < l_arrAreas.Length; i++)
             {
-                l_arrAreas[i] = new PlayArea(this);
-                l_arrAreas[i].Index = i;
+                l_arrAreas[i] = new PlayArea(this, i);
                 if (i < 4)
                 {
                     //fascia sinistra

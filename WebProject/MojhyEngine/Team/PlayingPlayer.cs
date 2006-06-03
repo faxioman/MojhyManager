@@ -17,7 +17,7 @@ namespace Mojhy.Engine
     public class PlayingPlayer
     {
         //posizione nel campo del giocatore
-        private PointObject l_ptPosition;
+        private PointObject l_ptPosition = new PointObject();
         //oggetto field ove i giocatori sono posizionati
         private Field l_objField;
         //indice del giocatore
@@ -46,7 +46,6 @@ namespace Mojhy.Engine
         public PointObject CurrentPositionOnField
         {
             get { return l_ptPosition; }
-            set { l_ptPosition = value; }
         }
         /// <summary>
         /// Gets or sets the player's index.
@@ -55,7 +54,6 @@ namespace Mojhy.Engine
         public int Index
         {
             get { return l_intIndex; }
-            set { l_intIndex = value; }
         }
         /// <summary>
         /// Gets the parent Team object.
@@ -86,12 +84,16 @@ namespace Mojhy.Engine
         /// Initializes a new instance of the <see cref="T:PlayingPlayer"/> class.
         /// </summary>
         /// <param name="objTeam">The referenced Team object.</param>
+        /// <param name="Index">The index of the player (from 0 to 10).</param>
         /// <param name="objField">The referenced Field object.</param>
-        public PlayingPlayer(Team objTeam, Field objField)
+        public PlayingPlayer(Team objTeam, int Index, Field objField)
         {
+            if ((Index < 0) || (Index > 10)) 
+                throw new Exception("PlayingPlayer Index range is from 0 to 10");
             l_objPlayingPositions = new PlayingPositions();
             l_objField = objField;
             l_objTeam = objTeam;
+            l_intIndex = Index;
         }
         /// <summary>
         /// Enables the artificial intelligence for the player.

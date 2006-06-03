@@ -44,8 +44,14 @@ namespace Mojhy.Engine
         /// </summary>
         public PlayingPositions()
         {
+            int i = 0;
             l_arrAttackPositions = new PointObject[20];
             l_arrDefensePositions = new PointObject[20];
+            for (i = 0; i < 20; i++)
+            {
+                l_arrAttackPositions[i] = new PointObject();
+                l_arrDefensePositions[i] = new PointObject();
+            }
         }
     }
 }

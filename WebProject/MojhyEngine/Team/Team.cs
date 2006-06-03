@@ -87,8 +87,7 @@ namespace Mojhy.Engine
                 //creo i giocatori sul campo
                 for (int i = 0; i < l_objPlayingPlayers.Length; i++)
                 {
-                    l_objPlayingPlayers[i] = new PlayingPlayer(this, objField);
-                    l_objPlayingPlayers[i].Index = i;
+                    l_objPlayingPlayers[i] = new PlayingPlayer(this, i, objField);
                 }
                 //imposto il riferimento all'oggetto campo  
                 l_objField = objField;

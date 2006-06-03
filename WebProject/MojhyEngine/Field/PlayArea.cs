@@ -41,15 +41,18 @@ namespace Mojhy.Engine
         public int Index
         {
             get { return l_intIndex; }
-            set { l_intIndex = value; }
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="T:PlayArea"/> class.
         /// </summary>
         /// <param name="objPlayAreas">The PlayAreas object.</param>
-        public PlayArea(PlayAreas objPlayAreas)
+        /// <param name="Index">The index of the area (from 0 to 19).</param>
+        public PlayArea(PlayAreas objPlayAreas, int Index)
         {
+            if ((Index < 0) || (Index > 19)) 
+                throw new Exception("PlayArea Index range is from 0 to 19");
             l_objPlayAreas = objPlayAreas;
+            l_intIndex = Index;
         }
     }
 }

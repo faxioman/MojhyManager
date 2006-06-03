@@ -32,7 +32,6 @@ namespace Mojhy.Engine
         public Point3D PositionOnField
         {
             get { return l_ptzBallPosition; }
-            set { l_ptzBallPosition = value; }
         }
         /// <summary>
         /// Initialize the ball on field.
