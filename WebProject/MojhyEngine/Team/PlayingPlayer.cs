@@ -86,8 +86,9 @@ namespace Mojhy.Engine
         /// <value>The distance from the ball in mm.</value>
         public int GetDistanceFromBall()
         {
-                Point3D ptBallPos = this.parent.parent.GetBall().PositionOnField;
-                return (int)Math.Round(Math.Sqrt(Math.Pow(ptBallPos.X - this.CurrentPositionOnField.X, 2) + Math.Pow(ptBallPos.Y - this.CurrentPositionOnField.Y, 2)));
+            Point3D ptBallPos = this.parent.parent.GetBall().PositionOnField;
+            //pitagora come se piovesse ;-)
+            return (int)Math.Round(Math.Sqrt(Math.Pow(ptBallPos.X - this.CurrentPositionOnField.X, 2) + Math.Pow(ptBallPos.Y - this.CurrentPositionOnField.Y, 2)));
         }
         /// <summary>
         /// Determines whether the player is the nearest to the ball.
