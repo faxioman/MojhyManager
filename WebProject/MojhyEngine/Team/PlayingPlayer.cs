@@ -177,7 +177,7 @@ namespace Mojhy.Engine
             }
         }
         /// <summary>
-        /// Calculate the direction angle of the player towards the ball (in RAD).
+        /// Calculate the direction angle of the player towards the destination (in RAD).
         /// </summary>
         /// <param name="px1">The PX1.</param>
         /// <param name="py1">The py1.</param>
