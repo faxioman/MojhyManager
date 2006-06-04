@@ -81,6 +81,31 @@ namespace Mojhy.Engine
             set { l_objPlayingPositions = value; }
         }
         /// <summary>
+        /// Gets the distance from the ball.
+        /// </summary>
+        /// <value>The distance from the ball in mm.</value>
+        public int GetDistanceFromBall()
+        {
+                Point3D ptBallPos = this.parent.parent.GetBall().PositionOnField;
+                return (int)Math.Round(Math.Sqrt(Math.Pow(ptBallPos.X - this.CurrentPositionOnField.X, 2) + Math.Pow(ptBallPos.Y - this.CurrentPositionOnField.Y, 2)));
+        }
+        /// <summary>
+        /// Determines whether the player is the nearest to the ball.
+        /// </summary>
+        /// <returns>
+        /// 	<c>true</c> if the player is the nearest to the ball; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsNearestToBall()
+        {
+            int intMyDistance = this.GetDistanceFromBall();
+            foreach (PlayingPlayer objPlayingPlayer in this.parent.PlayingPlayers)
+            {
+                if (intMyDistance > objPlayingPlayer.GetDistanceFromBall())
+                    return false;
+            }
+            return true;
+        }
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:PlayingPlayer"/> class.
         /// </summary>
         /// <param name="objTeam">The referenced Team object.</param>
@@ -133,30 +158,44 @@ namespace Mojhy.Engine
             double dblMoveAngle;
             //indice dell'area temporaneo
             int intAreaIndexTmp;
-            //mantengo due variabili 'Previous' relative allo stato della squadra e all'area corrente.
+            //mantengo tre variabili 'Previous' relative allo stato della squadra, all'area corrente e per vedere se cambia lo stato di giocatore più vicino alla palla.
             //In questo modo ricalcolo la posizione del giocatore solo se queste sono cambiate.
             Mojhy.Engine.Team.PlayingStatus objStatusPrevious = Team.PlayingStatus.kickoff;
             int intAreaIndexPrevious = -1;
+            bool blIsNearestPrevious = false;
+            //variabile se si tratta del giocatore più vicino alla palla
+            bool blIsNearestAux;
             //parte il ciclo guidato dal Thread
             while (System.Threading.Thread.CurrentThread.ThreadState == ThreadState.Running)
             {
                 intAreaIndexTmp = this.parent.parent.GetCurrentArea().Index;
-                if ((intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
+                blIsNearestAux = this.IsNearestToBall();
+                if (blIsNearestAux || (blIsNearestPrevious != blIsNearestAux) || (intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
                 {
-                    //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
-                    switch (this.parent.CurrentPlayingStatus)
+                    if (!blIsNearestAux)
+                        //deve correre verso la sua posizione
                     {
-                        case Team.PlayingStatus.attack:
-                            ptGoodPosition = this.PositionsOnField.AttackPositions[intAreaIndexTmp];
-                            break;
-                        case Team.PlayingStatus.defense:
-                            ptGoodPosition = this.PositionsOnField.DefensePositions[intAreaIndexTmp];
-                            break;
-                        default:
-                            //se non dovesse avere alcuno stato (non dovrebbe succedere) considero la posizione attuale del giocatore
-                            //come valida
-                            ptGoodPosition = this.CurrentPositionOnField;
-                            break;
+                        //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
+                        switch (this.parent.CurrentPlayingStatus)
+                        {
+                            case Team.PlayingStatus.attack:
+                                ptGoodPosition = this.PositionsOnField.AttackPositions[intAreaIndexTmp];
+                                break;
+                            case Team.PlayingStatus.defense:
+                                ptGoodPosition = this.PositionsOnField.DefensePositions[intAreaIndexTmp];
+                                break;
+                            default:
+                                //se non dovesse avere alcuno stato (non dovrebbe succedere) considero la posizione attuale del giocatore
+                                //come valida
+                                ptGoodPosition = this.CurrentPositionOnField;
+                                break;
+                        }
+                    }
+                    else
+                        //deve correre verso la palla
+                    {
+                        Point3D ptBallPosition = this.parent.parent.GetBall().PositionOnField;
+                        ptGoodPosition = new PointObject(ptBallPosition.X, ptBallPosition.Y);
                     }
                     //calcolo l'angolo di spostamento del giocatore
                     dblMoveAngle = Angle(this.CurrentPositionOnField.X, this.CurrentPositionOnField.Y, ptGoodPosition.X, ptGoodPosition.Y);
@@ -164,6 +203,7 @@ namespace Mojhy.Engine
                     dblSin = Math.Sin(dblMoveAngle);
                     intAreaIndexPrevious = intAreaIndexTmp;
                     objStatusPrevious = this.parent.CurrentPlayingStatus;
+                    blIsNearestPrevious = blIsNearestAux;
                     intMoveX = (int)Math.Round(l_sglVelocity * dblCos);
                     intMoveY= (int)Math.Round(l_sglVelocity * dblSin);
                 }
