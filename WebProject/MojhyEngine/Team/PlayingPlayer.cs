@@ -174,7 +174,7 @@ namespace Mojhy.Engine
                 if (blIsNearestAux || (blIsNearestPrevious != blIsNearestAux) || (intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
                 {
                     if (!blIsNearestAux)
-                        //deve correre verso la sua posizione
+                        //deve andare verso la sua posizione
                     {
                         //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
                         switch (this.parent.CurrentPlayingStatus)
@@ -191,12 +191,14 @@ namespace Mojhy.Engine
                                 ptGoodPosition = this.CurrentPositionOnField;
                                 break;
                         }
+                        l_sglVelocity = 30;
                     }
                     else
                         //deve correre verso la palla
                     {
                         Point3D ptBallPosition = this.parent.parent.GetBall().PositionOnField;
                         ptGoodPosition = new PointObject(ptBallPosition.X, ptBallPosition.Y);
+                        l_sglVelocity = 60;
                     }
                     //calcolo l'angolo di spostamento del giocatore
                     dblMoveAngle = Angle(this.CurrentPositionOnField.X, this.CurrentPositionOnField.Y, ptGoodPosition.X, ptGoodPosition.Y);
