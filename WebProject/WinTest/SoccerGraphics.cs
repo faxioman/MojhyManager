@@ -302,7 +302,7 @@ namespace WinTest
         {
             if (objBall != null)
             {
-                l_objGraphics.DrawImage(l_imgPalloncino, new Point(objBall.PositionOnField.X, objBall.PositionOnField.Y));
+                l_objGraphics.DrawImage(l_imgPalloncino, new Point(objBall.PositionOnField.X-500, objBall.PositionOnField.Y-500));
             }
         }
 
