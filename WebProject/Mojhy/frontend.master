@@ -1,0 +1,47 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="frontend.master.cs" Inherits="frontend" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Mojhy Manager</title>
+    <link href="frontstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <table class="topbboard">
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:ContentPlaceHolder ID="cntheader" runat="server">
+                            contenuto di default
+                        </asp:ContentPlaceHolder>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <asp:ContentPlaceHolder ID="cntmenu" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="cntmain" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
