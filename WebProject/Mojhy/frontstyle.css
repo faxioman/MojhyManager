@@ -3,11 +3,18 @@
 	margin: 0px;
 	text-align: center;
 }
-.topbboard
+.topbboard1
 {
 	background-image: url(/img/bglgn.jpg);
 	width: 740px;
-	height: 120px;
+	height: 118px;
 	text-align: left;
-	bor
+	padding: 0px;
+	margin:0px;
+}
+.topborder
+{
+	background-image: url(/img/brdtoplgn.jpg);
+	width: 740px;
+	height: 20px;
 }
