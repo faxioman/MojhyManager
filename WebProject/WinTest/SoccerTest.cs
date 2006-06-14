@@ -409,6 +409,7 @@ namespace WinTest
                 {
                     l_objTeamA.CurrentPlayingStatus = Mojhy.Engine.Team.PlayingStatus.attack;
                     l_objTeamA.EnableAI();
+                    //l_objField.GetBall().EnableAI();
                 }
             }
             else
@@ -420,6 +421,7 @@ namespace WinTest
                 btShowAttack.Show();
                 btShowDefense.Show();
                 l_objTeamA.DisableAI();
+                //l_objField.GetBall().DisableAI();
             }
             Invalidate();
         }

@@ -165,60 +165,109 @@ namespace Mojhy.Engine
             int intAreaIndexPrevious = -1;
             bool blIsNearestPrevious = false;
             //variabile se si tratta del giocatore più vicino alla palla
-            bool blIsNearestAux;
+            bool blIsNearestAux = false;
+
+            //variabile che indica se il giocatore ha il possesso della palla
+            bool blHasBallPossessionAux = false;
+
             //parte il ciclo guidato dal Thread
             while (System.Threading.Thread.CurrentThread.ThreadState == ThreadState.Running)
             {
                 intAreaIndexTmp = this.parent.parent.GetCurrentArea().Index;
-                blIsNearestAux = this.IsNearestToBall();
-                if (blIsNearestAux || (blIsNearestPrevious != blIsNearestAux) || (intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
+                                
+                //controllo se il giocatore ha il possesso della balla
+                //se il giocatore ha il possesso allora passa la palla al giocatore con numero successivo
+                if (this.GetDistanceFromBall() < 600)
                 {
-                    if (!blIsNearestAux)
-                        //deve andare verso la sua posizione
-                    {
-                        //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
-                        switch (this.parent.CurrentPlayingStatus)
-                        {
-                            case Team.PlayingStatus.attack:
-                                ptGoodPosition = this.PositionsOnField.AttackPositions[intAreaIndexTmp];
-                                break;
-                            case Team.PlayingStatus.defense:
-                                ptGoodPosition = this.PositionsOnField.DefensePositions[intAreaIndexTmp];
-                                break;
-                            default:
-                                //se non dovesse avere alcuno stato (non dovrebbe succedere) considero la posizione attuale del giocatore
-                                //come valida
-                                ptGoodPosition = this.CurrentPositionOnField;
-                                break;
-                        }
-                        l_sglVelocity = 30;
-                    }
-                    else
-                        //deve correre verso la palla
-                    {
-                        Point3D ptBallPosition = this.parent.parent.GetBall().PositionOnField;
-                        ptGoodPosition = new PointObject(ptBallPosition.X, ptBallPosition.Y);
-                        l_sglVelocity = 60;
-                    }
-                    //calcolo l'angolo di spostamento del giocatore
-                    dblMoveAngle = Angle(this.CurrentPositionOnField.X, this.CurrentPositionOnField.Y, ptGoodPosition.X, ptGoodPosition.Y);
-                    dblCos = Math.Cos(dblMoveAngle);
-                    dblSin = Math.Sin(dblMoveAngle);
-                    intAreaIndexPrevious = intAreaIndexTmp;
-                    objStatusPrevious = this.parent.CurrentPlayingStatus;
-                    blIsNearestPrevious = blIsNearestAux;
-                    intMoveX = (int)Math.Round(l_sglVelocity * dblCos);
-                    intMoveY= (int)Math.Round(l_sglVelocity * dblSin);
+                    
+                    blHasBallPossessionAux = true;
+                    
+                    //la posizione che deve raggiungere è la porta avversaria                    
+                    int iPlayerToPassBall = 0;
+                    if (this.Index < 9) iPlayerToPassBall = this.Index + 1;
+
+                    ptGoodPosition = this.parent.PlayingPlayers[iPlayerToPassBall].CurrentPositionOnField;                    
+                    l_sglVelocity = 20;
+
+                    this.parent.parent.GetBall().EndPositionOnField = new Point3D(ptGoodPosition.X, ptGoodPosition.Y, 0);
+                    //per ora imposto manualmente la forza .... ma poi sarà da implementare l'algoritmo
+                    this.parent.parent.GetBall().ShootPower = 8;
+                    this.parent.parent.GetBall().DisableBall();
+                    this.parent.parent.GetBall().EnableBall();
+
+                    //imposta la posizione che il giocatore assume dopo il tiro ....
+                    //cioè sta fermo !
+                    ptGoodPosition = this.CurrentPositionOnField;
                 }
+                else
+                {
+
+                    blHasBallPossessionAux = false;
+                    
+                    //il giocatore corre verso la palla o verso la sua posizione
+                    blIsNearestAux = this.IsNearestToBall();
+                    if (blIsNearestAux || (blIsNearestPrevious != blIsNearestAux) || (intAreaIndexPrevious != intAreaIndexTmp) || (objStatusPrevious != this.parent.CurrentPlayingStatus))
+                    {
+                        if (!blIsNearestAux)
+                        //deve andare verso la sua posizione
+                        {
+                            //leggo la posizione del giocatore a seconda di dove si trova il pallone e lo stato della squadra
+                            switch (this.parent.CurrentPlayingStatus)
+                            {
+                                case Team.PlayingStatus.attack:
+                                    ptGoodPosition = this.PositionsOnField.AttackPositions[intAreaIndexTmp];
+                                    break;
+                                case Team.PlayingStatus.defense:
+                                    ptGoodPosition = this.PositionsOnField.DefensePositions[intAreaIndexTmp];
+                                    break;
+                                default:
+                                    //se non dovesse avere alcuno stato (non dovrebbe succedere) considero la posizione attuale del giocatore
+                                    //come valida
+                                    ptGoodPosition = this.CurrentPositionOnField;
+                                    break;
+                            }
+                            l_sglVelocity = 30;
+                        }
+                        else
+                        //deve correre verso la palla
+                        {
+                            Point3D ptBallPosition = this.parent.parent.GetBall().PositionOnField;
+                            ptGoodPosition = new PointObject(ptBallPosition.X, ptBallPosition.Y);
+                            l_sglVelocity = 60;
+                        }
+                    }
+
+                }
+
+                //calcolo l'angolo di spostamento del giocatore
+                dblMoveAngle = Angle(this.CurrentPositionOnField.X, this.CurrentPositionOnField.Y, ptGoodPosition.X, ptGoodPosition.Y);
+                dblCos = Math.Cos(dblMoveAngle);
+                dblSin = Math.Sin(dblMoveAngle);
+                intAreaIndexPrevious = intAreaIndexTmp;
+                objStatusPrevious = this.parent.CurrentPlayingStatus;
+                blIsNearestPrevious = blIsNearestAux;
+                intMoveX = (int)Math.Round(l_sglVelocity * dblCos);
+                intMoveY = (int)Math.Round(l_sglVelocity * dblSin);
+                
                 System.Threading.Thread.Sleep(4); //TODO. SOLO PER TESTING...POI NON SARà IL CASO DI RALLENTARE NULLA!!!!
                 //muovo il giocatore nella sua posizione (verifico che non sia già arrivato 'nei pressi')
                 if ((Math.Abs(this.CurrentPositionOnField.X - ptGoodPosition.X) > 500) || (Math.Abs(this.CurrentPositionOnField.Y - ptGoodPosition.Y) > 500))
                 {
                     this.CurrentPositionOnField.X += intMoveX;
                     this.CurrentPositionOnField.Y -= intMoveY;
+
+                    //if (blHasBallPossessionAux)
+                    //{
+                    //    //se il giocatore ha il possesso la palla si muove con lui
+                    //    this.parent.parent.GetBall().PositionOnField.X += intMoveX;
+                    //    this.parent.parent.GetBall().PositionOnField.Y -= intMoveY;
+                    //}
+
                 }
+                                
             }
         }
+        
         /// <summary>
         /// Calculate the direction angle of the player towards the destination (in RAD).
         /// </summary>
