@@ -17,8 +17,8 @@ public partial class _default : System.Web.UI.Page
         AjaxPro.Utility.RegisterTypeForAjax(typeof(_default));
     }
     [AjaxPro.AjaxMethod]
-    public DateTime GetServerTime()
+    public string GetServerTime()
     {
-        return DateTime.Now;
+        return "Ora server: ";
     }
 }
