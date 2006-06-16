@@ -3,6 +3,14 @@
 MENU
 </asp:Content>
 <asp:Content ID="main" ContentPlaceHolderID="cntmain" Runat="Server">
-THIS IS THE HOMEPAGE
+<script language="javascript">
+// This method will be called after the method has been executed
+// and the result has been sent to the client.
+function getServerTime_callback(res)
+{
+  alert(res.value);
+}
+</script>
+<input type="button" value="vedi data server" onclick="_default.GetServerTime(getServerTime_callback)" />
 </asp:Content>
 

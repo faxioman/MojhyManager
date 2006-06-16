@@ -13,6 +13,12 @@ public partial class _default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        //registro la classe per Ajax
+        AjaxPro.Utility.RegisterTypeForAjax(typeof(_default));
+    }
+    [AjaxPro.AjaxMethod]
+    public DateTime GetServerTime()
+    {
+        return DateTime.Now;
     }
 }
