@@ -19,6 +19,6 @@ public partial class _default : System.Web.UI.Page
     [AjaxPro.AjaxMethod]
     public string GetServerTime()
     {
-        return "Ora server: ";
+        return "Ora server: " + DateTime.Now.ToString();
     }
 }

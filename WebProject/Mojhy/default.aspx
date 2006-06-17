@@ -3,7 +3,7 @@
 MENU
 </asp:Content>
 <asp:Content ID="main" ContentPlaceHolderID="cntmain" Runat="Server">
-<script language="javascript">
+<script language="javascript" type="text/javascript">
 // This method will be called after the method has been executed
 // and the result has been sent to the client.
 function getServerTime_callback(res)
