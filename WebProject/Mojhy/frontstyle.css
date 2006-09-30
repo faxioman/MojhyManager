@@ -1,20 +1,44 @@
 ﻿body
 {
 	margin: 0px;
+	padding: 0px;
 	text-align: center;
 }
-.topbboard1
+.bigbordertop
 {
-	background-image: url(/img/bglgn.jpg);
-	width: 740px;
-	height: 118px;
-	text-align: left;
-	padding: 0px;
-	margin:0px;
+    height: 15px;
+    background-image: url(/img/brdtoplgn.gif);
 }
-.topborder
+.bigborderltop
 {
-	background-image: url(/img/brdtoplgn.jpg);
-	width: 740px;
-	height: 20px;
+    height: 15px;
+    width: 14px;
+    background-image: url(/img/brdtopllgn.gif);
+}
+.bigborderrtop
+{
+    height: 15px;
+    width: 14px;
+    background-image: url(/img/brdtoprlgn.gif);
+}
+.bigborderbottom
+{
+    height: 17px;
+    background-image: url(/img/brdbotlgn.gif);
+}
+.bigborderlbottom
+{
+    height: 17px;
+    width: 14px;
+    background-image: url(/img/brdbotllgn.gif);
+}
+.bigborderrbottom
+{
+    height: 17px;
+    width: 14px;
+    background-image: url(/img/brdbotrlgn.gif);
+}
+.toplgn
+{
+    width: 720px;
 }

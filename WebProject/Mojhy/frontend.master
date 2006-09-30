@@ -8,32 +8,36 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <table class="topbboard">
+            <table class="toplgn" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td>
-                    </td>
-                    <td class="topborder">&nbsp;
-                    </td>
-                    <td>
-                    </td>
+                    <td class="bigborderltop">
+                        <img src="/img/spc.gif" alt=""/></td>
+                    <td class="bigbordertop">
+                        <img src="/img/spc.gif" alt=""/></td>
+                    <td class="bigborderrtop">
+                        <img src="/img/spc.gif" alt=""/></td>
                 </tr>
                 <tr>
                     <td>
                     </td>
-                    <td>
+                    <td heigth="300">
                         <asp:ContentPlaceHolder ID="cntheader" runat="server">
-                            contenuto di default
+                        <br /><br />
+                            contenuto di default<br />
+                           <br /> 
                         </asp:ContentPlaceHolder>
                     </td>
                     <td>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="bigborderlbottom">
                     </td>
-                    <td>
+                    <td class="bigborderbottom">
+                    <img src="/img/spc.gif" alt=""/>
                     </td>
-                    <td>
+                    <td class="bigborderrbottom">
+                    <img src="/img/spc.gif" alt=""/>
                     </td>
                 </tr>
             </table>
