@@ -166,7 +166,8 @@ namespace Mojhy.Engine
             bool blIsNearestPrevious = false;
             //variabile se si tratta del giocatore più vicino alla palla
             bool blIsNearestAux = false;
-
+            //riferimento all'oggetto palla
+            Ball objBall = this.parent.parent.GetBall();
             //variabile che indica se il giocatore ha il possesso della palla
             bool blHasBallPossessionAux = false;
 
@@ -188,7 +189,6 @@ namespace Mojhy.Engine
 
                     ptGoodPosition = this.parent.PlayingPlayers[iPlayerToPassBall].CurrentPositionOnField;                    
                     l_sglVelocity = 20;
-                    Ball objBall = this.parent.parent.GetBall();
                     //l'oggetto palla deve essere modificato da un player per volta
                     lock (objBall)
                     {
