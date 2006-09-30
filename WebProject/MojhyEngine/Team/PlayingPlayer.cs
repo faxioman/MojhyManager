@@ -188,13 +188,16 @@ namespace Mojhy.Engine
 
                     ptGoodPosition = this.parent.PlayingPlayers[iPlayerToPassBall].CurrentPositionOnField;                    
                     l_sglVelocity = 20;
-
-                    this.parent.parent.GetBall().EndPositionOnField = new Point3D(ptGoodPosition.X, ptGoodPosition.Y, 0);
-                    //per ora imposto manualmente la forza .... ma poi sarà da implementare l'algoritmo
-                    this.parent.parent.GetBall().ShootPower = 8;
-                    this.parent.parent.GetBall().DisableBall();
-                    this.parent.parent.GetBall().EnableBall();
-
+                    Ball objBall = this.parent.parent.GetBall();
+                    //l'oggetto palla deve essere modificato da un player per volta
+                    lock (objBall)
+                    {
+                        objBall.EndPositionOnField = new Point3D(ptGoodPosition.X, ptGoodPosition.Y, 0);
+                        //per ora imposto manualmente la forza .... ma poi sarà da implementare l'algoritmo
+                        objBall.ShootPower = 8;
+                        objBall.DisableBall();
+                        objBall.EnableBall();
+                    }
                     //imposta la posizione che il giocatore assume dopo il tiro ....
                     //cioè sta fermo !
                     ptGoodPosition = this.CurrentPositionOnField;
@@ -231,7 +234,7 @@ namespace Mojhy.Engine
                         else
                         //deve correre verso la palla
                         {
-                            Point3D ptBallPosition = this.parent.parent.GetBall().PositionOnField;
+                            Point3D ptBallPosition = objBall.PositionOnField;
                             ptGoodPosition = new PointObject(ptBallPosition.X, ptBallPosition.Y);
                             l_sglVelocity = 60;
                         }
