@@ -30,9 +30,12 @@
   <ItemGroup>
     <Compile Include="DrawingExt.cs" />
     <Compile Include="FrameworkUtils.cs" />
+    <Compile Include="Math.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.XML" />
   </ItemGroup>
