@@ -49,7 +49,7 @@ namespace Mojhy.Utils
             // Convert to degrees
             angle = angle * 180 / System.Math.PI;
             //Return to RADIANT ;-) non chiedetemi il perchè 
-            angle = (((double)(360 - angle)) / 180) * Math.PI;
+            angle = (((double)(360 - angle)) / 180) * System.Math.PI;
             return angle;
         }
     }
