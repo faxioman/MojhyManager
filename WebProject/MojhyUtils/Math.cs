@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Mojhy.Utils
 {
-    class Math
+    public static class Math
     {
         /// <summary>
         /// Calculate the direction angle from a source point to a destination point in RAD.
