@@ -190,7 +190,7 @@ namespace Mojhy.Engine
                 if (l_sglShootDistance >= 50)
                 {
                     //calcolo l'angolo di spostamento del pallone
-                    dblMoveAngle = Angle(this.PositionOnField.X, this.PositionOnField.Y, l_ptzBallEndPosition.X, l_ptzBallEndPosition.Y);
+                    dblMoveAngle = Mojhy.Utils.Math.Angle(this.PositionOnField.X, this.PositionOnField.Y, l_ptzBallEndPosition.X, l_ptzBallEndPosition.Y);
                     dblCos = Math.Cos(dblMoveAngle);
                     dblSin = Math.Sin(dblMoveAngle);
                     intMoveX = (int)Math.Round(l_sglVelocity * dblCos);
@@ -214,54 +214,6 @@ namespace Mojhy.Engine
                     this.DisableBall();
                 }
             }
-        }
-
-        /// <summary>
-        /// Calculate the direction angle of the ball towards the destination (in RAD).
-        /// </summary>
-        /// <param name="px1">The PX1.</param>
-        /// <param name="py1">The py1.</param>
-        /// <param name="px2">The PX2.</param>
-        /// <param name="py2">The py2.</param>
-        /// <returns></returns>
-        private double Angle(double px1, double py1, double px2, double py2)
-        {
-            // Negate X and Y value
-            double pxRes = px2 - px1;
-            double pyRes = py2 - py1;
-            double angle = 0.0;
-            // Calculate the angle
-            if (pxRes == 0.0)
-            {
-                if (pxRes == 0.0)
-                    angle = 0.0;
-                else if (pyRes > 0.0)
-                    angle = System.Math.PI / 2.0;
-                else
-                    angle = System.Math.PI * 3.0 / 2.0;
-            }
-            else if (pyRes == 0.0)
-            {
-                if (pxRes > 0.0)
-                    angle = 0.0;
-                else
-                    angle = System.Math.PI;
-            }
-            else
-            {
-                if (pxRes < 0.0)
-                    angle = System.Math.Atan(pyRes / pxRes) + System.Math.PI;
-                else if (pyRes < 0.0)
-                    angle = System.Math.Atan(pyRes / pxRes) + (2 * System.Math.PI);
-                else
-                    angle = System.Math.Atan(pyRes / pxRes);
-            }
-            // Convert to degrees
-            angle = angle * 180 / System.Math.PI;
-            //Return to RADIANT ;-) non chiedetemi il perchè 
-            angle = (((double)(360 - angle)) / 180) * Math.PI;
-            return angle;
-        }
-            
+        }            
     }
 }
