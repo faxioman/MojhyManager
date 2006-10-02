@@ -1,3 +1,4 @@
+
 -dividere il campo in 12 settori:
 
 
