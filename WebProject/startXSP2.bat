@@ -1,3 +1,4 @@
+
 @echo off
 call C:\Programmi\Mono-1.1.15\bin\setmonopath.bat
 cd /D C:\Mojhy\WebProject\Mojhy
