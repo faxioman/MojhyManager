@@ -11,6 +11,6 @@ function getServerTime_callback(res)
   alert(res.value);
 }
 </script>
-<input type="button" value="vedi data server" onclick="_default.GetServerTime(getServerTime_callback)" />
+<input type="button" value="vedi data server" onclick="_default.GetServerTime(getServerTime_callback)" />ciao
 </asp:Content>
 
