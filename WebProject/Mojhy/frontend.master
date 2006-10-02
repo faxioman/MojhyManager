@@ -23,7 +23,7 @@
                     <td heigth="300">
                         <asp:ContentPlaceHolder ID="cntheader" runat="server">
                         <br /><br />
-                            contenuto di default ciao<br />
+                            contenuto di default ao<br />
                            <br /> 
                         </asp:ContentPlaceHolder>
                     </td>
