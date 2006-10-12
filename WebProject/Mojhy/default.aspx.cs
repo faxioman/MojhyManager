@@ -11,6 +11,10 @@ using System.Web.UI.HtmlControls;
 
 public partial class _default : System.Web.UI.Page
 {
+	protected System.Web.UI.WebControls.Content main;
+
+	protected System.Web.UI.WebControls.Content menu;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         //registro la classe per Ajax
