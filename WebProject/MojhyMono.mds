@@ -1,25 +1,29 @@
-<Combine name="MojyMono" fileversion="2.0">
+<Combine name="MojhyMono" fileversion="2.0">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MojhyEngine" configuration="Debug" />
       <Entry build="True" name="MojhyUtils" configuration="Debug" />
       <Entry build="True" name="Mojhy" configuration="Debug" />
+      <Entry build="True" name="WinTest" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MojhyEngine" configuration="Release" />
       <Entry build="True" name="MojhyUtils" configuration="Release" />
       <Entry build="True" name="Mojhy" configuration="Release" />
+      <Entry build="True" name="WinTest" configuration="Release" />
     </Configuration>
   </Configurations>
   <DeployTargets />
-  <StartMode startupentry="MojhyEngine" single="True">
+  <StartMode startupentry="Mojhy" single="True">
     <Execute type="None" entry="MojhyEngine" />
     <Execute type="None" entry="MojhyUtils" />
     <Execute type="None" entry="Mojhy" />
+    <Execute type="None" entry="WinTest" />
   </StartMode>
   <Entries>
     <Entry filename="./MojhyEngine/MojhyEngine.mdp" />
     <Entry filename="./MojhyUtils/MojhyUtils.mdp" />
     <Entry filename="./Mojhy/Mojhy.mdp" />
+    <Entry filename="./WinTest/WinTest.mdp" />
   </Entries>
 </Combine>
