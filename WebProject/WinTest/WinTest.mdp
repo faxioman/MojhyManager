@@ -1,0 +1,47 @@
+<Project name="WinTest" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="WinTest" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="WinTest" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./Formations/4-4-2.mft" subtype="Code" buildaction="Nothing" />
+    <File name="./Images/Attacco.png" subtype="Code" buildaction="Nothing" />
+    <File name="./Images/Current.png" subtype="Code" buildaction="Nothing" />
+    <File name="./Images/Difesa.png" subtype="Code" buildaction="Nothing" />
+    <File name="./Images/Palloncino.png" subtype="Code" buildaction="Nothing" />
+    <File name="./Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/Resources.Designer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/Resources.resx" subtype="Code" buildaction="Nothing" />
+    <File name="./Properties/Settings.Designer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Properties/Settings.settings" subtype="Code" buildaction="Nothing" />
+    <File name="./Program.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Settings.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SoccerGraphics.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SoccerTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SoccerTest.Designer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SoccerTest.resx" subtype="Code" buildaction="Nothing" />
+    <File name="./TrainTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrainTest.Designer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrainTest.resx" subtype="Code" buildaction="Nothing" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="MojhyEngine" />
+    <ProjectReference type="Project" localcopy="True" refto="MojhyUtils" />
+  </References>
+</Project>
