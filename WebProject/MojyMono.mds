@@ -3,19 +3,23 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MojhyEngine" configuration="Debug" />
       <Entry build="True" name="MojhyUtils" configuration="Debug" />
+      <Entry build="True" name="Mojhy" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MojhyEngine" configuration="Release" />
       <Entry build="True" name="MojhyUtils" configuration="Release" />
+      <Entry build="True" name="Mojhy" configuration="Release" />
     </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="MojhyEngine" single="True">
     <Execute type="None" entry="MojhyEngine" />
     <Execute type="None" entry="MojhyUtils" />
+    <Execute type="None" entry="Mojhy" />
   </StartMode>
   <Entries>
     <Entry filename="./MojhyEngine/MojhyEngine.mdp" />
     <Entry filename="./MojhyUtils/MojhyUtils.mdp" />
+    <Entry filename="./Mojhy/Mojhy.mdp" />
   </Entries>
 </Combine>
