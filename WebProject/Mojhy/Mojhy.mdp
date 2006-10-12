@@ -1,0 +1,40 @@
+<Project name="Mojhy" fileversion="2.0" language="C#" clr-version="Net_2_0" VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True" ctype="AspNetAppProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="AspNetAppProjectConfiguration">
+      <Output directory="./" assembly="Mojhy" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="AspNetAppProjectConfiguration">
+      <Output directory="./" assembly="Mojhy" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./bin/AjaxPro.2.dll" subtype="Code" buildaction="Nothing" />
+    <File name="./img/bglgn.jpg" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdbotlgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdbotllgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdbotrlgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdtoplgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdtopllgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/brdtoprlgn.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./img/spc.gif" subtype="Code" buildaction="Nothing" />
+    <File name="./default.aspx" subtype="Code" buildaction="Nothing" />
+    <File name="./default.aspx.cs" subtype="Code" buildaction="Compile" />
+    <File name="./frontend.master" subtype="Code" buildaction="Nothing" />
+    <File name="./frontend.master.cs" subtype="Code" buildaction="Compile" />
+    <File name="./frontstyle.css" subtype="Code" buildaction="Nothing" />
+    <File name="./web.config" subtype="Code" buildaction="Nothing" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </References>
+  <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+</Project>
