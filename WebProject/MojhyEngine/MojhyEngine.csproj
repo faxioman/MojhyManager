@@ -36,7 +36,7 @@
     <Compile Include="Field\Field.cs" />
     <Compile Include="Field\PlayArea.cs" />
     <Compile Include="Field\PlayAreas.cs" />
-    <Compile Include="FiniteStateMachine\FsmXml.cs" />
+    <Compile Include="FiniteStateMachine\FsmXmlAlpha.cs" />
     <Compile Include="League\Division.cs" />
     <Compile Include="League\League.cs" />
     <Compile Include="League\Season.cs" />
@@ -64,6 +64,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="FiniteStateMachine\scxml.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="MojhyEngine.cd" />
   </ItemGroup>
   <ItemGroup>
