@@ -36,6 +36,7 @@
     <Compile Include="Field\Field.cs" />
     <Compile Include="Field\PlayArea.cs" />
     <Compile Include="Field\PlayAreas.cs" />
+    <Compile Include="FiniteStateMachine\FsmXml.cs" />
     <Compile Include="League\Division.cs" />
     <Compile Include="League\League.cs" />
     <Compile Include="League\Season.cs" />
@@ -61,6 +62,12 @@
       <Project>{26605B21-1918-4251-B026-6074857E7FAB}</Project>
       <Name>MojhyUtils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MojhyEngine.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FiniteStateMachine\PlayingPlayerFSM.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
