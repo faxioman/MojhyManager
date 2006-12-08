@@ -90,7 +90,7 @@
     </Compartments>
   </Class>
   <Class Name="Mojhy.Engine.PlayingPositions">
-    <Position X="10" Y="3.5" Width="1.5" />
+    <Position X="10.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Team\PlayingPositions.cs</FileName>
       <HashCode>AAAAAAFAAAAAAAAAAABAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
