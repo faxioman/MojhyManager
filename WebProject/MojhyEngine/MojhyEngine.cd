@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="Mojhy.Engine.Ball">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Ball\Ball.cs</FileName>
+      <HashCode>AIIAAAAAAACAAABAAAACQgAEAIAEAAAAQAABAAIEAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="parent" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Mojhy.Engine.Field">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Field\Field.cs</FileName>
+      <HashCode>EQIEQOBATAAEJCACG4AAQEASkASCACAgAIABgR7FAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Areas" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Mojhy.Engine.PlayArea">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Field\PlayArea.cs</FileName>
+      <HashCode>AAAAACgAgAAAAABAAAAAAAAAAAAAgAAAAAEAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="parent" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Mojhy.Engine.PlayAreas">
+    <Position X="3.5" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <FileName>Field\PlayAreas.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAIAACgBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AreasList" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Mojhy.Engine.Team">
+    <Position X="5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Team\Team.cs</FileName>
+      <HashCode>AEAAAAAAAAAAAABIAAACICQAAAQEAABAAAAAAgACAQA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="parent" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Mojhy.Engine.Team.PlayingStatus">
+        <TypeIdentifier>
+          <NewMemberFileName>Team\Team.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+  </Class>
+  <Class Name="Mojhy.Engine.PlayingPlayer">
+    <Position X="7.5" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <FileName>Team\PlayingPlayer.cs</FileName>
+      <HashCode>AYAAAAgAQACAAABAEAACEAAAASEAAAAAAAEBAAgCAQA=</HashCode>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="parent" />
+      <Property Name="CurrentPlayArea" />
+      <Property Name="PositionsOnField" />
+    </ShowAsAssociation>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+  <Class Name="Mojhy.Engine.PlayingPositions">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Team\PlayingPositions.cs</FileName>
+      <HashCode>AAAAAAFAAAAAAAAAAABAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+  </Class>
+</ClassDiagram>
