@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0"?>
 <scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" initialstate="Start">
   <state id="Start">
-    <transition cond="" event="" target=""/>
+    <transition event="Started" target="MovingToPosition"/>
+  </state>
+  <state id="MovingToPosition">
+    <transition event="NearestBall" target="RunningToBall"/>
+  </state>
+  <state id="RunningToBall">
+    <transition event="ReachedBall" target="PassingBall"/>
+  </state>
+  <state id="PassingBall">
+    <transition target="MovingToPosition"/>
   </state>
 </scxml>
